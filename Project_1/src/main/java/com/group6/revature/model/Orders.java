@@ -1,13 +1,37 @@
+package com.group6.revature.model;
+
 import java.util.Date;
 import java.util.Objects;
+import jakarta.persistence.*;
+import java.util.Objects;
 
+@Entity
+@Table(name = "Orders")
 public class Orders {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(updatable = false)
     private int orderID;
+
+    @Column(nullable = false)
     private int customerID;
+
+    @Column(nullable = false)
     private Date orderDate;
+
+    @Column(nullable = false)
+
+    @Column(nullable = false)
     private String status;
+
+    @Column(nullable = false)
     private double total;
+
+    @Column(nullable = false)
     private int partID;
+
+    @Column(nullable = false)
     private int quantity;
 
     public Orders() {
