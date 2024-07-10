@@ -22,6 +22,13 @@ public class VehicleMakesModels {
     @Column(nullable = false)
     private int year;
 
+//    @ManyToOne
+//    @JoinColumn(name = "user_id")
+//    private Users user;
+
+    public VehicleMakesModels() {
+    }
+
     public VehicleMakesModels(int makeModel_id, String make, String model, int year) {
         this.makeModel_id = makeModel_id;
         this.make = make;
