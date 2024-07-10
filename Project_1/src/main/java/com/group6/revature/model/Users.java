@@ -25,6 +25,9 @@ public class Users {
     @Column(nullable = false)
     private String role;
 
+    public Users() {
+    }
+
     public Users(int user_id, String username, String password, String email, String role, String created_at) {
         this.user_id = user_id;
         this.username = username;
