@@ -1,16 +1,42 @@
 import java.util.Date;
 import java.util.Objects;
+package com.group6.revature.model;
 
+import jakarta.persistence.*;
+
+import java.util.Objects;
+
+@Entity
+@Table(name="parts")
 public class Parts {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(updatable = false)
     private int partID;
+
+    @Column(nullable = false)
     private String partName;
+
+    @Column(nullable = false)
     private String description;
+
+    @Column(nullable = false)
     private double price;
+
+    @Column
     private int sellerID;
+
+    @Column
     private int makeModelID;
+
+    @Column(nullable = false)
     private int inventory;
+
+    @Column(nullable = false)
     private Date createdAt;
+
+    @Column
     private Date updatedAt;
 
     public Date getCreatedAt() {
