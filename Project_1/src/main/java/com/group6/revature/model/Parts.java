@@ -1,6 +1,6 @@
+package com.group6.revature.model;
 import java.util.Date;
 import java.util.Objects;
-package com.group6.revature.model;
 
 import jakarta.persistence.*;
 
