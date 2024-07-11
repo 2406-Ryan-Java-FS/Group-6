@@ -22,7 +22,7 @@ public interface partsService {
 
     public int getInventory(int id);
 
-    public int getPrice(int id);
+    public double getPrice(int id);
 
     public void updatePrice(int id, double amount);
 

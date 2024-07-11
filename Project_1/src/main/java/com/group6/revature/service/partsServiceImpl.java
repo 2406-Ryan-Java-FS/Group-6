@@ -2,7 +2,6 @@ package com.group6.revature.service;
 
 import com.group6.revature.model.Parts;
 import com.group6.revature.repository.partsRepo;
-import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -53,6 +52,8 @@ public class partsServiceImpl implements partsService {
         return prt.findByPartName(name);
     }
 
+    //need to keep an eye on the updates, there might be a slight problem
+    //wont know till testing of the method
     @Override
     public void updateInventory(int id, int amount){
         prt.updateInventory(id,amount);
@@ -64,7 +65,7 @@ public class partsServiceImpl implements partsService {
     }
 
     @Override
-    public int getPrice(int id){
+    public double getPrice(int id){
         return prt.getPrice(id);
     }
 
