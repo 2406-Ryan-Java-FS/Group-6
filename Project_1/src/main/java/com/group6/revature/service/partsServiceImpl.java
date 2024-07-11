@@ -53,23 +53,28 @@ public class partsServiceImpl implements partsService {
         return prt.findByPartName(name);
     }
 
-    // have team double check if this would work
-//    @Override
-//    public boolean partAvailable(int id){
-//        try{
-//            Parts p = getPart(id);
-//            if(p.getPartID() !=0 && p.getInventory() > 0){
-//                return true;
-//            }
-//        }catch (IllegalArgumentException e){
-//            e.printStackTrace();
-//        }
-//        return false;
-//    }
-//
+    @Override
+    public void updateInventory(int id, int amount){
+        prt.updateInventory(id,amount);
+    }
 
     @Override
     public int getInventory(int id){
         return prt.findInventory(id);
+    }
+
+    @Override
+    public int getPrice(int id){
+        return prt.getPrice(id);
+    }
+
+    @Override
+    public void updatePrice(int id, double amount){
+        prt.updatePrice(id,amount);
+    }
+
+    @Override
+    public int getMakeModel(int id){
+        return prt.getMakeModel(id);
     }
 }

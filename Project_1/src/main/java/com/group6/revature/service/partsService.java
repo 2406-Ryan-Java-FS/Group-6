@@ -18,7 +18,13 @@ public interface partsService {
 
     public List<Parts> getPart(String name);
 
-//    public boolean partAvailable(int id);
-//
+    public void updateInventory(int id, int amount);
+
     public int getInventory(int id);
+
+    public int getPrice(int id);
+
+    public void updatePrice(int id, double amount);
+
+    public int getMakeModel(int id);
 }
