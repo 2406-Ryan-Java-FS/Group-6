@@ -77,4 +77,14 @@ public class partsServiceImpl implements partsService {
     public int getMakeModel(int id){
         return prt.getMakeModel(id);
     }
+
+    @Override
+    public void updateDescription(int id, String changes){
+        prt.updateDescription(id,changes);
+    }
+
+    @Override
+    public String getDescription(int id){
+        return prt.getDescription(id);
+    }
 }

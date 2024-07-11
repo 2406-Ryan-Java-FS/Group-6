@@ -34,4 +34,12 @@ public interface partsRepo  extends JpaRepository<Parts, Integer>{
     //double check if i am doing the get model for part right, check service
     @Query("select make_model_id from parts where part_id = :id")
     int getMakeModel(int id);
+
+    @Transactional
+    @Modifying
+    @Query("update parts set inventory = :amount where part_id = :id")
+    void updateDescription(int id, String changes);
+
+    @Query("select description from parts where part_id = :id")
+    String getDescription(int id);
 }

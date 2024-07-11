@@ -27,4 +27,8 @@ public interface partsService {
     public void updatePrice(int id, double amount);
 
     public int getMakeModel(int id);
+
+    public void updateDescription(int id, String changes);
+
+    public String getDescription(int id);
 }
