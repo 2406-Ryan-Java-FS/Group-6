@@ -8,6 +8,7 @@ import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -24,7 +25,7 @@ public class partsController {
 //    All get mapping
 
     @GetMapping("/{id}")
-    public Parts getPart(int id){
+    public Parts getPart(@PathVariable int id){
         return ps.getPart(id);
     }
 
@@ -33,28 +34,28 @@ public class partsController {
         return ps.getAllParts();
     }
 
-    @GetMapping("/search")
-    public List<Parts> getPartByName(String name){
-        return ps.getPart(name);
-    }
+//    @GetMapping("/search")
+//    public List<Parts> getPartByName(String name){
+//        return ps.getPart(name);
+//    }
 
     @GetMapping("{id}/inventory")
-    public int getInventory(int id){
+    public int getInventory(@PathVariable int id){
         return ps.getInventory(id);
     }
 
     @GetMapping("{id}/price")
-    public double getPrice(int id){
+    public BigDecimal getPrice(@PathVariable int id){
         return ps.getPrice(id);
     }
 
     @GetMapping("{id}/MakeModel")
-    public int getMakeModel(int id){
+    public int getMakeModel(@PathVariable int id){
         return ps.getMakeModel(id);
     }
 
     @GetMapping("{id}/description")
-    public String getDescription(int id){
+    public String getDescription(@PathVariable int id){
         return ps.getDescription(id);
     }
 
@@ -65,8 +66,6 @@ public class partsController {
         return new ResponseEntity<>(p, HttpStatus.OK);
     }
 
-//    All put mapping. noticed there might be a slight problem with the update services for parts
-    //wont know till i test them. If there is, I (jason) will have it fixed by the morning(7/12)
     @PutMapping("/{id}")
     public ResponseEntity<Parts> updatePart(@PathVariable int id, @RequestBody Parts p){
         p.setPartID(id);
@@ -80,7 +79,8 @@ public class partsController {
         }
     }
 
-    @PutMapping(value = "/{id}/inventory", consumes = "application/json" , produces = "application/json")
+//    , consumes = "application/json"
+    @PutMapping(value = "/{id}/inventory", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Parts> updateInventory(@PathVariable int id, @RequestBody int amount){
         Parts p = new Parts();
         p.setPartID(id);
@@ -92,8 +92,9 @@ public class partsController {
         }
     }
 
-    @PutMapping(value = "/{id}/price", consumes = "application/json" , produces = "application/json")
-    public ResponseEntity<Parts> updatePrice(@PathVariable int id, @RequestBody double amount){
+//    , consumes = "application/json"
+    @PutMapping(value = "/{id}/price", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<Parts> updatePrice(@PathVariable int id, @RequestBody BigDecimal amount){
         Parts p = new Parts();
         p.setPartID(id);
         if(p.getPartID() == id){
@@ -104,12 +105,13 @@ public class partsController {
         }
     }
 
-    @PutMapping(value = "/{id}/inventory", consumes = "application/json" , produces = "application/json")
-    public ResponseEntity<Parts> updateDescription(@PathVariable int id, @RequestBody String text){
+//    , consumes = "application/json"
+    @PutMapping(value = "/{id}/description",consumes = "application/json", produces = "application/json")
+    public ResponseEntity<Parts> updateDescription(@PathVariable int id, @RequestBody String changes){
         Parts p = new Parts();
         p.setPartID(id);
         if(p.getPartID() == id){
-            ps.updateDescription(id, text);
+            ps.updateDescription(id, changes);
             return ResponseEntity.noContent().build();
         }else{
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
@@ -117,7 +119,7 @@ public class partsController {
     }
 
 //    All to the delete mapping
-    @DeleteMapping("/id")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> deletePart(@PathVariable int id){
         boolean wasDeleted = ps.deletePart(id);
         return new ResponseEntity<>(wasDeleted ? HttpStatus.NO_CONTENT : HttpStatus.NOT_FOUND);

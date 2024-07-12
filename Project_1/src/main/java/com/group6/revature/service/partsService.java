@@ -2,6 +2,7 @@ package com.group6.revature.service;
 
 import com.group6.revature.model.Parts;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface partsService {
@@ -16,15 +17,15 @@ public interface partsService {
 
     public boolean deletePart(int id);
 
-    public List<Parts> getPart(String name);
+//    public List<Parts> getPart(String name);
 
     public void updateInventory(int id, int amount);
 
     public int getInventory(int id);
 
-    public double getPrice(int id);
+    public BigDecimal getPrice(int id);
 
-    public void updatePrice(int id, double amount);
+    public void updatePrice(int id, BigDecimal amount);
 
     public int getMakeModel(int id);
 

@@ -5,6 +5,7 @@ import com.group6.revature.repository.partsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -47,10 +48,10 @@ public class partsServiceImpl implements partsService {
         return false;
     }
 
-    @Override
-    public List<Parts> getPart(String name){
-        return prt.findByPartName(name);
-    }
+//    @Override
+//    public List<Parts> getPart(String name){
+//        return prt.findByPartName(name);
+//    }
 
     //need to keep an eye on the updates, there might be a slight problem
     //wont know till testing of the method
@@ -65,12 +66,12 @@ public class partsServiceImpl implements partsService {
     }
 
     @Override
-    public double getPrice(int id){
+    public BigDecimal getPrice(int id){
         return prt.getPrice(id);
     }
 
     @Override
-    public void updatePrice(int id, double amount){
+    public void updatePrice(int id, BigDecimal amount){
         prt.updatePrice(id,amount);
     }
 
