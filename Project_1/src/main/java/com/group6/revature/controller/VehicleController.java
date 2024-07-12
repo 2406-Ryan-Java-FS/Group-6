@@ -43,4 +43,15 @@ public class VehicleController {
         return new ResponseEntity<>(vehicles, HttpStatus.OK);
     }
 
+    /**
+     * Endpoint for retrieving all Vehicles registered to a particular User.
+     *
+     * @param customerId The userId of a registered User.
+     * @return A list of all Vehicles registered to the applicable User.
+     */
+    @GetMapping("/{customerId}")
+    public ResponseEntity<List<Vehicle>> getVehiclesByCustomerId(@PathVariable Integer customerId) {
+        List<Vehicle> vehicles = vehicleService.getVehiclesByCustomerId(customerId);
+        return new ResponseEntity<>(vehicles, HttpStatus.OK);
+    }
 }

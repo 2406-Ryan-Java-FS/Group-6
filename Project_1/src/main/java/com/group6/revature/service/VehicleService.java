@@ -44,4 +44,18 @@ public class VehicleService {
     public List<Vehicle> getAllVehicles() {
         return vehicleRepository.findAll();
     }
+
+    /**
+     * Used to retrieve all Vehicles registered to a particular User.
+     *
+     * @param customerId The userId of a registered User.
+     * @return A list of all Vehicles registered to the applicable User.
+     */
+    public List<Vehicle> getVehiclesByCustomerId(Integer customerId) {
+
+        if (customerId != null && !userRepository.existsById(customerId)) {
+            throw new BadRequestException("Customer does not exist.");
+        }
+        return vehicleRepository.findAllByCustomerId(customerId);
+    }
 }
