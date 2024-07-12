@@ -2,6 +2,7 @@ package com.group6.revature.model;
 
 import jakarta.persistence.*;
 
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -25,10 +26,12 @@ public class Users {
     @Column(nullable = false)
     private String role;
 
+    private Date created_at;
+
     public Users() {
     }
 
-    public Users(int user_id, String username, String password, String email, String role, String created_at) {
+    public Users(int user_id, String username, String password, String email, String role, Date created_at) {
         this.user_id = user_id;
         this.username = username;
         this.password = password;
@@ -77,15 +80,13 @@ public class Users {
         this.role = role;
     }
 
-    public String getCreated_at() {
+    public Date getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(String created_at) {
+    public void setCreated_at(Date created_at) {
         this.created_at = created_at;
     }
-
-    private String created_at;
 
     @Override
     public boolean equals(Object o) {
@@ -108,7 +109,7 @@ public class Users {
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", role='" + role + '\'' +
-                ", created_at='" + created_at + '\'' +
+                ", created_at=" + created_at +
                 '}';
     }
 }

@@ -22,8 +22,8 @@ public class Vehicle {
     @Column(nullable = false)
     private Integer year;
 
-    @Column(name = "owner_id")
-    private Integer ownerId;
+    @Column(name = "customer_id")
+    private Integer customerId;
 
     public Vehicle() {
     }
@@ -33,7 +33,7 @@ public class Vehicle {
         this.make = make;
         this.model = model;
         this.year = year;
-        this.ownerId = ownerId;
+        this.customerId = ownerId;
     }
 
     public Integer getMakeModelId() {
@@ -69,11 +69,11 @@ public class Vehicle {
     }
 
     public Integer getOwnerId() {
-        return ownerId;
+        return customerId;
     }
 
     public void setOwnerId(Integer ownerId) {
-        this.ownerId = ownerId;
+        this.customerId = ownerId;
     }
 
     @Override
@@ -85,12 +85,12 @@ public class Vehicle {
                 Objects.equals(make, vehicle.make) &&
                 Objects.equals(model, vehicle.model) &&
                 Objects.equals(year, vehicle.year) &&
-                Objects.equals(ownerId, vehicle.ownerId);
+                Objects.equals(customerId, vehicle.customerId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(makeModelId, make, model, year, ownerId);
+        return Objects.hash(makeModelId, make, model, year, customerId);
     }
 
     @Override
@@ -100,7 +100,7 @@ public class Vehicle {
                 ", make='" + make + '\'' +
                 ", model='" + model + '\'' +
                 ", year=" + year +
-                ", ownerId=" + ownerId +
+                ", ownerId=" + customerId +
                 '}';
     }
 }
