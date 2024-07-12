@@ -4,7 +4,9 @@ import com.group6.revature.model.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.group6.revature.repository.userRepo;
+import org.springframework.stereotype.Service;
 
+@Service
 public class userServiceImpl implements userService{
 
     @Autowired
@@ -13,6 +15,11 @@ public class userServiceImpl implements userService{
 
     @Override
     public Users addUser(Users user) {
+        String existingUser = ur.findByUsername(user.getUsername());
+        if (existingUser != null) {
+            throw new IllegalArgumentException("Username is already taken");
+        }
+
         return ur.save(user);
     }
 
@@ -54,6 +61,13 @@ public class userServiceImpl implements userService{
 
     @Override
     public Users updatePassword(Users change) {
+        Users existingUser = ur.findById(change.getUser_id()).orElse(null);
+
+        if (existingUser == null) {
+            throw new IllegalArgumentException("User not found");
+        }
+
+        existingUser.setPassword(change.getPassword());
         return ur.save(change);
     }
 }

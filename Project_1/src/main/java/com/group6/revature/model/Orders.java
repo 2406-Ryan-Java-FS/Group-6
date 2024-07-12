@@ -21,8 +21,6 @@ public class Orders {
     private Date orderDate;
 
     @Column(nullable = false)
-
-    @Column(nullable = false)
     private String status;
 
     @Column(nullable = false)
