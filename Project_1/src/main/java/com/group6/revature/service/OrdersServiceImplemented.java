@@ -5,6 +5,8 @@ import com.group6.revature.service.OrdersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class OrdersServiceImplemented implements OrdersService {
 
@@ -14,10 +16,11 @@ public class OrdersServiceImplemented implements OrdersService {
     @Override
     public Orders addOrder(Orders o) {
         or.save(o);
+        return o;
     }
 
     public Orders getOrder(int id) {
-        return or.findByID(id).orElse(null);
+        return or.findById(id).orElse(null);
     }
 
     public Orders updateOrder(Orders up) {
