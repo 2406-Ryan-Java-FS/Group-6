@@ -58,4 +58,46 @@ public class VehicleService {
         }
         return vehicleRepository.findAllByCustomerId(customerId);
     }
+
+    /**
+     * Used to update a Vehicle in the repository given it's makeModelId.
+     *
+     * @param makeModelId The makeModelId of a registered Vehicle.
+     * @param vehicle     Vehicle containing updated information.
+     * @return The updated Vehicle from the repository.
+     * @throws BadRequestException if there's an issue with the client's request.
+     */
+    public Vehicle updateVehicle(Integer makeModelId, Vehicle vehicle) {
+
+        if (makeModelId != null && !vehicleRepository.existsById(makeModelId)) {
+            throw new BadRequestException("makeModelId is invalid.");
+        }
+
+        if (vehicle.getMake().isEmpty()) {
+            throw new BadRequestException("Vehicle make cannot be blank.");
+        }
+
+        if (vehicle.getModel().isEmpty()) {
+            throw new BadRequestException("Vehicle model cannot be blank.");
+        }
+
+        if (vehicle.getYear() == null) {
+            throw new BadRequestException("Vehicle year cannot be blank.");
+        }
+
+        if (vehicle.getCustomerId() != null && !userRepository.existsById(vehicle.getCustomerId())) {
+            throw new BadRequestException("CustomerId does not exist.");
+        }
+
+        Vehicle updatedVehicle = this.getVehicleById(makeModelId);
+        updatedVehicle.setMake(vehicle.getMake());
+        updatedVehicle.setModel(vehicle.getModel());
+        updatedVehicle.setYear(vehicle.getYear());
+        updatedVehicle.setCustomerId(vehicle.getCustomerId());
+        return vehicleRepository.save(updatedVehicle);
+    }
+
+    private Vehicle getVehicleById(Integer makeModelId) {
+        return vehicleRepository.findByMakeModelId(makeModelId);
+    }
 }

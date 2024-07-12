@@ -54,4 +54,17 @@ public class VehicleController {
         List<Vehicle> vehicles = vehicleService.getVehiclesByCustomerId(customerId);
         return new ResponseEntity<>(vehicles, HttpStatus.OK);
     }
+
+    /**
+     * Endpoint for updating a Vehicle given it's makeModelId.
+     *
+     * @param makeModelId The makeModelId of a registered Vehicle.
+     * @param vehicle     containing Vehicle data to be updated.
+     * @return The updated Vehicle.
+     */
+    @PatchMapping("/{makeModelId}")
+    public ResponseEntity<Vehicle> updateVehicle(@PathVariable Integer makeModelId, @RequestBody Vehicle vehicle) {
+        Vehicle updatedVehicle = vehicleService.updateVehicle(makeModelId, vehicle);
+        return new ResponseEntity<>(updatedVehicle, HttpStatus.OK);
+    }
 }
