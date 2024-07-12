@@ -35,4 +35,13 @@ public class VehicleService {
         }
         return vehicleRepository.save(vehicle);
     }
+
+    /**
+     * Used to retrieve all Vehicles from the repository.
+     *
+     * @return A list of all Vehicles.
+     */
+    public List<Vehicle> getAllVehicles() {
+        return vehicleRepository.findAll();
+    }
 }
