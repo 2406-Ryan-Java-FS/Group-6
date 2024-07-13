@@ -34,10 +34,10 @@ public class partsController {
         return ps.getAllParts();
     }
 
-//    @GetMapping("/search")
-//    public List<Parts> getPartByName(String name){
-//        return ps.getPart(name);
-//    }
+    @GetMapping("/search")
+    public List<Parts> getPartByName(@RequestParam("part_name") String part_name){
+        return ps.getPart(part_name);
+    }
 
     @GetMapping("{id}/inventory")
     public int getInventory(@PathVariable int id){

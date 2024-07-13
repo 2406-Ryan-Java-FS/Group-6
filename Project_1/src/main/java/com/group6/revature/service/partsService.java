@@ -17,7 +17,7 @@ public interface partsService {
 
     public boolean deletePart(int id);
 
-//    public List<Parts> getPart(String name);
+    public List<Parts> getPart(String name);
 
     public void updateInventory(int id, int amount);
 

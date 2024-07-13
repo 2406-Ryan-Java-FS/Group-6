@@ -48,10 +48,10 @@ public class partsServiceImpl implements partsService {
         return false;
     }
 
-//    @Override
-//    public List<Parts> getPart(String name){
-//        return prt.findByPartName(name);
-//    }
+    @Override
+    public List<Parts> getPart(String part_name){
+        return prt.findByPartName(part_name);
+    }
 
     //need to keep an eye on the updates, there might be a slight problem
     //wont know till testing of the method

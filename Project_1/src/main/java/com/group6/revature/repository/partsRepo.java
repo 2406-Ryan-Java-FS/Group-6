@@ -13,7 +13,8 @@ import java.util.List;
 
 @Repository
 public interface partsRepo  extends JpaRepository<Parts, Integer>{
-//    List<Parts> findByPartName(String part_name);
+    @Query("select p from Parts p where p.part_name = :part_name")
+    List<Parts> findByPartName(@Param("part_name") String part_name);
 
     @Query("select p.inventory from Parts p where p.part_id = :id")
     int findInventory(int id);
