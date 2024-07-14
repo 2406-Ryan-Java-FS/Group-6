@@ -117,12 +117,12 @@ public class Orders {
     @Override
     public String toString() {
         return "Orders{" +
-                "orderID=" + orderID +
-                ", customerID=" + customerID +
-                ", orderDate=" + orderDate +
+                "order_id=" + orderID +
+                ", customer_id=" + customerID +
+                ", order_date=" + orderDate +
                 ", status='" + status + '\'' +
                 ", total=" + total +
-                ", partID=" + partID +
+                ", part_id=" + partID +
                 ", quantity=" + quantity +
                 '}';
     }

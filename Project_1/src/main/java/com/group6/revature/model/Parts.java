@@ -1,4 +1,6 @@
 package com.group6.revature.model;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
 
@@ -13,77 +15,77 @@ public class Parts {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)
-    private int partID;
+    private int part_id;
 
-    @Column(nullable = false)
-    private String partName;
+    @Column(name = "part_name", nullable = false)
+    private String part_name;
 
     @Column(nullable = false)
     private String description;
 
     @Column(nullable = false)
-    private double price;
+    private BigDecimal price;
 
     @Column
-    private int sellerID;
+    private int seller_id;
 
     @Column
-    private int makeModelID;
+    private int make_model_id;
 
     @Column(nullable = false)
     private int inventory;
 
-    @Column(nullable = false)
-    private Date createdAt;
+    @Column(columnDefinition = "TIMESTAMP")
+    private LocalDateTime created_at;
 
-    @Column
-    private Date updatedAt;
+    @Column(columnDefinition = "TIMESTAMP")
+    private LocalDateTime updated_at;
 
-    public Date getCreatedAt() {
-        return createdAt;
+    public LocalDateTime getCreatedAt() {
+        return created_at;
     }
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
+    public void setCreatedAt(LocalDateTime created_at) {
+        this.created_at = created_at;
     }
 
-    public Date getUpdatedAt() {
-        return updatedAt;
+    public LocalDateTime getUpdatedAt() {
+        return updated_at;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setUpdatedAt(LocalDateTime updated_at) {
+        this.updated_at = updated_at;
     }
 
     public Parts() {
     }
 
-    public Parts(int partID, String partName, String description, double price, int sellerID, int makeModelID, int inventory, Date createdAt, Date updatedAt) {
-        this.partID = partID;
-        this.partName = partName;
+    public Parts(int part_id, String part_name, String description, BigDecimal price, int seller_id, int make_model_id, int inventory, LocalDateTime created_at, LocalDateTime updated_at) {
+        this.part_id = part_id;
+        this.part_name = part_name;
         this.description = description;
         this.price = price;
-        this.sellerID = sellerID;
-        this.makeModelID = makeModelID;
+        this.seller_id = seller_id;
+        this.make_model_id = make_model_id;
         this.inventory = inventory;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
     }
 
     public int getPartID() {
-        return partID;
+        return part_id;
     }
 
-    public void setPartID(int partID) {
-        this.partID = partID;
+    public void setPartID(int part_id) {
+        this.part_id = part_id;
     }
 
     public String getPartName() {
-        return partName;
+        return part_name;
     }
 
-    public void setPartName(String partName) {
-        this.partName = partName;
+    public void setPartName(String part_name) {
+        this.part_name = part_name;
     }
 
     public String getDescription() {
@@ -94,28 +96,28 @@ public class Parts {
         this.description = description;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
     public int getSellerID() {
-        return sellerID;
+        return seller_id;
     }
 
-    public void setSellerID(int sellerID) {
-        this.sellerID = sellerID;
+    public void setSellerID(int seller_id) {
+        this.seller_id = seller_id;
     }
 
     public int getMakeModelID() {
-        return makeModelID;
+        return make_model_id;
     }
 
-    public void setMakeModelID(int makeModelID) {
-        this.makeModelID = makeModelID;
+    public void setMakeModelID(int make_model_id) {
+        this.make_model_id = make_model_id;
     }
 
     public int getInventory() {
@@ -126,30 +128,44 @@ public class Parts {
         this.inventory = inventory;
     }
 
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (!(o instanceof Parts parts)) return false;
+//        return part_id == parts.part_id && Double.compare(price, parts.price) == 0 && seller_id == parts.seller_id && make_model_id == parts.make_model_id && inventory == parts.inventory && Objects.equals(part_name, parts.part_name) && Objects.equals(description, parts.description) && Objects.equals(created_at, parts.created_at) && Objects.equals(updated_at, parts.updated_at);
+//    }
+
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(part_id, part_name, description, price, seller_id, make_model_id, inventory, created_at, updated_at);
+//    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Parts parts)) return false;
-        return partID == parts.partID && Double.compare(price, parts.price) == 0 && sellerID == parts.sellerID && makeModelID == parts.makeModelID && inventory == parts.inventory && Objects.equals(partName, parts.partName) && Objects.equals(description, parts.description) && Objects.equals(createdAt, parts.createdAt) && Objects.equals(updatedAt, parts.updatedAt);
+        if (o == null || getClass() != o.getClass()) return false;
+        Parts parts = (Parts) o;
+        return part_id == parts.part_id && seller_id == parts.seller_id && make_model_id == parts.make_model_id && inventory == parts.inventory && Objects.equals(part_name, parts.part_name) && Objects.equals(description, parts.description) && Objects.equals(price, parts.price) && Objects.equals(created_at, parts.created_at) && Objects.equals(updated_at, parts.updated_at);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(partID, partName, description, price, sellerID, makeModelID, inventory, createdAt, updatedAt);
+        return Objects.hash(part_id, part_name, description, price, seller_id, make_model_id, inventory, created_at, updated_at);
     }
 
     @Override
     public String toString() {
         return "Parts{" +
-                "partID=" + partID +
-                ", partName='" + partName + '\'' +
+                "part_id=" + part_id +
+                ", part_name='" + part_name + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
-                ", sellerID=" + sellerID +
-                ", makeModelID=" + makeModelID +
+                ", seller_id=" + seller_id +
+                ", make_model_id=" + make_model_id +
                 ", inventory=" + inventory +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
+                ", created_at=" + created_at +
+                ", updated_at=" + updated_at +
                 '}';
     }
 }

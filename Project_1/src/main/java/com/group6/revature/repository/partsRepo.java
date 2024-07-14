@@ -4,42 +4,45 @@ import com.group6.revature.model.Parts;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Repository
 public interface partsRepo  extends JpaRepository<Parts, Integer>{
-    List<Parts> findByPartName(String partName);
+    @Query("select p from Parts p where p.part_name = :part_name")
+    List<Parts> findByPartName(@Param("part_name") String part_name);
 
-    @Query("select inventory from parts where part_id = :id")
+    @Query("select p.inventory from Parts p where p.part_id = :id")
     int findInventory(int id);
 
     @Transactional
     @Modifying
-    @Query("update parts set inventory = :amount where part_id = :id")
-    void updateInventory(int id, int amount);
+    @Query("update Parts p set p.inventory = :amount where p.part_id = :id")
+    void updateInventory(@Param("id") int id, @Param("amount") int amount);
 
-    @Query("select price from parts where part_id = :id")
-    int getPrice(int id);
+    @Query("select p.price from Parts p where p.part_id = :id")
+    BigDecimal getPrice(int id);
 
 
     //ask about what data type amount should be
     @Transactional
     @Modifying
-    @Query("update parts set price = :amount where part_id = :id")
-    void updatePrice(int id, double amount);
+    @Query("update Parts p set p.price = :amount where p.part_id = :id")
+    void updatePrice(@Param("id") int id, @Param("amount") BigDecimal amount);
 
     //double check if i am doing the get model for part right, check service
-    @Query("select make_model_id from parts where part_id = :id")
+    @Query("select p.make_model_id from Parts p where p.part_id = :id")
     int getMakeModel(int id);
 
     @Transactional
     @Modifying
-    @Query("update parts set inventory = :amount where part_id = :id")
-    void updateDescription(int id, String changes);
+    @Query("update Parts p set p.description = :changes where p.part_id = :id")
+    void updateDescription(@Param("id") int id, @Param("changes") String changes);
 
-    @Query("select description from parts where part_id = :id")
-    String getDescription(int id);
+    @Query("SELECT p.description FROM Parts p WHERE p.part_id = :id")
+    String getDescription(@Param("id") int id);
 }
