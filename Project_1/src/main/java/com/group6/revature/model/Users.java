@@ -21,13 +21,13 @@ public class Users {
     @Column(name = "password_hash", unique = true)
     private String password;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, updatable = false)
     private String email;
 
     @Column(nullable = false)
     private String role;
 
-    @Column(columnDefinition = "TIMESTAMP")
+    @Column(columnDefinition = "TIMESTAMP", updatable = false)
     private LocalDateTime created_at;
 
 

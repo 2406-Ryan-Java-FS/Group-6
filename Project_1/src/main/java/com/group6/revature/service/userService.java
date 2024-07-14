@@ -9,7 +9,8 @@ public interface userService {
     public Users addUser(Users user);
     public Users getUser(int id);
     public Users loginValidate(Users user);
-    public Users deleteUser(Users admin, int idToDelete);
-    public Users updatePassword(Users change);
+    public Users deleteUserAsAdmin(Users admin, int idToDelete);
+    public Users deleteUser(Users user);
+    public Users updateUser(Users change);
 
 }

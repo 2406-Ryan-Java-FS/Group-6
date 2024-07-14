@@ -50,9 +50,10 @@ public class userServiceImpl implements userService{
 
     // to add authorization step
     @Override
-    public Users deleteUser(Users admin, int idToDelete) {
+    public Users deleteUserAsAdmin(Users admin, int idToDelete) {
         try{
-            if (!admin.getRole().equalsIgnoreCase("Admin")) {
+            Users getAdmin = ur.findById(admin.getUser_id()).orElse(null);
+            if (!getAdmin.getRole().equalsIgnoreCase("Admin")) {
                 throw new SecurityException("Only users with role 'Admin' can delete accounts.");
             }
 
@@ -68,14 +69,43 @@ public class userServiceImpl implements userService{
     }
 
     @Override
-    public Users updatePassword(Users change) {
-        Users existingUser = ur.findById(change.getUser_id()).orElse(null);
+    public Users updateUser(Users change) {
+        int userId = change.getUser_id();
+        Users existingUser = ur.findById(userId).orElse(null);
 
         if (existingUser == null) {
             throw new IllegalArgumentException("User not found");
         }
 
+        if (change.getUsername() != null && change.getUsername() != existingUser.getUsername()) {
+            existingUser.setUsername(change.getUsername());
+        }
+
+        if (change.getPassword() != null) {
+            existingUser.setPassword(change.getPassword());
+        }
+
+        if (existingUser.getRole() != "Admin" && (existingUser.getRole() == "Customer" || change.getRole() == "Seller")) {
+            throw new IllegalArgumentException("You are not allowed to change your role");
+        }
+
         existingUser.setPassword(change.getPassword());
         return ur.save(change);
+    }
+
+    @Override
+    public Users deleteUser(Users user) {
+        try {
+            Users userInfo = ur.findById(user.getUser_id()).orElse(null);
+//        int userId = user.getUser_id();
+            if (userInfo != null) {
+                ur.deleteById(user.getUser_id());
+                return userInfo;
+            }
+        } catch (SecurityException | IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }
