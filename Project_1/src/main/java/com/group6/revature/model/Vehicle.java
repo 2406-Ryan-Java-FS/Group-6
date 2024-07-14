@@ -68,12 +68,12 @@ public class Vehicle {
         this.year = year;
     }
 
-    public Integer getOwnerId() {
+    public Integer getCustomerId() {
         return customerId;
     }
 
-    public void setOwnerId(Integer ownerId) {
-        this.customerId = ownerId;
+    public void setCustomerId(Integer customerId) {
+        this.customerId = customerId;
     }
 
     @Override
