@@ -2,6 +2,7 @@ package com.group6.revature.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
 
@@ -26,12 +27,14 @@ public class Users {
     @Column(nullable = false)
     private String role;
 
-    private Date created_at;
+    @Column(columnDefinition = "TIMESTAMP")
+    private LocalDateTime created_at;
+
 
     public Users() {
     }
 
-    public Users(int user_id, String username, String password, String email, String role, Date created_at) {
+    public Users(int user_id, String username, String password, String email, String role, LocalDateTime created_at) {
         this.user_id = user_id;
         this.username = username;
         this.password = password;
@@ -80,11 +83,11 @@ public class Users {
         this.role = role;
     }
 
-    public Date getCreated_at() {
+    public LocalDateTime getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(Date created_at) {
+    public void setCreated_at(LocalDateTime created_at) {
         this.created_at = created_at;
     }
 

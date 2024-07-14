@@ -32,5 +32,45 @@ public class UsersController {
 
     }
 
+//    @PostMapping(consumes = "application/json", produces = "application/json")
+    @PostMapping
+    public ResponseEntity<Users> addUser(@RequestBody Users u) {
+        try {
+            u = us.addUser(u);
+            return new ResponseEntity<>(u, HttpStatus.OK);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
+    @PutMapping
+    public ResponseEntity<String> updatePassword(@RequestBody Users change) {
+        try {
+            us.updatePassword(change);
+            return ResponseEntity.ok("Password updated");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
+
+
+
+    // to add JWT
+    @PostMapping("/login")
+    public ResponseEntity<Users> loginValidate(@RequestBody Users user) {
+        Users validatedUser = us.loginValidate(user);
+
+        if (validatedUser != null) {
+            return ResponseEntity.ok(validatedUser);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+    }
+
+
 
 }

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.group6.revature.repository.userRepo;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class userServiceImpl implements userService{
 
@@ -15,11 +17,16 @@ public class userServiceImpl implements userService{
 
     @Override
     public Users addUser(Users user) {
-        String existingUser = ur.findByUsername(user.getUsername());
+        Users existingUser = ur.findByUsername(user.getUsername());
         if (existingUser != null) {
             throw new IllegalArgumentException("Username is already taken");
         }
+        existingUser = ur.findByEmail(user.getEmail());
+        if (existingUser != null) {
+            throw new IllegalArgumentException("Email is already registered");
+        }
 
+        user.setCreated_at(LocalDateTime.now());
         return ur.save(user);
     }
 
@@ -30,11 +37,12 @@ public class userServiceImpl implements userService{
 
     @Override
     public Users loginValidate(Users user) {
+        String username = user.getUsername();
+        String password = user.getPassword();
 
-        int userId = user.getUser_id();
-        Users existingUser = ur.findById(userId).orElse(null);
+        Users existingUser = ur.findByUsername(username);
 
-        if (existingUser != null && existingUser.getPassword().equals(user.getPassword())) {
+        if (existingUser != null && existingUser.getPassword().equals(password)) {
             return existingUser;
         }
         return null;
