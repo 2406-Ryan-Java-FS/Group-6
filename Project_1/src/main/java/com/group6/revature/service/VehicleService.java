@@ -37,26 +37,17 @@ public class VehicleService {
     }
 
     /**
-     * Used to retrieve all Vehicles from the repository.
+     * Used to retrieve a Vehicle from the repository given it's makeModelId.
      *
-     * @return A list of all Vehicles.
+     * @param makeModelId The makeModelId of a Vehicle.
+     * @return The associated Vehicle object, null if makeModelId not found.
      */
-    public List<Vehicle> getAllVehicles() {
-        return vehicleRepository.findAll();
-    }
+    private Vehicle getVehicle(Integer makeModelId) {
 
-    /**
-     * Used to retrieve all Vehicles registered to a particular User.
-     *
-     * @param customerId The userId of a registered User.
-     * @return A list of all Vehicles registered to the applicable User.
-     */
-    public List<Vehicle> getVehiclesByCustomerId(Integer customerId) {
-
-        if (customerId != null && !userRepository.existsById(customerId)) {
-            throw new BadRequestException("Customer does not exist.");
+        if (!vehicleRepository.existsById(makeModelId)) {
+            return null;
         }
-        return vehicleRepository.findAllByCustomerId(customerId);
+        return vehicleRepository.findByMakeModelId(makeModelId);
     }
 
     /**
@@ -89,22 +80,12 @@ public class VehicleService {
             throw new BadRequestException("CustomerId does not exist.");
         }
 
-        Vehicle updatedVehicle = this.getVehicleById(makeModelId);
+        Vehicle updatedVehicle = this.getVehicle(makeModelId);
         updatedVehicle.setMake(vehicle.getMake());
         updatedVehicle.setModel(vehicle.getModel());
         updatedVehicle.setYear(vehicle.getYear());
         updatedVehicle.setCustomerId(vehicle.getCustomerId());
         return vehicleRepository.save(updatedVehicle);
-    }
-
-    /**
-     * Used to retrieve a Vehicle from the repository given it's makeModelId.
-     *
-     * @param makeModelId The makeModelId of a Vehicle.
-     * @return The associated Vehicle object, null if makeModelId not found.
-     */
-    private Vehicle getVehicleById(Integer makeModelId) {
-        return vehicleRepository.findByMakeModelId(makeModelId);
     }
 
     /**
@@ -114,11 +95,34 @@ public class VehicleService {
      * @return The number of rows affected.
      */
     public int deleteVehicle(Integer makeModelId) {
-        if (vehicleRepository.existsById(makeModelId)) {
+        if (makeModelId != null && vehicleRepository.existsById(makeModelId)) {
             vehicleRepository.deleteById(makeModelId);
             return 1;
         } else {
             return 0;
         }
+    }
+
+    /**
+     * Used to retrieve all Vehicles from the repository.
+     *
+     * @return A list of all Vehicles.
+     */
+    public List<Vehicle> getAllVehicles() {
+        return vehicleRepository.findAll();
+    }
+
+    /**
+     * Used to retrieve all Vehicles registered to a particular User.
+     *
+     * @param customerId The userId of a registered User.
+     * @return A list of all Vehicles registered to the applicable User.
+     */
+    public List<Vehicle> getVehiclesByCustomerId(Integer customerId) {
+
+        if (customerId != null && !userRepository.existsById(customerId)) {
+            throw new BadRequestException("Customer does not exist.");
+        }
+        return vehicleRepository.findAllByCustomerId(customerId);
     }
 }

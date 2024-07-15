@@ -27,32 +27,9 @@ public class VehicleController {
      * @return The persisted Vehicle Object including it's newly assigned makeModel_id.
      */
     @PostMapping
-    public ResponseEntity<Vehicle> registerVehicle(@RequestBody Vehicle vehicleToRegister) {
+    public ResponseEntity<Vehicle> addVehicle(@RequestBody Vehicle vehicleToRegister) {
         Vehicle registeredVehicle = vehicleService.addVehicle(vehicleToRegister);
         return new ResponseEntity<>(registeredVehicle, HttpStatus.OK);
-    }
-
-    /**
-     * Endpoint for retrieving all Vehicles.
-     *
-     * @return A list of all Vehicles.
-     */
-    @GetMapping
-    public ResponseEntity<List<Vehicle>> getAllVehicles() {
-        List<Vehicle> vehicles = vehicleService.getAllVehicles();
-        return new ResponseEntity<>(vehicles, HttpStatus.OK);
-    }
-
-    /**
-     * Endpoint for retrieving all Vehicles registered to a particular User.
-     *
-     * @param customerId The userId of a registered User.
-     * @return A list of all Vehicles registered to the applicable User.
-     */
-    @GetMapping("/{customerId}")
-    public ResponseEntity<List<Vehicle>> getVehiclesByCustomerId(@PathVariable Integer customerId) {
-        List<Vehicle> vehicles = vehicleService.getVehiclesByCustomerId(customerId);
-        return new ResponseEntity<>(vehicles, HttpStatus.OK);
     }
 
     /**
@@ -77,6 +54,34 @@ public class VehicleController {
     @DeleteMapping("/{makeModelId}")
     public ResponseEntity<Integer> deleteVehicle(@PathVariable Integer makeModelId) {
         int rows = vehicleService.deleteVehicle(makeModelId);
-        return new ResponseEntity<>(rows, HttpStatus.OK);
+
+        if (rows != 0) {
+            return new ResponseEntity<>(rows, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(rows, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    /**
+     * Endpoint for retrieving all Vehicles.
+     *
+     * @return A list of all Vehicles.
+     */
+    @GetMapping
+    public ResponseEntity<List<Vehicle>> getAllVehicles() {
+        List<Vehicle> vehicles = vehicleService.getAllVehicles();
+        return new ResponseEntity<>(vehicles, HttpStatus.OK);
+    }
+
+    /**
+     * Endpoint for retrieving all Vehicles registered to a particular User.
+     *
+     * @param customerId The userId of a registered User.
+     * @return A list of all Vehicles registered to the applicable User.
+     */
+    @GetMapping("/{customerId}")
+    public ResponseEntity<List<Vehicle>> getVehiclesByCustomerId(@PathVariable Integer customerId) {
+        List<Vehicle> vehicles = vehicleService.getVehiclesByCustomerId(customerId);
+        return new ResponseEntity<>(vehicles, HttpStatus.OK);
     }
 }
