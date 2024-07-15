@@ -67,4 +67,16 @@ public class VehicleController {
         Vehicle updatedVehicle = vehicleService.updateVehicle(makeModelId, vehicle);
         return new ResponseEntity<>(updatedVehicle, HttpStatus.OK);
     }
+
+    /**
+     * Endpoint for deleting a Vehicle given it's makeModelId.
+     *
+     * @param makeModelId The makeModelId of Vehicle to be deleted.
+     * @return The number of rows affected.
+     */
+    @DeleteMapping("/{makeModelId}")
+    public ResponseEntity<Integer> deleteVehicle(@PathVariable Integer makeModelId) {
+        int rows = vehicleService.deleteVehicle(makeModelId);
+        return new ResponseEntity<>(rows, HttpStatus.OK);
+    }
 }

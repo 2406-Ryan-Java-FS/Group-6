@@ -97,7 +97,28 @@ public class VehicleService {
         return vehicleRepository.save(updatedVehicle);
     }
 
+    /**
+     * Used to retrieve a Vehicle from the repository given it's makeModelId.
+     *
+     * @param makeModelId The makeModelId of a Vehicle.
+     * @return The associated Vehicle object, null if makeModelId not found.
+     */
     private Vehicle getVehicleById(Integer makeModelId) {
         return vehicleRepository.findByMakeModelId(makeModelId);
+    }
+
+    /**
+     * Used to delete a Vehicle given it's makeModelId.
+     *
+     * @param makeModelId The makeModelId of Vehicle to be deleted.
+     * @return The number of rows affected.
+     */
+    public int deleteVehicle(Integer makeModelId) {
+        if (vehicleRepository.existsById(makeModelId)) {
+            vehicleRepository.deleteById(makeModelId);
+            return 1;
+        } else {
+            return 0;
+        }
     }
 }
