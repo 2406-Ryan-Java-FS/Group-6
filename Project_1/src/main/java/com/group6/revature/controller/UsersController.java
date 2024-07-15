@@ -20,9 +20,9 @@ public class UsersController {
     @GetMapping("/{id}")
     public Users getUser(@PathVariable int id) { return us.getUser(id); }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Users> deleteUser(@PathVariable("id") int idToDelete, @RequestBody Users admin) {
-        Users adminDeleter = us.deleteUser(admin, idToDelete);
+    @DeleteMapping("admin/{id}")
+    public ResponseEntity<Users> deleteUserAsAdmin(@PathVariable("id") int idToDelete, @RequestBody Users admin) {
+        Users adminDeleter = us.deleteUserAsAdmin(admin, idToDelete);
 
         if (adminDeleter != null) {
             return ResponseEntity.ok(adminDeleter);
@@ -31,6 +31,58 @@ public class UsersController {
         }
 
     }
+
+//    @PostMapping(consumes = "application/json", produces = "application/json")
+    @PostMapping
+    public ResponseEntity<Users> addUser(@RequestBody Users u) {
+        try {
+            u = us.addUser(u);
+            return new ResponseEntity<>(u, HttpStatus.OK);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
+    @PutMapping
+    public ResponseEntity<String> updateUser(@RequestBody Users change) {
+        try {
+            us.updateUser(change);
+            return ResponseEntity.ok("Password updated");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
+
+
+
+    // to add JWT
+    @PostMapping("/login")
+    public ResponseEntity<Users> loginValidate(@RequestBody Users user) {
+        Users validatedUser = us.loginValidate(user);
+
+        if (validatedUser != null) {
+            return ResponseEntity.ok(validatedUser);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Users> deleteUser(@RequestBody Users user) {
+        Users deletedUser = us.deleteUser(user);
+
+        if (deletedUser != null) {
+            return ResponseEntity.ok(deletedUser);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+    }
+
 
 
 }
