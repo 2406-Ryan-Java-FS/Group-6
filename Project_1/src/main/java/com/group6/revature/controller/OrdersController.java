@@ -32,7 +32,7 @@ public class OrdersController {
         return os.getOrder(id);
     }
 
-    @PostMapping(consumes = "/application/json", produces = "application/json")
+    @PostMapping//(consumes = "/application/json", produces = "/application/json")
     public ResponseEntity<Orders> addOrder(@RequestBody Orders o) {
         o = os.addOrder(o);
         return new ResponseEntity<>(o, HttpStatus.OK);
