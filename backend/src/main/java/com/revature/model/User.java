@@ -1,14 +1,13 @@
-package com.group6.revature.model;
+package com.revature.model;
 
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Objects;
 
 @Entity
 @Table(name = "users")
-public class Users {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,10 +30,10 @@ public class Users {
     private LocalDateTime created_at;
 
 
-    public Users() {
+    public User() {
     }
 
-    public Users(int user_id, String username, String password, String email, String role, LocalDateTime created_at) {
+    public User(int user_id, String username, String password, String email, String role, LocalDateTime created_at) {
         this.user_id = user_id;
         this.username = username;
         this.password = password;
@@ -95,7 +94,7 @@ public class Users {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Users users = (Users) o;
+        User users = (User) o;
         return user_id == users.user_id && Objects.equals(username, users.username) && Objects.equals(password, users.password) && Objects.equals(email, users.email) && Objects.equals(role, users.role) && Objects.equals(created_at, users.created_at);
     }
 

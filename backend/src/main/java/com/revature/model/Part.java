@@ -1,16 +1,13 @@
-package com.group6.revature.model;
+package com.revature.model;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Objects;
 
 import jakarta.persistence.*;
 
-import java.util.Objects;
-
 @Entity
 @Table(name="parts")
-public class Parts {
+public class Part {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,10 +54,10 @@ public class Parts {
         this.updated_at = updated_at;
     }
 
-    public Parts() {
+    public Part() {
     }
 
-    public Parts(int part_id, String part_name, String description, BigDecimal price, int seller_id, int make_model_id, int inventory, LocalDateTime created_at, LocalDateTime updated_at) {
+    public Part(int part_id, String part_name, String description, BigDecimal price, int seller_id, int make_model_id, int inventory, LocalDateTime created_at, LocalDateTime updated_at) {
         this.part_id = part_id;
         this.part_name = part_name;
         this.description = description;
@@ -145,7 +142,7 @@ public class Parts {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Parts parts = (Parts) o;
+        Part parts = (Part) o;
         return part_id == parts.part_id && seller_id == parts.seller_id && make_model_id == parts.make_model_id && inventory == parts.inventory && Objects.equals(part_name, parts.part_name) && Objects.equals(description, parts.description) && Objects.equals(price, parts.price) && Objects.equals(created_at, parts.created_at) && Objects.equals(updated_at, parts.updated_at);
     }
 

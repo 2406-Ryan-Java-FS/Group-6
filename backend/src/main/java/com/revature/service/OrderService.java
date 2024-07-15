@@ -1,20 +1,20 @@
-package com.group6.revature.service;
+package com.revature.service;
 
-import com.group6.revature.exception.BadRequestException;
-import com.group6.revature.model.Order;
-import com.group6.revature.repository.OrderRepository;
+import com.revature.exception.BadRequestException;
+import com.revature.model.Order;
+import com.revature.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class OrdersServiceImplemented implements OrdersService {
+public class OrderService implements IOrderService {
 
     OrderRepository orderRepository;
 
     @Autowired
-    public OrdersServiceImplemented(OrderRepository orderRepository) {
+    public OrderService(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
     }
 

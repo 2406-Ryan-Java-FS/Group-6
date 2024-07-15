@@ -1,9 +1,9 @@
-package com.group6.revature.service;
+package com.revature.service;
 
-import com.group6.revature.exception.BadRequestException;
-import com.group6.revature.model.Vehicle;
-import com.group6.revature.repository.VehicleRepository;
-import com.group6.revature.repository.userRepo;
+import com.revature.exception.BadRequestException;
+import com.revature.model.Vehicle;
+import com.revature.repository.VehicleRepository;
+import com.revature.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +13,10 @@ import java.util.List;
 public class VehicleService {
 
     private final VehicleRepository vehicleRepository;
-    private final userRepo userRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public VehicleService(VehicleRepository vehicleRepository, userRepo userRepository) {
+    public VehicleService(VehicleRepository vehicleRepository, UserRepository userRepository) {
         this.vehicleRepository = vehicleRepository;
         this.userRepository = userRepository;
     }

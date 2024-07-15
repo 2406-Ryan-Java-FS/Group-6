@@ -1,10 +1,9 @@
-package com.group6.revature.controller;
+package com.revature.controller;
 
-import com.group6.revature.model.Parts;
-import com.group6.revature.service.partsService;
+import com.revature.model.Part;
+import com.revature.service.IPartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,29 +12,29 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/parts")
-public class partsController {
+public class PartController {
 
-    partsService ps;
+    IPartService ps;
 
     @Autowired
-    public partsController(partsService ps){
+    public PartController(IPartService ps){
         this.ps = ps;
     }
 
 //    All get mapping
 
     @GetMapping("/{id}")
-    public Parts getPart(@PathVariable int id){
+    public Part getPart(@PathVariable int id){
         return ps.getPart(id);
     }
 
     @GetMapping
-    public List<Parts> getAllParts(){
+    public List<Part> getAllParts(){
         return ps.getAllParts();
     }
 
     @GetMapping("/search")
-    public List<Parts> getPartByName(@RequestParam("part_name") String part_name){
+    public List<Part> getPartByName(@RequestParam("part_name") String part_name){
         return ps.getPart(part_name);
     }
 
@@ -61,16 +60,16 @@ public class partsController {
 
 //    All post mapping
     @PostMapping(consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Parts> addPart(@RequestBody Parts p){
+    public ResponseEntity<Part> addPart(@RequestBody Part p){
         p = ps.addPart(p);
         return new ResponseEntity<>(p, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Parts> updatePart(@PathVariable int id, @RequestBody Parts p){
+    public ResponseEntity<Part> updatePart(@PathVariable int id, @RequestBody Part p){
         p.setPartID(id);
 
-        Parts p2 = ps.getPart(id);
+        Part p2 = ps.getPart(id);
         if(p2.getPartID() == id){
             p = ps.updatePart(p);
             return new ResponseEntity<>(p, HttpStatus.OK);
@@ -81,8 +80,8 @@ public class partsController {
 
 //    , consumes = "application/json"
     @PutMapping(value = "/{id}/inventory", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Parts> updateInventory(@PathVariable int id, @RequestBody int amount){
-        Parts p = new Parts();
+    public ResponseEntity<Part> updateInventory(@PathVariable int id, @RequestBody int amount){
+        Part p = new Part();
         p.setPartID(id);
         if(p.getPartID() == id){
             ps.updateInventory(id, amount);
@@ -94,8 +93,8 @@ public class partsController {
 
 //    , consumes = "application/json"
     @PutMapping(value = "/{id}/price", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Parts> updatePrice(@PathVariable int id, @RequestBody BigDecimal amount){
-        Parts p = new Parts();
+    public ResponseEntity<Part> updatePrice(@PathVariable int id, @RequestBody BigDecimal amount){
+        Part p = new Part();
         p.setPartID(id);
         if(p.getPartID() == id){
             ps.updatePrice(id, amount);
@@ -107,8 +106,8 @@ public class partsController {
 
 //    , consumes = "application/json"
     @PutMapping(value = "/{id}/description",consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Parts> updateDescription(@PathVariable int id, @RequestBody String changes){
-        Parts p = new Parts();
+    public ResponseEntity<Part> updateDescription(@PathVariable int id, @RequestBody String changes){
+        Part p = new Part();
         p.setPartID(id);
         if(p.getPartID() == id){
             ps.updateDescription(id, changes);

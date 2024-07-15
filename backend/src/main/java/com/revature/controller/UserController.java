@@ -1,7 +1,7 @@
-package com.group6.revature.controller;
+package com.revature.controller;
 
-import com.group6.revature.model.Users;
-import com.group6.revature.service.userService;
+import com.revature.model.User;
+import com.revature.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,19 +10,19 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/users")
 @CrossOrigin
-public class UsersController {
+public class UserController {
 
-    userService us;
+    IUserService us;
 
     @Autowired
-    public UsersController(userService us) { this.us = us; }
+    public UserController(IUserService us) { this.us = us; }
 
     @GetMapping("/{id}")
-    public Users getUser(@PathVariable int id) { return us.getUser(id); }
+    public User getUser(@PathVariable int id) { return us.getUser(id); }
 
     @DeleteMapping("admin/{id}")
-    public ResponseEntity<Users> deleteUserAsAdmin(@PathVariable("id") int idToDelete, @RequestBody Users admin) {
-        Users adminDeleter = us.deleteUserAsAdmin(admin, idToDelete);
+    public ResponseEntity<User> deleteUserAsAdmin(@PathVariable("id") int idToDelete, @RequestBody User admin) {
+        User adminDeleter = us.deleteUserAsAdmin(admin, idToDelete);
 
         if (adminDeleter != null) {
             return ResponseEntity.ok(adminDeleter);
@@ -34,7 +34,7 @@ public class UsersController {
 
 //    @PostMapping(consumes = "application/json", produces = "application/json")
     @PostMapping
-    public ResponseEntity<Users> addUser(@RequestBody Users u) {
+    public ResponseEntity<User> addUser(@RequestBody User u) {
         try {
             u = us.addUser(u);
             return new ResponseEntity<>(u, HttpStatus.OK);
@@ -47,7 +47,7 @@ public class UsersController {
 
 
     @PutMapping
-    public ResponseEntity<String> updateUser(@RequestBody Users change) {
+    public ResponseEntity<String> updateUser(@RequestBody User change) {
         try {
             us.updateUser(change);
             return ResponseEntity.ok("Password updated");
@@ -60,8 +60,8 @@ public class UsersController {
 
     // to add JWT
     @PostMapping("/login")
-    public ResponseEntity<Users> loginValidate(@RequestBody Users user) {
-        Users validatedUser = us.loginValidate(user);
+    public ResponseEntity<User> loginValidate(@RequestBody User user) {
+        User validatedUser = us.loginValidate(user);
 
         if (validatedUser != null) {
             return ResponseEntity.ok(validatedUser);
@@ -72,8 +72,8 @@ public class UsersController {
     }
 
     @DeleteMapping
-    public ResponseEntity<Users> deleteUser(@RequestBody Users user) {
-        Users deletedUser = us.deleteUser(user);
+    public ResponseEntity<User> deleteUser(@RequestBody User user) {
+        User deletedUser = us.deleteUser(user);
 
         if (deletedUser != null) {
             return ResponseEntity.ok(deletedUser);

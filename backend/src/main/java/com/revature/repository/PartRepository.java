@@ -1,6 +1,6 @@
-package com.group6.revature.repository;
+package com.revature.repository;
 
-import com.group6.revature.model.Parts;
+import com.revature.model.Part;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.Modifying;
@@ -12,9 +12,9 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Repository
-public interface partsRepo  extends JpaRepository<Parts, Integer>{
+public interface PartRepository extends JpaRepository<Part, Integer>{
     @Query("select p from Parts p where p.part_name = :part_name")
-    List<Parts> findByPartName(@Param("part_name") String part_name);
+    List<Part> findByPartName(@Param("part_name") String part_name);
 
     @Query("select p.inventory from Parts p where p.part_id = :id")
     int findInventory(int id);

@@ -1,7 +1,7 @@
-package com.group6.revature.controller;
+package com.revature.controller;
 
-import com.group6.revature.model.Vehicle;
-import com.group6.revature.service.VehicleService;
+import com.revature.model.Vehicle;
+import com.revature.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

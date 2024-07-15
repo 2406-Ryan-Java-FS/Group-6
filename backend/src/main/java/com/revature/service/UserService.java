@@ -1,23 +1,23 @@
-package com.group6.revature.service;
+package com.revature.service;
 
-import com.group6.revature.model.Users;
+import com.revature.model.User;
+import com.revature.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.group6.revature.repository.userRepo;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
 @Service
-public class userServiceImpl implements userService{
+public class UserService implements IUserService {
 
     @Autowired
-    userRepo ur;
+    UserRepository ur;
 
 
     @Override
-    public Users addUser(Users user) {
-        Users existingUser = ur.findByUsername(user.getUsername());
+    public User addUser(User user) {
+        User existingUser = ur.findByUsername(user.getUsername());
         if (existingUser != null) {
             throw new IllegalArgumentException("Username is already taken");
         }
@@ -31,16 +31,16 @@ public class userServiceImpl implements userService{
     }
 
     @Override
-    public Users getUser(int id) {
+    public User getUser(int id) {
         return ur.findById(id).orElse(null);
     }
 
     @Override
-    public Users loginValidate(Users user) {
+    public User loginValidate(User user) {
         String username = user.getUsername();
         String password = user.getPassword();
 
-        Users existingUser = ur.findByUsername(username);
+        User existingUser = ur.findByUsername(username);
 
         if (existingUser != null && existingUser.getPassword().equals(password)) {
             return existingUser;
@@ -50,14 +50,14 @@ public class userServiceImpl implements userService{
 
     // to add authorization step
     @Override
-    public Users deleteUserAsAdmin(Users admin, int idToDelete) {
+    public User deleteUserAsAdmin(User admin, int idToDelete) {
         try{
-            Users getAdmin = ur.findById(admin.getUser_id()).orElse(null);
+            User getAdmin = ur.findById(admin.getUser_id()).orElse(null);
             if (!getAdmin.getRole().equalsIgnoreCase("Admin")) {
                 throw new SecurityException("Only users with role 'Admin' can delete accounts.");
             }
 
-            Users userToDelete = ur.findById(idToDelete).orElse(null);
+            User userToDelete = ur.findById(idToDelete).orElse(null);
             if (userToDelete != null && userToDelete.getUser_id() != 0) {
                 ur.deleteById(idToDelete);
                 return userToDelete;
@@ -69,9 +69,9 @@ public class userServiceImpl implements userService{
     }
 
     @Override
-    public Users updateUser(Users change) {
+    public User updateUser(User change) {
         int userId = change.getUser_id();
-        Users existingUser = ur.findById(userId).orElse(null);
+        User existingUser = ur.findById(userId).orElse(null);
 
         if (existingUser == null) {
             throw new IllegalArgumentException("User not found");
@@ -94,9 +94,9 @@ public class userServiceImpl implements userService{
     }
 
     @Override
-    public Users deleteUser(Users user) {
+    public User deleteUser(User user) {
         try {
-            Users userInfo = ur.findById(user.getUser_id()).orElse(null);
+            User userInfo = ur.findById(user.getUser_id()).orElse(null);
 //        int userId = user.getUser_id();
             if (userInfo != null) {
                 ur.deleteById(user.getUser_id());

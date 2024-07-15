@@ -1,10 +1,10 @@
-package com.group6.revature.service;
+package com.revature.service;
 
-import com.group6.revature.model.Order;
+import com.revature.model.Order;
 
 import java.util.List;
 
-public interface OrdersService {
+public interface IOrderService {
 
     Order addOrder(Order order);
 

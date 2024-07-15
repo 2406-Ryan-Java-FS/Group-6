@@ -1,23 +1,23 @@
-package com.group6.revature.service;
+package com.revature.service;
 
-import com.group6.revature.model.Parts;
+import com.revature.model.Part;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-public interface partsService {
+public interface IPartService {
 
-    public List<Parts> getAllParts();
+    public List<Part> getAllParts();
 
-    public Parts getPart(int id);
+    public Part getPart(int id);
 
-    public Parts addPart(Parts p);
+    public Part addPart(Part p);
 
-    public Parts updatePart(Parts changes);
+    public Part updatePart(Part changes);
 
     public boolean deletePart(int id);
 
-    public List<Parts> getPart(String name);
+    public List<Part> getPart(String name);
 
     public void updateInventory(int id, int amount);
 

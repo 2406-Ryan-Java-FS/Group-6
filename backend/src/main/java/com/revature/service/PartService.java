@@ -1,7 +1,7 @@
-package com.group6.revature.service;
+package com.revature.service;
 
-import com.group6.revature.model.Parts;
-import com.group6.revature.repository.partsRepo;
+import com.revature.model.Part;
+import com.revature.repository.PartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,35 +9,35 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Service
-public class partsServiceImpl implements partsService {
+public class PartService implements IPartService {
 
     @Autowired
-    partsRepo prt;
+    PartRepository prt;
 
     @Override
-    public List<Parts> getAllParts(){
+    public List<Part> getAllParts(){
         return prt.findAll();
     }
 
     @Override
-    public Parts getPart(int id){
+    public Part getPart(int id){
         return prt.findById(id).orElse(null);
     }
 
     @Override
-    public Parts addPart(Parts p){
+    public Part addPart(Part p){
         return prt.save(p);
     }
 
     @Override
-    public Parts updatePart(Parts changes){
+    public Part updatePart(Part changes){
         return prt.save(changes);
     }
 
     @Override
     public boolean deletePart(int id){
         try{
-            Parts p = getPart(id);
+            Part p = getPart(id);
             if(p.getPartID() !=0){
                 prt.deleteById(id);
                 return true;
@@ -49,7 +49,7 @@ public class partsServiceImpl implements partsService {
     }
 
     @Override
-    public List<Parts> getPart(String part_name){
+    public List<Part> getPart(String part_name){
         return prt.findByPartName(part_name);
     }
 

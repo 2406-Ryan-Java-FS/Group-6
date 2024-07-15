@@ -1,7 +1,7 @@
-package com.group6.revature.controller;
+package com.revature.controller;
 
-import com.group6.revature.model.Order;
-import com.group6.revature.service.OrdersServiceImplemented;
+import com.revature.model.Order;
+import com.revature.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +13,10 @@ import java.util.List;
 @RequestMapping("/orders")
 public class OrderController {
 
-    OrdersServiceImplemented orderService;
+    OrderService orderService;
 
     @Autowired
-    public OrderController(OrdersServiceImplemented orderService) {
+    public OrderController(OrderService orderService) {
         this.orderService = orderService;
     }
 
