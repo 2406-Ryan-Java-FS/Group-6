@@ -1,33 +1,34 @@
 package com.group6.revature.model;
 
-import java.util.Date;
-import java.util.Objects;
 import jakarta.persistence.*;
+
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Orders")
+@Table(name = "orders")
 public class Orders {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(updatable = false)
-    private int orderID;
+    @Column(name = "order_id", updatable = false)
+    private int orderId;
 
-    @Column(nullable = false)
-    private int customerID;
+    @Column(name = "customer_id", nullable = false)
+    private int customerId;
 
-    @Column(nullable = false)
+    @Column(name = "order_date", nullable = false)
     private Date orderDate;
 
     @Column(nullable = false)
     private String status;
 
     @Column(nullable = false)
-    private double total;
+    private BigDecimal total;
 
-    @Column(nullable = false)
-    private int partID;
+    @Column(name = "part_id", nullable = false)
+    private int partId;
 
     @Column(nullable = false)
     private int quantity;
@@ -35,30 +36,30 @@ public class Orders {
     public Orders() {
     }
 
-    public Orders(int orderID, int customerID, Date orderDate, String status, double total, int partID, int quantity) {
-        this.orderID = orderID;
-        this.customerID = customerID;
+    public Orders(int orderId, int customerId, Date orderDate, String status, BigDecimal total, int partId, int quantity) {
+        this.orderId = orderId;
+        this.customerId = customerId;
         this.orderDate = orderDate;
         this.status = status;
         this.total = total;
-        this.partID = partID;
+        this.partId = partId;
         this.quantity = quantity;
     }
 
-    public int getOrderID() {
-        return orderID;
+    public int getOrderId() {
+        return orderId;
     }
 
-    public void setOrderID(int orderID) {
-        this.orderID = orderID;
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
     }
 
-    public int getCustomerID() {
-        return customerID;
+    public int getCustomerId() {
+        return customerId;
     }
 
-    public void setCustomerID(int customerID) {
-        this.customerID = customerID;
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
     }
 
     public Date getOrderDate() {
@@ -77,20 +78,20 @@ public class Orders {
         this.status = status;
     }
 
-    public double getTotal() {
+    public BigDecimal getTotal() {
         return total;
     }
 
-    public void setTotal(double total) {
+    public void setTotal(BigDecimal total) {
         this.total = total;
     }
 
-    public int getPartID() {
-        return partID;
+    public int getPartId() {
+        return partId;
     }
 
-    public void setPartID(int partID) {
-        this.partID = partID;
+    public void setPartId(int partId) {
+        this.partId = partId;
     }
 
     public int getQuantity() {
@@ -106,23 +107,23 @@ public class Orders {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Orders orders = (Orders) o;
-        return orderID == orders.orderID && customerID == orders.customerID && Double.compare(total, orders.total) == 0 && partID == orders.partID && quantity == orders.quantity && Objects.equals(orderDate, orders.orderDate) && Objects.equals(status, orders.status);
+        return orderId == orders.orderId && customerId == orders.customerId && partId == orders.partId && quantity == orders.quantity && Objects.equals(orderDate, orders.orderDate) && Objects.equals(status, orders.status) && Objects.equals(total, orders.total);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(orderID, customerID, orderDate, status, total, partID, quantity);
+        return Objects.hash(orderId, customerId, orderDate, status, total, partId, quantity);
     }
 
     @Override
     public String toString() {
         return "Orders{" +
-                "order_id=" + orderID +
-                ", customer_id=" + customerID +
-                ", order_date=" + orderDate +
+                "orderId=" + orderId +
+                ", customerId=" + customerId +
+                ", orderDate=" + orderDate +
                 ", status='" + status + '\'' +
                 ", total=" + total +
-                ", part_id=" + partID +
+                ", partId=" + partId +
                 ", quantity=" + quantity +
                 '}';
     }
