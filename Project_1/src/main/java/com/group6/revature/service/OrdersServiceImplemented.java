@@ -1,7 +1,8 @@
 package com.group6.revature.service;
-import com.group6.revature.model.Orders;
-import com.group6.revature.repository.OrdersRepo;
-import com.group6.revature.service.OrdersService;
+
+import com.group6.revature.exception.BadRequestException;
+import com.group6.revature.model.Order;
+import com.group6.revature.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,38 +11,84 @@ import java.util.List;
 @Service
 public class OrdersServiceImplemented implements OrdersService {
 
+    OrderRepository orderRepository;
+
     @Autowired
-    OrdersRepo or;
-
-    @Override
-    public Orders addOrder(Orders o) {
-        or.save(o);
-        return o;
+    public OrdersServiceImplemented(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
     }
 
-    public Orders getOrder(int id) {
-        return or.findById(id).orElse(null);
+    /**
+     * Used to persist an Order to the repository.
+     *
+     * @param order The Order to be added.
+     * @return The persisted Order including it's newly assigned orderId.
+     * @throws BadRequestException if there's an issue with the client's request.
+     */
+    public Order addOrder(Order order) {
+
+        // TODO: Ensure fields conform to data constraints
+
+        return orderRepository.save(order);
     }
 
-    public Orders updateOrder(Orders up) {
-        return or.save(up);
-    }
+    /**
+     * Used to retrieve an Order from the repository given it's orderId.
+     *
+     * @param orderId The orderId of an Order.
+     * @return The associated Order, null if orderId not found.
+     */
+    public Order getOrder(Integer orderId) {
 
-    public Orders deleteOrder(int id) {
-        try{
-            Orders o = getOrder(id);
-            if(o != null) {
-                or.deleteById(id);
-                return(o);
-            }
-        }catch (IllegalArgumentException e) {
-            e.printStackTrace();
+        if (!orderRepository.existsById(orderId)) {
+            return null;
         }
-        return null;
+        return orderRepository.findByOrderId(orderId);
     }
 
-    public List<Orders> viewOrders() {
-        return or.findAll();
+    /**
+     * Used to update an Order in the repository given it's orderId.
+     *
+     * @param orderId The orderId of a registered Order.
+     * @param order   Order containing updated information.
+     * @return The updated Order from the repository.
+     * @throws BadRequestException if there's an issue with the client's request.
+     */
+    public Order updateOrder(Integer orderId, Order order) {
+
+        // TODO: Ensure fields conform to data constraints
+
+        Order updatedOrder = this.getOrder(order.getOrderId());
+        updatedOrder.setCustomerId(order.getCustomerId());
+        updatedOrder.setOrderDate(order.getOrderDate());
+        updatedOrder.setStatus(order.getStatus());
+        updatedOrder.setTotal(order.getTotal());
+        updatedOrder.setPartId(order.getPartId());
+        updatedOrder.setQuantity(order.getQuantity());
+        return orderRepository.save(updatedOrder);
     }
 
+    /**
+     * Used to delete an Order given it's orderId.
+     *
+     * @param orderId The orderId of Order to be deleted.
+     * @return The number of rows affected.
+     */
+    public Integer deleteOrder(Integer orderId) {
+        if (orderId != null && orderRepository.existsById(orderId)) {
+            orderRepository.deleteById(orderId);
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    /**
+     * Used to retrieve all Orders from the repository.
+     *
+     * @return A list of all Orders.
+     */
+    public List<Order> viewOrders() {
+        return orderRepository.findAll();
+    }
 }

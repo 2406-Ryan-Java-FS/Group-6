@@ -8,15 +8,15 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "orders")
-public class Orders {
+public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id", updatable = false)
-    private int orderId;
+    private Integer orderId;
 
     @Column(name = "customer_id", nullable = false)
-    private int customerId;
+    private Integer customerId;
 
     @Column(name = "order_date", nullable = false)
     private Date orderDate;
@@ -28,15 +28,15 @@ public class Orders {
     private BigDecimal total;
 
     @Column(name = "part_id", nullable = false)
-    private int partId;
+    private Integer partId;
 
     @Column(nullable = false)
-    private int quantity;
+    private Integer quantity;
 
-    public Orders() {
+    public Order() {
     }
 
-    public Orders(int orderId, int customerId, Date orderDate, String status, BigDecimal total, int partId, int quantity) {
+    public Order(Integer orderId, Integer customerId, Date orderDate, String status, BigDecimal total, Integer partId, Integer quantity) {
         this.orderId = orderId;
         this.customerId = customerId;
         this.orderDate = orderDate;
@@ -46,19 +46,19 @@ public class Orders {
         this.quantity = quantity;
     }
 
-    public int getOrderId() {
+    public Integer getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(int orderId) {
+    public void setOrderId(Integer orderId) {
         this.orderId = orderId;
     }
 
-    public int getCustomerId() {
+    public Integer getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(int customerId) {
+    public void setCustomerId(Integer customerId) {
         this.customerId = customerId;
     }
 
@@ -86,19 +86,19 @@ public class Orders {
         this.total = total;
     }
 
-    public int getPartId() {
+    public Integer getPartId() {
         return partId;
     }
 
-    public void setPartId(int partId) {
+    public void setPartId(Integer partId) {
         this.partId = partId;
     }
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 
@@ -106,8 +106,8 @@ public class Orders {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Orders orders = (Orders) o;
-        return orderId == orders.orderId && customerId == orders.customerId && partId == orders.partId && quantity == orders.quantity && Objects.equals(orderDate, orders.orderDate) && Objects.equals(status, orders.status) && Objects.equals(total, orders.total);
+        Order order = (Order) o;
+        return Objects.equals(orderId, order.orderId) && Objects.equals(customerId, order.customerId) && Objects.equals(orderDate, order.orderDate) && Objects.equals(status, order.status) && Objects.equals(total, order.total) && Objects.equals(partId, order.partId) && Objects.equals(quantity, order.quantity);
     }
 
     @Override
@@ -117,7 +117,7 @@ public class Orders {
 
     @Override
     public String toString() {
-        return "Orders{" +
+        return "Order{" +
                 "orderId=" + orderId +
                 ", customerId=" + customerId +
                 ", orderDate=" + orderDate +
