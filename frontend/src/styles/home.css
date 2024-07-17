@@ -25,6 +25,12 @@ p, h1, h2, a{
     font-size: smaller;
     text-align: left;
   }
+
+  .accountHome button{
+    border-radius: 3px;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    margin: 1%;
+  }
   
   .partsHome{
     border: 1px dashed black;
@@ -41,6 +47,46 @@ p, h1, h2, a{
     font-size: smaller;
     text-align: left;
   }
+
+  .partsCatagories {
+    display: flex;
+    flex-direction: column; /* Arrange groups vertically */
+    align-items: center;    /* Center groups horizontally */
+    width: 100%;            /* Full width of the container */
+}
+
+.group1, .group2 {
+    display: flex;
+    justify-content: center; /* Center items horizontally */
+    margin: 0%;          /* Vertical margin between groups */
+}
+
+.partsOil, .partsMechanical, .partsLights, .partsRandom {
+    background-color: #ffffff;  /* Example background color */
+    border: 1px solid #ddd;     /* Example border */
+    border-radius: 8px;         /* Example border radius */
+    padding: 80%;              /* Example padding */
+    margin: 25px;               /* Margin between items */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Example box shadow */
+    text-align: center;         /* Center text */
+    background-size: contain;    /* Scale the image to fit the container */
+}
+
+.partsOil{
+    background-image: url('../images/oil2.png');
+}
+
+.partsMechanical{
+    background-image: url('../images/mechanicalIcon.png');
+}
+
+.partsLights{
+    background-image: url('../images/light.jpg');
+}
+
+.partsRandom{
+    background-image: url('../images/fender.png');
+}
   
   .ordersHome{
     border: 1px dashed black;
@@ -51,6 +97,12 @@ p, h1, h2, a{
     display: flex;
     flex-direction: column;
     text-align: center; /* Center text */
+  }
+
+  .ordersHome button{
+    border-radius: 3px;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    margin: 1%;
   }
   
   .ordersHome h2{

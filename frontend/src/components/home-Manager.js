@@ -21,27 +21,42 @@ export default function Home(){
         <div className="accountHome">
             <h2>Account</h2>
             <div className="accountHome-content">
-                <Link className="accountHome-content-login" to="/" >Login</Link><br />
-                <Link className="accountHome-content-login" to="/" >Make New Account</Link>
+                <button onClick={<Link className="accountHome-content-login" to="/" >Login</Link>}>Log In</button><br />
+                <button onClick={<Link className="accountHome-content-createAccount" to="/" >Make New Account</Link>}>Create Account</button>
+                {/* <Link className="accountHome-content-login" to="/" >Login</Link><br />
+                <Link className="accountHome-content-login" to="/" >Make New Account</Link> */}
             </div>
         </div>
         <div className="partsHome">
             <h2>Parts</h2>
             <div className="partsHome-content">
-                <div>
-                    <p>Input few parts to view</p>
-                    <form className="d-flex" role="search">
-                        <input className="form-control me-2" type="search" placeholder="Search for Part" aria-label="Search" />
-                        <button className="btn btn-outline-success" type="submit">Search</button>
-                    </form>
+                <div className="partsCatagories">
+                    <div className="group1">
+                        <div className="partsOil">
+                            
+                        </div>  
+                        <div className="partsMechanical">
+                            
+                        </div> 
+                    </div>
+                    <div className="group2">
+                        <div className="partsLights">
+                            
+                        </div> 
+                        <div className="partsRandom">
+                            
+                        </div>  
+                    </div>                                  
                 </div>
             </div>
         </div>
         <div className="ordersHome">
             <h2>Orders</h2>
             <div className="orderHome-content">
-            <Link className="accountHome-content-login" to="/" >Place Order</Link><br />
-            <Link className="accountHome-content-login" to="/" >View Orders</Link>
+            <button onClick={<Link className="orderHome-content-placeOrder" to="/" >place new order</Link>}>Place Order</button><br />
+            <button onClick={<Link className="orderHome-content-viewOrder" to="/" >View orders</Link>}>View Orders</button>
+            {/* <Link className="accountHome-content-login" to="/" >Place Order</Link><br />
+            <Link className="accountHome-content-login" to="/" >View Orders</Link> */}
             </div>
         </div>
     </>)
