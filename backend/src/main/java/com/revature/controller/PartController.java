@@ -1,5 +1,6 @@
 package com.revature.controller;
 
+import com.revature.exception.BadRequestException;
 import com.revature.model.Part;
 import com.revature.service.PartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +30,13 @@ public class PartController {
      * @return The persisted Part including it's newly assigned partId.
      */
     @PostMapping
-    public ResponseEntity<Part> addPart(@RequestBody Part part) {
-        Part addedPart = partService.addPart(part);
-        return new ResponseEntity<>(addedPart, HttpStatus.CREATED);
+    public ResponseEntity<Object> addPart(@RequestBody Part part) {
+        try {
+            Part addedPart = partService.addPart(part);
+            return new ResponseEntity<>(addedPart, HttpStatus.CREATED);
+        } catch (BadRequestException bre) {
+            return new ResponseEntity<>(bre.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     // All GET Mapping

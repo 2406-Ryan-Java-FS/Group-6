@@ -10,8 +10,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories("com.group6.revature.repository")
 public class Project1Application {
 
-	public static void main(String[] args) {
-		SpringApplication.run(Project1Application.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(Project1Application.class, args);
+    }
 
 }

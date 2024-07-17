@@ -1,5 +1,6 @@
 package com.revature.controller;
 
+import com.revature.exception.BadRequestException;
 import com.revature.model.Vehicle;
 import com.revature.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +28,13 @@ public class VehicleController {
      * @return The persisted Vehicle Object including it's newly assigned makeModel_id.
      */
     @PostMapping
-    public ResponseEntity<Vehicle> addVehicle(@RequestBody Vehicle vehicleToRegister) {
-        Vehicle registeredVehicle = vehicleService.addVehicle(vehicleToRegister);
-        return new ResponseEntity<>(registeredVehicle, HttpStatus.OK);
+    public ResponseEntity<Object> addVehicle(@RequestBody Vehicle vehicleToRegister) {
+        try {
+            Vehicle registeredVehicle = vehicleService.addVehicle(vehicleToRegister);
+            return new ResponseEntity<>(registeredVehicle, HttpStatus.CREATED);
+        } catch (BadRequestException bre) {
+            return new ResponseEntity<>(bre.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     /**

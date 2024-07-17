@@ -8,7 +8,8 @@ import java.util.List;
 
 @Repository
 public interface VehicleRepository extends JpaRepository<Vehicle, Integer> {
-    List<Vehicle> findAllByCustomerId(Integer customerId);
 
     Vehicle findByMakeModelId(Integer makeModelId);
+
+    List<Vehicle> findAllByCustomerId(Integer customerId);
 }

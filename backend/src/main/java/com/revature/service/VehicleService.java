@@ -1,9 +1,10 @@
 package com.revature.service;
 
 import com.revature.exception.BadRequestException;
+import com.revature.exception.NotFoundException;
 import com.revature.model.Vehicle;
-import com.revature.repository.VehicleRepository;
 import com.revature.repository.UserRepository;
+import com.revature.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,7 @@ public class VehicleService {
      * Used to persist a Vehicle to the repository.
      *
      * @param vehicle The Vehicle to be added.
-     * @return The persisted Vehicle including it's newly assigned game_id.
+     * @return The persisted Vehicle including it's newly assigned gameId.
      * @throws BadRequestException if there's an issue with the client's request.
      */
     public Vehicle addVehicle(Vehicle vehicle) {
@@ -40,12 +41,13 @@ public class VehicleService {
      * Used to retrieve a Vehicle from the repository given it's makeModelId.
      *
      * @param makeModelId The makeModelId of a Vehicle.
-     * @return The associated Vehicle object, null if makeModelId not found.
+     * @return The associated Vehicle object.
+     * @throws NotFoundException if the makeModelId doesn't match an existing Vehicle.
      */
     private Vehicle getVehicle(Integer makeModelId) {
 
         if (!vehicleRepository.existsById(makeModelId)) {
-            return null;
+            throw new NotFoundException("Vehicle not found.");
         }
         return vehicleRepository.findByMakeModelId(makeModelId);
     }

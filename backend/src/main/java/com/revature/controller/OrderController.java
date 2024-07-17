@@ -1,5 +1,6 @@
 package com.revature.controller;
 
+import com.revature.exception.BadRequestException;
 import com.revature.model.Order;
 import com.revature.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +28,13 @@ public class OrderController {
      * @return The persisted Order including it's newly assigned orderId.
      */
     @PostMapping
-    public ResponseEntity<Order> addOrder(@RequestBody Order order) {
-        Order addedOrder = orderService.addOrder(order);
-        return new ResponseEntity<>(addedOrder, HttpStatus.OK);
+    public ResponseEntity<Object> addOrder(@RequestBody Order order) {
+        try {
+            Order addedOrder = orderService.addOrder(order);
+            return new ResponseEntity<>(addedOrder, HttpStatus.CREATED);
+        } catch (BadRequestException bre) {
+            return new ResponseEntity<>(bre.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     /**
