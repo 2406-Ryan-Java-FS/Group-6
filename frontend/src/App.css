@@ -24,6 +24,11 @@ nav {
   border: 1px dashed black;
   border-radius: 3px;
   margin-bottom: 1%;
+  margin-left: 25%;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  text-align: center; /* Center text */
 }
 
 .accountHome h2{
@@ -35,6 +40,11 @@ nav {
   border: 1px dashed black;
   border-radius: 3px;
   margin-bottom: 1%;
+  margin-left: 25%;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  text-align: center; /* Center text */
 }
 
 .partsHome h2{
@@ -46,6 +56,11 @@ nav {
   border: 1px dashed black;
   border-radius: 3px;
   margin-bottom: 1%;
+  margin-left: 25%;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  text-align: center; /* Center text */
 }
 
 .ordersHome h2{
