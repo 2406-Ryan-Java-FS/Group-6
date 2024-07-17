@@ -2,34 +2,35 @@ package com.revature.service;
 
 import com.revature.model.Part;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public interface IPartService {
 
-    public List<Part> getAllParts();
+    Part addPart(Part part);
 
-    public Part getPart(int id);
+    Part getPart(int partId);
 
-    public Part addPart(Part p);
+    Part updatePart(Integer partId, Part part);
 
-    public Part updatePart(Part changes);
+    int deletePart(Integer partId);
 
-    public boolean deletePart(int id);
+    List<Part> getAllParts();
 
-    public List<Part> getPart(String name);
+    List<Part> getPartsByName(String partName);
 
-    public void updateInventory(int id, int amount);
+    // We shouldn't need any of these as we can use getPart() and updatePart()
 
-    public int getInventory(int id);
-
-    public BigDecimal getPrice(int id);
-
-    public void updatePrice(int id, BigDecimal amount);
-
-    public int getMakeModel(int id);
-
-    public void updateDescription(int id, String changes);
-
-    public String getDescription(int id);
+//    public void updateInventory(int partId, int amount);
+//
+//    public int getInventory(int partId);
+//
+//    public BigDecimal getPrice(int partId);
+//
+//    public void updatePrice(int partId, BigDecimal amount);
+//
+//    public int getMakeModel(int partId);
+//
+//    public void updateDescription(int partId, String changes);
+//
+//    public String getDescription(int partId);
 }
