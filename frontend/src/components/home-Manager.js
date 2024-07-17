@@ -1,9 +1,22 @@
 import { Link } from "react-router-dom";
+import '../styles/home.css'
+import '../styles/nav.css'
 export default function Home(){
 
     return(<>
         <div className="headHome">
             <h1>Auto Parts Store</h1>    
+        </div>
+        <div className="introHome">
+            <p>Welcome to AutoParts Store, your ultimate destination for high-quality auto parts 
+                and accessories. Whether you're a professional mechanic or a DIY enthusiast, we offer 
+                an extensive selection of parts for all makes and models. Our commitment to exceptional 
+                service and unbeatable prices ensures you find exactly what you need to keep your 
+                vehicle running smoothly.
+            </p>
+            <p>
+                Your Car, Our Parts, Perfect Fit.
+            </p>
         </div>
         <div className="accountHome">
             <h2>Account</h2>
