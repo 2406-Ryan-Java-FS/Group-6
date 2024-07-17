@@ -12,3 +12,43 @@ nav {
   cursor: pointer;
 
 }
+
+.headHome h1{
+  text-align: center;
+  background-color: lightgray;
+  padding: 10px;
+  border-radius: 3px;
+}
+
+.accountHome{
+  border: 1px dashed black;
+  border-radius: 3px;
+  margin-bottom: 1%;
+}
+
+.accountHome h2{
+  font-size: smaller;
+  text-align: left;
+}
+
+.partsHome{
+  border: 1px dashed black;
+  border-radius: 3px;
+  margin-bottom: 1%;
+}
+
+.partsHome h2{
+  font-size: smaller;
+  text-align: left;
+}
+
+.ordersHome{
+  border: 1px dashed black;
+  border-radius: 3px;
+  margin-bottom: 1%;
+}
+
+.ordersHome h2{
+  font-size: smaller;
+  text-align: left;
+}
