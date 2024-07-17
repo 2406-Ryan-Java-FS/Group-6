@@ -4,11 +4,16 @@ import com.revature.model.User;
 
 public interface IUserService {
 
-    public User addUser(User user);
-    public User getUser(int id);
-    public User loginValidate(User user);
-    public User deleteUserAsAdmin(User admin, int idToDelete);
-    public User deleteUser(User user);
-    public User updateUser(User change);
+    User addUser(User user);
+
+    User getUser(int userId);
+
+    User updateUser(int userId, User user);
+
+    void deleteUser(User user);
+
+    void deleteUser(int userId, User admin);
+
+    User verifyUser(User user);
 
 }

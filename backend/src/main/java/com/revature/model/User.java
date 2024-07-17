@@ -11,8 +11,8 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(updatable = false)
-    private int user_id;
+    @Column(name = "user_id", updatable = false)
+    private int userId;
 
     @Column(nullable = false, unique = true)
     private String username;
@@ -26,28 +26,27 @@ public class User {
     @Column(nullable = false)
     private String role;
 
-    @Column(columnDefinition = "TIMESTAMP", updatable = false)
-    private LocalDateTime created_at;
-
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP", updatable = false)
+    private LocalDateTime createdAt;
 
     public User() {
     }
 
-    public User(int user_id, String username, String password, String email, String role, LocalDateTime created_at) {
-        this.user_id = user_id;
+    public User(int userId, String username, String password, String email, String role, LocalDateTime createdAt) {
+        this.userId = userId;
         this.username = username;
         this.password = password;
         this.email = email;
         this.role = role;
-        this.created_at = created_at;
+        this.createdAt = createdAt;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {
@@ -82,36 +81,36 @@ public class User {
         this.role = role;
     }
 
-    public LocalDateTime getCreated_at() {
-        return created_at;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated_at(LocalDateTime created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User users = (User) o;
-        return user_id == users.user_id && Objects.equals(username, users.username) && Objects.equals(password, users.password) && Objects.equals(email, users.email) && Objects.equals(role, users.role) && Objects.equals(created_at, users.created_at);
+        User user = (User) o;
+        return userId == user.userId && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(email, user.email) && Objects.equals(role, user.role) && Objects.equals(createdAt, user.createdAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(user_id, username, password, email, role, created_at);
+        return Objects.hash(userId, username, password, email, role, createdAt);
     }
 
     @Override
     public String toString() {
-        return "Users{" +
-                "user_id=" + user_id +
+        return "User{" +
+                "userId=" + userId +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", role='" + role + '\'' +
-                ", created_at=" + created_at +
+                ", createdAt=" + createdAt +
                 '}';
     }
 }
