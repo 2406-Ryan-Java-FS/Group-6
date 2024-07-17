@@ -1,38 +1,54 @@
-.App {
+nav {
+  display: inline;
+  margin: 5px;
+  background-color: rgb(230, 230, 230);
+  padding: 5px;
+  border: 1px solid black;
+  text-decoration: none;
+  font-weight: bold;
+  color: rgb(26, 26, 26);
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px rgb(0, 0, 100);
+  cursor: pointer;
+
+}
+
+.headHome h1{
   text-align: center;
+  background-color: lightgray;
+  padding: 10px;
+  border-radius: 3px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.accountHome{
+  border: 1px dashed black;
+  border-radius: 3px;
+  margin-bottom: 1%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.accountHome h2{
+  font-size: smaller;
+  text-align: left;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.partsHome{
+  border: 1px dashed black;
+  border-radius: 3px;
+  margin-bottom: 1%;
 }
 
-.App-link {
-  color: #61dafb;
+.partsHome h2{
+  font-size: smaller;
+  text-align: left;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.ordersHome{
+  border: 1px dashed black;
+  border-radius: 3px;
+  margin-bottom: 1%;
+}
+
+.ordersHome h2{
+  font-size: smaller;
+  text-align: left;
 }
