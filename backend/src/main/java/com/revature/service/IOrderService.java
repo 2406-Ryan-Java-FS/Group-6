@@ -12,7 +12,7 @@ public interface IOrderService {
 
     Order updateOrder(Integer orderId, Order order);
 
-    Integer deleteOrder(Integer orderId);
+    boolean deleteOrder(Integer orderId);
 
     List<Order> viewOrders();
 

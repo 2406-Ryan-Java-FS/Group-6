@@ -90,7 +90,7 @@ public class VehicleController {
      * Endpoint for retrieving all Vehicles registered to a specified User.
      *
      * @param customerId The userId of a registered User.
-     * @return If successful, returns a list of all Vehicles registered to the specified User.
+     * @return If successful, returns a list of all Vehicles registered to the specified User, along with a 200 status code.
      * If unsuccessful, returns a String message indicating the failure reason, along with a 400 status code.
      */
     @GetMapping("/{customerId}")

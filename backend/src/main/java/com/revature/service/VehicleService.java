@@ -28,6 +28,7 @@ public class VehicleService {
      * @param vehicle The Vehicle to be added.
      * @return The persisted Vehicle including it's newly assigned makeModelId.
      * @throws BadRequestException if there's an issue with the client's request.
+     * @throws NotFoundException   if the Customer does not exist.
      */
     public Vehicle addVehicle(Vehicle vehicle) {
 
@@ -56,6 +57,7 @@ public class VehicleService {
         if (makeModelId == null || !vehicleRepository.existsById(makeModelId)) {
             throw new BadRequestException("Vehicle Id is invalid.");
         }
+
         return vehicleRepository.findByMakeModelId(makeModelId);
     }
 
@@ -130,6 +132,7 @@ public class VehicleService {
         if (customerId == null || !userRepository.existsById(customerId)) {
             throw new BadRequestException("Customer Id is invalid.");
         }
+
         return vehicleRepository.findAllByCustomerId(customerId);
     }
 }

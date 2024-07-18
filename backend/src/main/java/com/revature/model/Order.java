@@ -3,7 +3,7 @@ package com.revature.model;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -19,7 +19,7 @@ public class Order {
     private Integer customerId;
 
     @Column(name = "order_date", nullable = false)
-    private Date orderDate;
+    private LocalDateTime orderDate;
 
     @Column(nullable = false)
     private String status;
@@ -36,7 +36,7 @@ public class Order {
     public Order() {
     }
 
-    public Order(Integer orderId, Integer customerId, Date orderDate, String status, BigDecimal total, Integer partId, Integer quantity) {
+    public Order(Integer orderId, Integer customerId, LocalDateTime orderDate, String status, BigDecimal total, Integer partId, Integer quantity) {
         this.orderId = orderId;
         this.customerId = customerId;
         this.orderDate = orderDate;
@@ -62,11 +62,11 @@ public class Order {
         this.customerId = customerId;
     }
 
-    public Date getOrderDate() {
+    public LocalDateTime getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(Date orderDate) {
+    public void setOrderDate(LocalDateTime orderDate) {
         this.orderDate = orderDate;
     }
 
