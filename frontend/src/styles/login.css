@@ -2,7 +2,7 @@ p, h1, h2, a {
     font-family:Georgia, 'Times New Roman', Times, serif;
 }
 
-.headLogin h1 {
+.headLogin {
     text-align: center;
     background-color: lightgray;
     padding: 10px;

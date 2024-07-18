@@ -5,6 +5,7 @@ import NavBar from './components/nav-bar';
 import Home from './components/home-Manager';
 import PartsManager from './components/parts-manager';
 import UserSettings from './components/user-settings';
+import LoginPage from './components/login-page';
 
 
 function App() {
@@ -16,7 +17,7 @@ function App() {
       <Route path='' element={<Home/>} />
       <Route path='parts' element={<PartsManager/>} />
       <Route path='/settings' element={<UserSettings/>} />
-
+      <Route path='/login' element={<LoginPage/>} />
     </Routes>
   </>)
   
