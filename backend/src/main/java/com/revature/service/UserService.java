@@ -2,7 +2,6 @@ package com.revature.service;
 
 import com.revature.exception.BadRequestException;
 import com.revature.exception.ConflictException;
-import com.revature.exception.NotFoundException;
 import com.revature.exception.UnauthorizedException;
 import com.revature.model.User;
 import com.revature.repository.UserRepository;
@@ -22,24 +21,27 @@ public class UserService implements IUserService {
     }
 
     /**
-     * Used to persist a User to the repository.
+     * Persists a User to the repository.
      *
      * @param user The User to be added.
-     * @return The persisted User including it's newly assigned userId.
+     * @return The persisted User including its newly assigned userId and createdAt.
      * @throws ConflictException   if there's already a User with the given username or password.
      * @throws BadRequestException if there's an issue with the client's request.
      */
     public User addUser(User user) {
 
-        // TODO: Ensure fields conform to data constraints
+        if (user.getUsername() == null || user.getUsername().isEmpty()
+                || user.getPassword() == null || user.getPassword().isEmpty()
+                || user.getEmail() == null || user.getEmail().isEmpty()
+                || user.getRole() == null || user.getRole().isEmpty()) {
+            throw new BadRequestException("Username, password, email, and role are required.");
+        }
 
-        User existingUser = userRepository.findByUsername(user.getUsername());
-        if (existingUser != null) {
+        if (userRepository.existsByUsername(user.getUsername())) {
             throw new ConflictException("Username is already taken");
         }
 
-        existingUser = userRepository.findByEmail(user.getEmail());
-        if (existingUser != null) {
+        if (userRepository.existsByEmail(user.getEmail())) {
             throw new ConflictException("Email is already registered");
         }
 
@@ -48,86 +50,99 @@ public class UserService implements IUserService {
     }
 
     /**
-     * Used to retrieve a User from the repository given it's userId.
+     * Retrieves a User from the repository given its userId.
      *
      * @param userId The userId of a User.
-     * @return The associated User, null if userId not found.
-     * @throws NotFoundException if the userId doesn't match an existing User.
+     * @return The associated User object.
+     * @throws BadRequestException if the userId is invalid.
      */
-    public User getUser(int userId) {
+    public User getUser(Integer userId) {
 
-        if (!userRepository.existsById(userId)) {
-            throw new NotFoundException("User not found.");
+        if (userId == null || !userRepository.existsById(userId)) {
+            throw new BadRequestException("User Id is invalid.");
         }
         return userRepository.findByUserId(userId);
     }
 
     /**
-     * Used to update a User in the repository given it's userId.
+     * Updates a User in the repository given its userId.
      *
-     * @param userId The userId of a registered Vehicle.
-     * @param user   User containing updated information.
-     * @return The updated User from the repository.
-     * @throws BadRequestException if there's an issue with the client's request.
+     * @param userId The userId of the User to be updated.
+     * @param user   User object containing updated information.
+     * @return The updated User object.
+     * @throws BadRequestException   if there's an issue with the client's request.
+     * @throws UnauthorizedException if trying to change roles without sufficient privileges.
+     * @throws ConflictException     if the updated username or email are already taken.
      */
-    public User updateUser(int userId, User user) {
+    public User updateUser(Integer userId, User user) {
 
-        User existingUser = userRepository.findById(userId).orElse(null);
-
-        if (existingUser == null) {
-            throw new BadRequestException("User not found");
+        if (userId == null || !userRepository.existsById(userId)) {
+            throw new BadRequestException("User Id is invalid.");
         }
 
-        if (user.getUsername() != null && !user.getUsername().equals(existingUser.getUsername())) {
-            existingUser.setUsername(user.getUsername());
+        User updatedUser = userRepository.findByUserId(userId);
+
+        if (user.getUsername() != null && !updatedUser.getUsername().equals(user.getUsername())) {
+            if (userRepository.existsByUsername(user.getUsername())) {
+                throw new ConflictException("Username is already taken");
+            }
+            updatedUser.setUsername(user.getUsername());
         }
 
-        if (user.getPassword() != null && !user.getPassword().equals(existingUser.getPassword())) {
-            existingUser.setPassword(user.getPassword());
+        if (user.getPassword() != null && !updatedUser.getPassword().equals(user.getPassword())) {
+            updatedUser.setPassword(user.getPassword());
         }
 
-        if (existingUser.getRole() != "Admin" && (existingUser.getRole() == "Customer" || user.getRole() == "Seller")) {
-            throw new BadRequestException("You are not allowed to change your role");
+        if (user.getEmail() != null && !updatedUser.getEmail().equals(user.getEmail())) {
+            if (userRepository.existsByEmail(user.getEmail())) {
+                throw new ConflictException("Email is already registered");
+            }
+            updatedUser.setEmail(user.getEmail());
+        }
+
+        if ((updatedUser.getRole().equalsIgnoreCase("Customer")
+                && !user.getRole().equalsIgnoreCase("Customer"))
+                || (updatedUser.getRole().equalsIgnoreCase("Seller")
+                && !user.getRole().equalsIgnoreCase("Seller"))) {
+            throw new UnauthorizedException("You are not allowed to change your role");
         }
 
         return userRepository.save(user);
     }
 
     /**
-     * Used to delete a User given valid login credentials.
+     * Deletes a User given valid login credentials.
      *
-     * @param user containing valid login credentials for the User to be deleted.
+     * @param user User object containing valid login credentials for the User to be deleted.
      */
     public void deleteUser(User user) throws UnauthorizedException, IllegalArgumentException {
 
-        User validUser = this.verifyUser(user);
-
-        if (validUser != null) {
-            userRepository.deleteById(user.getUserId());
-        }
+        this.verifyUser(user);
+        userRepository.deleteById(user.getUserId());
     }
 
     /**
-     * Used to delete a User given valid admin login credentials.
+     * Deletes a User given valid admin login credentials.
      *
      * @param userId The userId of the User to be deleted.
-     * @param admin  containing valid admin login credentials.
+     * @param admin  User object containing valid admin login credentials.
+     * @throws UnauthorizedException if a non-Admin attempts to delete a User.
      */
     public void deleteUser(int userId, User admin) throws IllegalArgumentException {
 
         User validUser = this.verifyUser(admin);
 
         if (!validUser.getRole().equalsIgnoreCase("Admin")) {
-            throw new UnauthorizedException("Only users with role 'Admin' can delete accounts.");
+            throw new UnauthorizedException("Only users with the role 'Admin' can delete accounts.");
         }
 
         userRepository.deleteById(userId);
     }
 
     /**
-     * Used to verify a User login.
+     * Verifies a User login.
      *
-     * @param user User containing the username and password to verify.
+     * @param user User object containing the username and password to verify.
      * @return The verified User.
      * @throws UnauthorizedException if the username and/or password are invalid.
      */
