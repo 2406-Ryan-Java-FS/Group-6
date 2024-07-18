@@ -4,10 +4,13 @@ import com.revature.exception.BadRequestException;
 import com.revature.exception.ConflictException;
 import com.revature.exception.UnauthorizedException;
 import com.revature.model.User;
+import com.revature.repository.UserRepository;
 import com.revature.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,10 +19,12 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     UserService userService;
+    UserRepository userRepository;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, UserRepository userRepository) {
         this.userService = userService;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -57,6 +62,23 @@ public class UserController {
             return new ResponseEntity<>(existingUser, HttpStatus.OK);
         } catch (BadRequestException bre) {
             return new ResponseEntity<>(bre.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * Endpoint for retrieving a User by passing bearer token through header
+     */
+    @GetMapping("/current")
+    public ResponseEntity<User> getCurrentUser(Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        String username = userDetails.getUsername();
+        User user = userRepository.findByUsername(username);
+
+        if (user != null) {
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.notFound().build();
         }
     }
 
