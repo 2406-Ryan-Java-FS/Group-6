@@ -23,6 +23,7 @@ public class PartService implements IPartService {
     VehicleRepository vehicleRepository;
     OrderRepository orderRepository;
 
+    @Autowired
     public PartService(PartRepository partRepository, UserRepository userRepository,
                        VehicleRepository vehicleRepository, OrderRepository orderRepository) {
         this.partRepository = partRepository;
@@ -30,8 +31,6 @@ public class PartService implements IPartService {
         this.vehicleRepository = vehicleRepository;
         this.orderRepository = orderRepository;
     }
-
-    @Autowired
 
     /**
      * Persists a Part to the repository.
