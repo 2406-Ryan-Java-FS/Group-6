@@ -1,5 +1,6 @@
 package com.revature.controller;
 
+import com.revature.dto.UserUpdateDTO;
 import com.revature.exception.BadRequestException;
 import com.revature.exception.ConflictException;
 import com.revature.exception.UnauthorizedException;
@@ -92,10 +93,10 @@ public class UserController {
      * If unsuccessful, returns a String message indicating the failure reason along with a 400, 401, or 409 status code.
      */
     @PutMapping("/{userId}")
-    public ResponseEntity<Object> updateUser(@PathVariable Integer userId, @RequestBody User user) {
+    public ResponseEntity<Object> updateUser(@PathVariable Integer userId, @RequestBody UserUpdateDTO userUpdateDTO) {
 
         try {
-            User updatedUser = userService.updateUser(userId, user);
+            User updatedUser = userService.updateUser(userId, userUpdateDTO);
             return new ResponseEntity<>(updatedUser, HttpStatus.OK);
         } catch (BadRequestException bre) {
             return new ResponseEntity<>(bre.getMessage(), HttpStatus.BAD_REQUEST);
