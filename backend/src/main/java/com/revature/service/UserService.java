@@ -139,6 +139,13 @@ public class UserService implements IUserService {
         userRepository.deleteById(userId);
     }
 
+    public void deleteUser(int userId) throws IllegalArgumentException {
+        User existingUser = userRepository.findByUserId(userId);
+        if (existingUser != null) {
+            userRepository.deleteById(userId);
+        }
+    }
+
     /**
      * Verifies a User login.
      *

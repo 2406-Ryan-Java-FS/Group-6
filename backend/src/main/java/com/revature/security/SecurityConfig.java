@@ -41,6 +41,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests((authz) -> authz
                         .requestMatchers("/users/current").authenticated()
+                        .requestMatchers("/users/admin/**").authenticated()
                         .anyRequest().permitAll()
                 );
 

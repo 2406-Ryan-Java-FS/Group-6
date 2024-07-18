@@ -134,10 +134,18 @@ public class UserController {
      * If unsuccessful, returns a String message indicating the failure reason along with a 400 or 401 status code.
      */
     @DeleteMapping("admin/{userId}")
-    public ResponseEntity<String> deleteUserAsAdmin(@PathVariable int userId, @RequestBody User admin) {
+    public ResponseEntity<String> deleteUserAsAdmin(@PathVariable int userId, Authentication authentication) {
 
         try {
-            userService.deleteUser(userId, admin);
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            String username = userDetails.getUsername();
+            User admin = userRepository.findByUsername(username);
+
+            if (!admin.getRole().equalsIgnoreCase("Admin")) {
+                throw new UnauthorizedException("Only Admins can do this");
+            }
+
+            userService.deleteUser(userId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (IllegalArgumentException iae) {
             return new ResponseEntity<>(iae.getMessage(), HttpStatus.BAD_REQUEST);
@@ -145,5 +153,15 @@ public class UserController {
             return new ResponseEntity<>(ue.getMessage(), HttpStatus.UNAUTHORIZED);
         }
     }
+
+//            try {
+//        userService.deleteUser(userId, admin);
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    } catch (IllegalArgumentException iae) {
+//        return new ResponseEntity<>(iae.getMessage(), HttpStatus.BAD_REQUEST);
+//    } catch (UnauthorizedException ue) {
+//        return new ResponseEntity<>(ue.getMessage(), HttpStatus.UNAUTHORIZED);
+//    }
+//}
 
 }
