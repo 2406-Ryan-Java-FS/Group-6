@@ -1,0 +1,157 @@
+p, h1, h2, a{
+    font-family:Georgia, 'Times New Roman', Times, serif;
+}
+
+
+.headHome h1{
+    text-align: center;
+    background-color: lightgray;
+    padding: 10px;
+    border-radius: 3px;
+  }
+  
+  .accountHome{
+    border: 1px dashed black;
+    border-radius: 3px;
+    margin-bottom: 1%;
+    margin-left: 25%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    text-align: center; /* Center text */
+  }
+  
+  .accountHome h2{
+    font-size: smaller;
+    text-align: left;
+  }
+
+  .accountHome button{
+    border-radius: 3px;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    margin: 1%;
+  }
+  
+  .partsHome{
+    border: 1px dashed black;
+    border-radius: 3px;
+    margin-bottom: 1%;
+    margin-left: 25%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    text-align: center; /* Center text */
+  }
+
+  .partsHome-content {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center;     /* Center vertically */
+    min-height: 100vh;       /* Full viewport height */
+    background-color: #f0f0f0; /* Example background color */
+}
+  
+  .partsHome h2{
+    font-size: smaller;
+    text-align: left;
+  }
+
+  .partsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px; /* Space between buttons */
+}
+
+  .partsCatagories {
+    display: flex;
+    flex-direction: column; /* Arrange groups vertically */
+    align-items: center;    /* Center groups horizontally */
+    width: 100%;            /* Full width of the container */
+}
+
+.group1, .group2 {
+    display: flex;
+    justify-content: center; /* Center items horizontally */
+    margin: 10px 0;           /* Vertical margin between groups */
+}
+
+.partsButton {
+    background-size: cover;    /* Cover the entire button */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Prevent image repetition */
+    width: 150px;               /* Example width */
+    height: 150px;              /* Example height */
+    display: flex;
+    justify-content: center;    /* Center text horizontally */
+    align-items: center;        /* Center text vertically */
+    border-radius: 8px;         /* Example border radius */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Example box shadow */
+    border: none;              /* Remove default border */
+    cursor: pointer;           /* Pointer cursor on hover */
+    filter: grayscale(50%);    /* Apply grayscale to the image */
+    overflow: hidden;          /* Hide overflow for the overlay */
+}
+
+.partsButton::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(189, 189, 189, 0.5); /* Semi-transparent overlay */
+    z-index: 1; /* Place overlay below text */
+}
+
+.partsText {
+    margin-top: 10px; /* Space between button and text */
+    color: black;     /* Text color */
+    font-weight: bold; /* Font weight */
+}
+
+.partsButton:hover {
+    opacity: 0.8; /* Slightly dim the button on hover */
+}
+
+.partsOil{
+    background-image: url('../images/oil2.png');
+}
+
+.partsMechanical{
+    background-image: url('../images/mechanicalIcon.png');
+}
+
+.partsLights{
+    background-image: url('../images/light.jpg');
+}
+
+.partsRandom{
+    background-image: url('../images/fender.png');
+}
+  
+  .ordersHome{
+    border: 1px dashed black;
+    border-radius: 3px;
+    margin-bottom: 1%;
+    margin-left: 25%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    text-align: center; /* Center text */
+  }
+
+  .ordersHome button{
+    border-radius: 3px;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    margin: 1%;
+  }
+  
+  .ordersHome h2{
+    font-size: smaller;
+    text-align: left;
+  }
+
+  .introHome{
+    text-align: center;
+  }
