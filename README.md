@@ -70,7 +70,8 @@ CREATE TABLE vehicle_makes_models (
     make_model_id SERIAL PRIMARY KEY,
     make VARCHAR(50) NOT NULL,
     model VARCHAR(50) NOT NULL,
-    year INT NOT NULL
+    year INT NOT NULL,
+    customer_id INT REFERENCES users(user_id) ON DELETE SET NULL
 );
 
 -- Parts Table
@@ -79,8 +80,8 @@ CREATE TABLE parts (
     part_name VARCHAR(100) NOT NULL,
     description TEXT,
     price DECIMAL(10, 2) NOT NULL,
-    seller_id INT REFERENCES users(user_id),
-    make_model_id INT REFERENCES vehicle_makes_models(make_model_id),
+    seller_id INT REFERENCES users(user_id) ON DELETE SET NULL,
+    make_model_id INT REFERENCES vehicle_makes_models(make_model_id) ON DELETE SET NULL,
     inventory INT NOT NULL DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -89,11 +90,11 @@ CREATE TABLE parts (
 -- Orders Table
 CREATE TABLE orders (
     order_id SERIAL PRIMARY KEY,
-    customer_id INT REFERENCES users(user_id),
+    customer_id INT REFERENCES users(user_id) ON DELETE SET NULL,
     order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     status VARCHAR(20) CHECK (status IN ('Pending', 'Shipped', 'Delivered', 'Cancelled')) NOT NULL,
     total DECIMAL(10, 2) NOT NULL,
-    part_id INT REFERENCES parts(part_id),
+    part_id INT REFERENCES parts(part_id) NOT NULL,
     quantity INT NOT NULL
 );
 ```
@@ -106,10 +107,10 @@ INSERT INTO users (username, password_hash, email, role) VALUES
 ('admin', 'hashed_password_3', 'admin@example.com', 'Admin');
 
 -- Insert Vehicle Makes and Models
-INSERT INTO vehicle_makes_models (make, model, year) VALUES
-('Toyota', 'Camry', 2020),
-('Ford', 'Mustang', 2019),
-('Honda', 'Civic', 2021);
+INSERT INTO vehicle_makes_models (make, model, year, customer_id) VALUES
+('Toyota', 'Camry', 2020, 1),
+('Ford', 'Mustang', 2019, 2),
+('Honda', 'Civic', 2021, 3);
 
 -- Insert Parts
 INSERT INTO parts (part_name, description, price, seller_id, make_model_id, inventory) VALUES
