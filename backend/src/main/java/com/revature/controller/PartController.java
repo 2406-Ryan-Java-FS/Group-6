@@ -1,6 +1,8 @@
 package com.revature.controller;
 
 import com.revature.exception.BadRequestException;
+import com.revature.exception.ConflictException;
+import com.revature.exception.UnauthorizedException;
 import com.revature.model.Part;
 import com.revature.service.PartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/parts")
+@CrossOrigin
 public class PartController {
 
     PartService partService;
@@ -36,6 +39,8 @@ public class PartController {
             return new ResponseEntity<>(addedPart, HttpStatus.CREATED);
         } catch (BadRequestException bre) {
             return new ResponseEntity<>(bre.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (ConflictException ce) {
+            return new ResponseEntity<>(ce.getMessage(), HttpStatus.CONFLICT);
         }
     }
 
@@ -112,9 +117,16 @@ public class PartController {
      * @return The updated Part.
      */
     @PutMapping("/{partId}")
-    public ResponseEntity<Part> updatePart(@PathVariable int partId, @RequestBody Part part) {
-        Part updatedPart = partService.updatePart(partId, part);
-        return new ResponseEntity<>(updatedPart, HttpStatus.OK);
+    public ResponseEntity<Object> updatePart(@PathVariable Integer partId, @RequestBody Part part) {
+
+        try {
+            Part updatedPart = partService.updatePart(partId, part);
+            return new ResponseEntity<>(updatedPart, HttpStatus.OK);
+        } catch (BadRequestException bre) {
+            return new ResponseEntity<>(bre.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (ConflictException ce) {
+            return new ResponseEntity<>(ce.getMessage(), HttpStatus.CONFLICT);
+        }
     }
 
     // We shouldn't need any of these as we can use updatePart() to update any field

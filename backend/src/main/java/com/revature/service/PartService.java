@@ -1,12 +1,16 @@
 package com.revature.service;
 
 import com.revature.exception.BadRequestException;
+import com.revature.exception.ConflictException;
+import com.revature.exception.UnauthorizedException;
 import com.revature.model.Part;
 import com.revature.repository.PartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.time.LocalDateTime;
 
 @Service
 public class PartService implements IPartService {
@@ -27,8 +31,16 @@ public class PartService implements IPartService {
      */
     public Part addPart(Part part) {
 
-        // TODO: Ensure fields conform to data constraints
+        if(part.getPartName() == null || part.getDescription() == null
+                || part.getPrice() == null || part.getInventory() == null){
+            throw new BadRequestException("partName, partDescription, partPrice, and partInventory are required.");
+        }
 
+//        if(partRepository.existsByPartName(part.getPartName())){
+//            throw new ConflictException("Part name is already taken");
+//        }
+
+        part.setCreatedAt(LocalDateTime.now());
         return partRepository.save(part);
     }
 
@@ -38,7 +50,11 @@ public class PartService implements IPartService {
      * @param partId The partId of a Part.
      * @return The associated Part object, null if partId not found.
      */
-    public Part getPart(int partId) {
+    public Part getPart(Integer partId) {
+
+        if(partId == null || !partRepository.existsById(partId)){
+            throw new BadRequestException("Part Id is invalid.");
+        }
         return partRepository.findByPartId(partId);
     }
 
@@ -52,17 +68,41 @@ public class PartService implements IPartService {
      */
     public Part updatePart(Integer partId, Part part) {
 
-        // TODO: Ensure fields conform to data constraints
+        if(partId ==null || !partRepository.existsById(partId)){
+            throw new BadRequestException("Part Id is invalid");
+        }
 
-        Part updatedPart = this.getPart(partId);
-        updatedPart.setPartName(part.getPartName());
-        updatedPart.setDescription(part.getDescription());
-        updatedPart.setPrice(part.getPrice());
+        Part updatedPart = partRepository.findByPartId(partId);
+
+//        if(part.getPartName() != null && !updatedPart.getPartName().equals(part.getPartName())){
+//            if(partRepository.existsByPartName(part.getPartName())){
+//                throw new ConflictException("Part name is already taken");
+//            }
+//            updatedPart.setPartName(part.getPartName());
+//        }
+
+        if(part.getDescription() != null){
+            updatedPart.setDescription(part.getDescription());
+        }
+
+        if(part.getPrice() != null){
+            if(part.getPrice().compareTo(BigDecimal.ZERO) <= 0) {
+                throw new ConflictException("Price must be greater than 0");
+            }
+            updatedPart.setPrice(part.getPrice());
+        }
+
+        if(part.getInventory() != null){
+            if(part.getInventory() < 0){
+                throw new ConflictException("Inventory can't be less than 0");
+            }
+            updatedPart.setInventory(part.getInventory());
+        }
+
         updatedPart.setSellerId(part.getSellerId());
+
         updatedPart.setMakeModelId(part.getMakeModelId());
-        updatedPart.setInventory(part.getInventory());
-        updatedPart.setCreatedAt(part.getCreatedAt());
-        updatedPart.setUpdatedAt(part.getUpdatedAt());
+
         return partRepository.save(updatedPart);
     }
 
@@ -91,7 +131,10 @@ public class PartService implements IPartService {
     }
 
     /**
-     * TODO: add Javadoc comment
+     * Takes in the part name and returns all parts with the part name
+     *
+     * @param partName is the name being passed in
+     * @return all parts with the name
      */
     public List<Part> getPartsByName(String partName) {
         return partRepository.findAllByPartName(partName);

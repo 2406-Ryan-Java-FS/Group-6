@@ -8,7 +8,7 @@ public interface IPartService {
 
     Part addPart(Part part);
 
-    Part getPart(int partId);
+    Part getPart(Integer partId);
 
     Part updatePart(Integer partId, Part part);
 
