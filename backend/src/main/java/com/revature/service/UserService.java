@@ -143,6 +143,8 @@ public class UserService implements IUserService {
         User existingUser = userRepository.findByUserId(userId);
         if (existingUser != null) {
             userRepository.deleteById(userId);
+        } else if (existingUser == null) {
+            throw new IllegalArgumentException("User already deleted or does not exist.");
         }
     }
 

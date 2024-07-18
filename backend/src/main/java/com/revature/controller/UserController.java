@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/users")
@@ -108,28 +109,37 @@ public class UserController {
     /**
      * Endpoint for deleting a User using that user's credentials.
      *
-     * @param user The User object containing the valid username and password to delete their account.
+     * @authHeader authentication deletes user tied to the token.
      * @return If successful, returns a 200 status code.
      * If unsuccessful, returns a String message indicating the failure reason along with a 400 or 401 status code.
      */
     @DeleteMapping
-    public ResponseEntity<String> deleteUser(@RequestBody User user) {
+    public ResponseEntity<String> deleteUser(Authentication authentication) {
 
         try {
-            userService.deleteUser(user);
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            String username = userDetails.getUsername();
+
+            User user = userRepository.findByUsername(username);
+            if (user == null) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+            }
+
+            userService.deleteUser(user.getUserId());
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (IllegalArgumentException iae) {
             return new ResponseEntity<>(iae.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (UnauthorizedException ue) {
             return new ResponseEntity<>(ue.getMessage(), HttpStatus.UNAUTHORIZED);
         }
+
     }
 
     /**
      * Endpoint for deleting a User as an Admin.
      *
      * @param userId The userId of User to be deleted.
-     * @param admin  containing valid username & password for an admin account.
+     * @authHeader authentication checks if token has admin role.
      * @return If successful, returns a 200 status code.
      * If unsuccessful, returns a String message indicating the failure reason along with a 400 or 401 status code.
      */
@@ -153,15 +163,5 @@ public class UserController {
             return new ResponseEntity<>(ue.getMessage(), HttpStatus.UNAUTHORIZED);
         }
     }
-
-//            try {
-//        userService.deleteUser(userId, admin);
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    } catch (IllegalArgumentException iae) {
-//        return new ResponseEntity<>(iae.getMessage(), HttpStatus.BAD_REQUEST);
-//    } catch (UnauthorizedException ue) {
-//        return new ResponseEntity<>(ue.getMessage(), HttpStatus.UNAUTHORIZED);
-//    }
-//}
 
 }
