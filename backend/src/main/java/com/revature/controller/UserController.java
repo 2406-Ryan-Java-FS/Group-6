@@ -146,23 +146,4 @@ public class UserController {
         }
     }
 
-    // to add JWT
-
-    /**
-     * Endpoint for verifying a User login.
-     *
-     * @param user The User object containing the username and password combination to be verified.
-     * @return If successful, returns the verified User along with a 200 status code.
-     * If unsuccessful, returns a String message indicating the failure reason along with a 401 status code.
-     */
-    @PostMapping("/login")
-    public ResponseEntity<Object> loginUser(@RequestBody User user) {
-
-        try {
-            User verifiedUser = userService.verifyUser(user);
-            return new ResponseEntity<>(verifiedUser, HttpStatus.OK);
-        } catch (UnauthorizedException ue) {
-            return new ResponseEntity<>(ue.getMessage(), HttpStatus.UNAUTHORIZED);
-        }
-    }
 }
