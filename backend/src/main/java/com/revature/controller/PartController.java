@@ -2,7 +2,7 @@ package com.revature.controller;
 
 import com.revature.exception.BadRequestException;
 import com.revature.exception.ConflictException;
-import com.revature.exception.UnauthorizedException;
+import com.revature.exception.NotFoundException;
 import com.revature.model.Part;
 import com.revature.service.PartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +24,12 @@ public class PartController {
         this.partService = partService;
     }
 
-    // All POST Mapping
-
     /**
      * Endpoint for adding a new Part.
      *
      * @param part The Part to be added.
-     * @return The persisted Part including it's newly assigned partId.
+     * @return If successful, returns the persisted Part with its newly assigned partId, along with a 201 status code.
+     * If unsuccessful, returns a String message indicating the failure reason, along with a 400 or 404 status code.
      */
     @PostMapping
     public ResponseEntity<Object> addPart(@RequestBody Part part) {
@@ -39,33 +38,77 @@ public class PartController {
             return new ResponseEntity<>(addedPart, HttpStatus.CREATED);
         } catch (BadRequestException bre) {
             return new ResponseEntity<>(bre.getMessage(), HttpStatus.BAD_REQUEST);
-        } catch (ConflictException ce) {
-            return new ResponseEntity<>(ce.getMessage(), HttpStatus.CONFLICT);
+        } catch (NotFoundException nfe) {
+            return new ResponseEntity<>(nfe.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 
-    // All GET Mapping
-
     /**
-     * Endpoint for retrieving a Part given it's partId.
+     * Endpoint for retrieving a Part given its partId.
      *
-     * @param partId The partId of a Part.
-     * @return The associated Part, empty body if not found.
+     * @param partId The partId of the Part to retrieve.
+     * @return If successful, returns the Part along with a 200 status code.
+     * If unsuccessful, returns a String message indicating the failure reason along with a 400 status code.
      */
     @GetMapping("/{partId}")
-    public ResponseEntity<Part> getPart(@PathVariable int partId) {
-        Part part = partService.getPart(partId);
-        if (part == null) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        } else {
-            return new ResponseEntity<>(part, HttpStatus.OK);
+    public ResponseEntity<Object> getPart(@PathVariable int partId) {
+
+        try {
+            Part existingPart = partService.getPart(partId);
+            return new ResponseEntity<>(existingPart, HttpStatus.OK);
+        } catch (BadRequestException bre) {
+            return new ResponseEntity<>(bre.getMessage(), HttpStatus.BAD_REQUEST);
         }
+    }
+
+    /**
+     * Endpoint for updating a Part given its partId.
+     *
+     * @param partId The partId of the existing Part to be updated.
+     * @param part   The Part object containing the updated data.
+     * @return If successful, returns the updated Part, along with a 200 status code.
+     * If unsuccessful, returns a String message indicating the failure reason, along with a 400 or 404 status code.
+     */
+    @PutMapping("/{partId}")
+    public ResponseEntity<Object> updatePart(@PathVariable Integer partId, @RequestBody Part part) {
+
+        try {
+            Part updatedPart = partService.updatePart(partId, part);
+            return new ResponseEntity<>(updatedPart, HttpStatus.OK);
+        } catch (BadRequestException bre) {
+            return new ResponseEntity<>(bre.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (NotFoundException nfe) {
+            return new ResponseEntity<>(nfe.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    /**
+     * Endpoint for deleting a Part given its partId.
+     *
+     * @param partId The partId of the Part to be deleted.
+     * @return If successful, returns a 200 status code.
+     * If unsuccessful, returns a String message indicating the failure reason, along with a 400 or 409 status code.
+     */
+    @DeleteMapping("/{partId}")
+    public ResponseEntity<String> deletePart(@PathVariable int partId) {
+
+        try {
+            if (partService.deletePart(partId)) {
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
+        } catch (BadRequestException bre) {
+            return new ResponseEntity<>(bre.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (ConflictException ce) {
+            return new ResponseEntity<>(ce.getMessage(), HttpStatus.CONFLICT);
+        }
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     /**
      * Endpoint for retrieving all Parts.
      *
-     * @return A list of all Parts.
+     * @return A list of all Parts along with a 200 status code.
      */
     @GetMapping
     public ResponseEntity<List<Part>> getAllParts() {
@@ -77,112 +120,11 @@ public class PartController {
      * Endpoint for retrieving all Parts with the matching partName.
      *
      * @param partName The partName of a Part.
-     * @return A list of all Parts with the matching partName.
+     * @return A list of all Parts with the matching partName along with a 200 status code.
      */
     @GetMapping("/search")
     public ResponseEntity<List<Part>> getPartByName(@RequestParam("partName") String partName) {
         List<Part> parts = partService.getPartsByName(partName);
         return new ResponseEntity<>(parts, HttpStatus.OK);
-    }
-
-    // We shouldn't need any of these as we can use getPart() and extract the relevant field
-
-//    @GetMapping("{partId}/inventory")
-//    public int getInventory(@PathVariable int partId){
-//        return partService.getInventory(partId);
-//    }
-//
-//    @GetMapping("{partId}/price")
-//    public BigDecimal getPrice(@PathVariable int partId){
-//        return partService.getPrice(partId);
-//    }
-//
-//    @GetMapping("{partId}/MakeModel")
-//    public int getMakeModel(@PathVariable int partId){
-//        return partService.getMakeModel(partId);
-//    }
-//
-//    @GetMapping("{partId}/description")
-//    public String getDescription(@PathVariable int partId){
-//        return partService.getDescription(partId);
-//    }
-
-    // All PUT Mapping
-
-    /**
-     * Endpoint for updating a Part given it's partId.
-     *
-     * @param partId The partId of a registered Part.
-     * @param part   A Part containing data to be updated.
-     * @return The updated Part.
-     */
-    @PutMapping("/{partId}")
-    public ResponseEntity<Object> updatePart(@PathVariable Integer partId, @RequestBody Part part) {
-
-        try {
-            Part updatedPart = partService.updatePart(partId, part);
-            return new ResponseEntity<>(updatedPart, HttpStatus.OK);
-        } catch (BadRequestException bre) {
-            return new ResponseEntity<>(bre.getMessage(), HttpStatus.BAD_REQUEST);
-        } catch (ConflictException ce) {
-            return new ResponseEntity<>(ce.getMessage(), HttpStatus.CONFLICT);
-        }
-    }
-
-    // We shouldn't need any of these as we can use updatePart() to update any field
-
-//    @PutMapping(value = "/{partId}/inventory")
-//    public ResponseEntity<Part> updateInventory(@PathVariable int partId, @RequestBody int amount){
-//        Part p = new Part();
-//        p.setPartId(partId);
-//        if(p.getPartId() == partId){
-//            partService.updateInventory(partId, amount);
-//            return ResponseEntity.noContent().build();
-//        }else{
-//            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-//        }
-//    }
-//
-//    @PutMapping(value = "/{partId}/price")
-//    public ResponseEntity<Part> updatePrice(@PathVariable int partId, @RequestBody BigDecimal amount){
-//        Part p = new Part();
-//        p.setPartId(partId);
-//        if(p.getPartId() == partId){
-//            partService.updatePrice(partId, amount);
-//            return ResponseEntity.noContent().build();
-//        }else{
-//            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-//        }
-//    }
-//
-//    @PutMapping(value = "/{partId}/description")
-//    public ResponseEntity<Part> updateDescription(@PathVariable int partId, @RequestBody String changes){
-//        Part p = new Part();
-//        p.setPartId(partId);
-//        if(p.getPartId() == partId){
-//            partService.updateDescription(partId, changes);
-//            return ResponseEntity.noContent().build();
-//        }else{
-//            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-//        }
-//    }
-
-    // All DELETE Mapping
-
-    /**
-     * Endpoint for deleting a Part given it's partId.
-     *
-     * @param partId The partId of Part to be deleted.
-     * @return The number of rows affected.
-     */
-    @DeleteMapping("/{partId}")
-    public ResponseEntity<Integer> deletePart(@PathVariable int partId) {
-        int rows = partService.deletePart(partId);
-
-        if (rows != 0) {
-            return new ResponseEntity<>(rows, HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(rows, HttpStatus.NOT_FOUND);
-        }
     }
 }
