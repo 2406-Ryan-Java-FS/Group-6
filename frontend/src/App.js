@@ -14,7 +14,7 @@ function App() {
 
     <Routes>
       <Route path='' element={<Home/>} />
-      <Route path='parts' element={<PartsManager/>} />
+      <Route path='/parts' element={<PartsManager/>} />
       <Route path='/settings' element={<UserSettings/>} />
 
     </Routes>
