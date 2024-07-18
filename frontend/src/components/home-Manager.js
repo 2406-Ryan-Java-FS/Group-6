@@ -66,7 +66,7 @@ export default function Home(){
                         </div>
                         <div className="partsContainer">
                             <button className="partsButton partsRandom"></button>
-                            <div className="partsText">Other Parts</div>
+                            <div className="partsText">All Parts</div>
                         </div>
                     </div>                                  
                 </div>
