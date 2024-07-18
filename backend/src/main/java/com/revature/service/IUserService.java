@@ -6,9 +6,9 @@ public interface IUserService {
 
     User addUser(User user);
 
-    User getUser(int userId);
+    User getUser(Integer userId);
 
-    User updateUser(int userId, User user);
+    User updateUser(Integer userId, User user);
 
     void deleteUser(User user);
 
