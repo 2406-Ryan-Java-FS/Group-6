@@ -23,7 +23,7 @@ public class VehicleService {
     }
 
     /**
-     * Used to persist a Vehicle to the repository.
+     * Persists a Vehicle to the repository.
      *
      * @param vehicle The Vehicle to be added.
      * @return The persisted Vehicle including it's newly assigned makeModelId.
@@ -45,11 +45,11 @@ public class VehicleService {
     }
 
     /**
-     * Used to retrieve a Vehicle from the repository given it's makeModelId.
+     * Retrieves a Vehicle from the repository given it's makeModelId.
      *
      * @param makeModelId The makeModelId of a Vehicle.
      * @return The associated Vehicle object.
-     * @throws BadRequestException if the makeModelId doesn't match an existing Vehicle.
+     * @throws BadRequestException if the makeModelId is invalid.
      */
     private Vehicle getVehicle(Integer makeModelId) {
 
@@ -60,11 +60,11 @@ public class VehicleService {
     }
 
     /**
-     * Used to update a Vehicle in the repository given it's makeModelId.
+     * Updates a Vehicle in the repository given it's makeModelId.
      *
      * @param makeModelId The makeModelId of a registered Vehicle.
      * @param vehicle     Vehicle containing updated information.
-     * @return The updated Vehicle from the repository.
+     * @return The updated Vehicle object.
      * @throws BadRequestException if there's an issue with the client's request.
      */
     public Vehicle updateVehicle(Integer makeModelId, Vehicle vehicle) {
@@ -95,7 +95,7 @@ public class VehicleService {
     }
 
     /**
-     * Used to delete a Vehicle given its makeModelId.
+     * Deletes a Vehicle given its makeModelId.
      *
      * @param makeModelId The makeModelId of the Vehicle to be deleted.
      * @return true if the deletion is successful, false if the Vehicle with the given makeModelId is not found.

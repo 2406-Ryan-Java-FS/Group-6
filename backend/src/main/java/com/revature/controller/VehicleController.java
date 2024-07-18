@@ -78,7 +78,7 @@ public class VehicleController {
     /**
      * Endpoint for retrieving all Vehicles.
      *
-     * @return A list of all Vehicles.
+     * @return A list of all Vehicles along with a 200 status code.
      */
     @GetMapping
     public ResponseEntity<List<Vehicle>> getAllVehicles() {
