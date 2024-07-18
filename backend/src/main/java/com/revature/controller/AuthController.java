@@ -40,31 +40,15 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-//    public ResponseEntity<String> loginValidate(@RequestBody User user) {
     public ResponseEntity<AuthResponseDTO> loginValidate(@RequestBody User user) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
-//                new UsernamePasswordAuthenticationToken(validatedUser);
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        //added
         String token = jwtGenerator.generateToken(authentication);
 
-//        return new ResponseEntity<>("User signed success!", HttpStatus.OK);
         return new ResponseEntity<>(new AuthResponseDTO(token), HttpStatus.OK);
 
     }
-
-
-//    @PostMapping("/login")
-//    public ResponseEntity<String> loginValidate(@RequestBody User user) {
-//        User validatedUser = userService.verifyUser(user);
-//        if (validatedUser != null) {
-//            return new ResponseEntity<>("User signed success!", HttpStatus.OK);
-//        } else {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-//        }
-//    }
 
 }

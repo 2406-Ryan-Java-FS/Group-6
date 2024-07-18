@@ -15,19 +15,14 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-
     //checks to see if token in header
+
+
     @Autowired
     private JwtGenerator tokenGenerator;
 
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
-
-//    @Autowired
-//    public JwtAuthenticationFilter(JwtGenerator tokenGenerator, CustomUserDetailsService customUserDetailsService) {
-//        this.tokenGenerator = tokenGenerator;
-//        this.customUserDetailsService = customUserDetailsService;
-//    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {

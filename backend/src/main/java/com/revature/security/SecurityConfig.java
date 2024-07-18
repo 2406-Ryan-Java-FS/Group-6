@@ -20,8 +20,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
 
-//    private UserService userService;
-
     private JwtAuthEntryPoint authEntryPoint;
     private CustomUserDetailsService userDetailsService;
 
@@ -45,10 +43,7 @@ public class SecurityConfig {
                         .requestMatchers("/users/current").authenticated()
                         .anyRequest().permitAll()
                 );
-//                .requestMatchers("/").permitAll()
 
-//                .and()
-//                .httpBasic(); // deprecated
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
@@ -61,6 +56,7 @@ public class SecurityConfig {
 
     @Bean
     PasswordEncoder passwordEncoder() {
+        // Hashed passwords not implemented yet
 //        return new BCryptPasswordEncoder();
         return NoOpPasswordEncoder.getInstance();
     }

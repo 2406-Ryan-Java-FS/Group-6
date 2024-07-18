@@ -16,8 +16,9 @@ import java.util.List;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
-
     // returns user details
+
+
     UserRepository userRepository;
 
     @Autowired
@@ -33,15 +34,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
     }
 
-////    @Override
 //    public UserDetails loadUserById(int userId) {
-//        User user = userRepository.findById(userId).orElseThrow(() -> new UsernameNotFoundException("User not found with id: " + userId));
-//        Collection<? extends GrantedAuthority> authorities = Collections.singleton(new SimpleGrantedAuthority("ROLE_" + user.getRole()));
-//
-//        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
-//    }
-
-//    private Collection<GrantedAuthority> mapRolesToAuthorities(List<Role> role) {
-//        return SimpleGrantedAuthority()
 //    }
 }
