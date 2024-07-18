@@ -13,6 +13,8 @@ public interface PartRepository extends JpaRepository<Part, Integer> {
 
     List<Part> findAllByPartName(String partName);
 
+    boolean existsByPartName(String partName);
+
     // We shouldn't need any of these as we can use findByPartId() and save()
 
 //    @Transactional

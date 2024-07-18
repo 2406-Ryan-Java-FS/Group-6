@@ -5,9 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@SpringBootApplication(scanBasePackages = "com.group6.revature")
-@EntityScan("com.group6.revature.model")
-@EnableJpaRepositories("com.group6.revature.repository")
+@SpringBootApplication(scanBasePackages = "com.revature")
+@EntityScan("com.revature.model")
+@EnableJpaRepositories("com.revature.repository")
 public class Project1Application {
 
     public static void main(String[] args) {
