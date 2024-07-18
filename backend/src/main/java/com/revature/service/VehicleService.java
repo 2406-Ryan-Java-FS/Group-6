@@ -23,90 +23,94 @@ public class VehicleService {
     }
 
     /**
-     * Used to persist a Vehicle to the repository.
+     * Persists a Vehicle to the repository.
      *
      * @param vehicle The Vehicle to be added.
-     * @return The persisted Vehicle including it's newly assigned gameId.
+     * @return The persisted Vehicle including it's newly assigned makeModelId.
      * @throws BadRequestException if there's an issue with the client's request.
      */
     public Vehicle addVehicle(Vehicle vehicle) {
 
-        if (vehicle.getCustomerId() != null && !userRepository.existsById(vehicle.getCustomerId())) {
-            throw new BadRequestException("Customer does not exist.");
+        if (vehicle.getMake() == null || vehicle.getMake().isEmpty()
+                || vehicle.getModel() == null || vehicle.getModel().isEmpty()
+                || vehicle.getYear() == null) {
+            throw new BadRequestException("Vehicle make, model, and year are required.");
         }
+
+        if (vehicle.getCustomerId() == null || !userRepository.existsById(vehicle.getCustomerId())) {
+            throw new NotFoundException("Customer does not exist.");
+        }
+
         return vehicleRepository.save(vehicle);
     }
 
     /**
-     * Used to retrieve a Vehicle from the repository given it's makeModelId.
+     * Retrieves a Vehicle from the repository given it's makeModelId.
      *
      * @param makeModelId The makeModelId of a Vehicle.
      * @return The associated Vehicle object.
-     * @throws NotFoundException if the makeModelId doesn't match an existing Vehicle.
+     * @throws BadRequestException if the makeModelId is invalid.
      */
     private Vehicle getVehicle(Integer makeModelId) {
 
-        if (!vehicleRepository.existsById(makeModelId)) {
-            throw new NotFoundException("Vehicle not found.");
+        if (makeModelId == null || !vehicleRepository.existsById(makeModelId)) {
+            throw new BadRequestException("Vehicle Id is invalid.");
         }
         return vehicleRepository.findByMakeModelId(makeModelId);
     }
 
     /**
-     * Used to update a Vehicle in the repository given it's makeModelId.
+     * Updates a Vehicle in the repository given it's makeModelId.
      *
      * @param makeModelId The makeModelId of a registered Vehicle.
      * @param vehicle     Vehicle containing updated information.
-     * @return The updated Vehicle from the repository.
+     * @return The updated Vehicle object.
      * @throws BadRequestException if there's an issue with the client's request.
      */
     public Vehicle updateVehicle(Integer makeModelId, Vehicle vehicle) {
 
-        if (makeModelId != null && !vehicleRepository.existsById(makeModelId)) {
-            throw new BadRequestException("makeModelId is invalid.");
-        }
-
-        if (vehicle.getMake().isEmpty()) {
-            throw new BadRequestException("Vehicle make cannot be blank.");
-        }
-
-        if (vehicle.getModel().isEmpty()) {
-            throw new BadRequestException("Vehicle model cannot be blank.");
-        }
-
-        if (vehicle.getYear() == null) {
-            throw new BadRequestException("Vehicle year cannot be blank.");
-        }
-
-        if (vehicle.getCustomerId() != null && !userRepository.existsById(vehicle.getCustomerId())) {
-            throw new BadRequestException("CustomerId does not exist.");
+        if (makeModelId == null || !vehicleRepository.existsById(makeModelId)) {
+            throw new BadRequestException("Vehicle Id is invalid.");
         }
 
         Vehicle updatedVehicle = this.getVehicle(makeModelId);
-        updatedVehicle.setMake(vehicle.getMake());
-        updatedVehicle.setModel(vehicle.getModel());
-        updatedVehicle.setYear(vehicle.getYear());
-        updatedVehicle.setCustomerId(vehicle.getCustomerId());
+
+        if (vehicle.getMake() != null && !vehicle.getMake().isEmpty()) {
+            updatedVehicle.setMake(vehicle.getMake());
+        }
+
+        if (vehicle.getModel() != null && !vehicle.getModel().isEmpty()) {
+            updatedVehicle.setModel(vehicle.getModel());
+        }
+
+        if (vehicle.getYear() != null) {
+            updatedVehicle.setYear(vehicle.getYear());
+        }
+
+        if (vehicle.getCustomerId() != null && userRepository.existsById(vehicle.getCustomerId())) {
+            updatedVehicle.setCustomerId(vehicle.getCustomerId());
+        }
+
         return vehicleRepository.save(updatedVehicle);
     }
 
     /**
-     * Used to delete a Vehicle given it's makeModelId.
+     * Deletes a Vehicle given its makeModelId.
      *
-     * @param makeModelId The makeModelId of Vehicle to be deleted.
-     * @return The number of rows affected.
+     * @param makeModelId The makeModelId of the Vehicle to be deleted.
+     * @return true if the deletion is successful, false if the Vehicle with the given makeModelId is not found.
      */
-    public int deleteVehicle(Integer makeModelId) {
+    public boolean deleteVehicle(Integer makeModelId) {
         if (makeModelId != null && vehicleRepository.existsById(makeModelId)) {
             vehicleRepository.deleteById(makeModelId);
-            return 1;
+            return true;
         } else {
-            return 0;
+            return false;
         }
     }
 
     /**
-     * Used to retrieve all Vehicles from the repository.
+     * Retrieves all Vehicles from the repository.
      *
      * @return A list of all Vehicles.
      */
@@ -115,15 +119,16 @@ public class VehicleService {
     }
 
     /**
-     * Used to retrieve all Vehicles registered to a particular User.
+     * Retrieves all Vehicles registered to a specified User.
      *
      * @param customerId The userId of a registered User.
-     * @return A list of all Vehicles registered to the applicable User.
+     * @return A list of all Vehicles registered to the specified User.
+     * @throws BadRequestException if there's an issue with the client's request.
      */
     public List<Vehicle> getVehiclesByCustomerId(Integer customerId) {
 
-        if (customerId != null && !userRepository.existsById(customerId)) {
-            throw new BadRequestException("Customer does not exist.");
+        if (customerId == null || !userRepository.existsById(customerId)) {
+            throw new BadRequestException("Customer Id is invalid.");
         }
         return vehicleRepository.findAllByCustomerId(customerId);
     }

@@ -26,7 +26,8 @@ public class UserController {
      * Endpoint for registering a new User.
      *
      * @param user The User to be registered.
-     * @return The persisted User including it's newly assigned userId, error message if bad request.
+     * @return If successful, returns the persisted User with its newly assigned userId and createdAt, along with a 201 status code.
+     * If unsuccessful, returns a String message indicating the failure reason, along with a 400 or 409 status code.
      */
     @PostMapping
     public ResponseEntity<Object> addUser(@RequestBody User user) {
@@ -41,44 +42,64 @@ public class UserController {
         }
     }
 
+    /**
+     * Endpoint for retrieving a User given its userId.
+     *
+     * @param userId The userId of the User to retrieve.
+     * @return If successful, returns the User along with a 200 status code.
+     * If unsuccessful, returns a String message indicating the failure reason along with a 400 status code.
+     */
     @GetMapping("/{userId}")
-    public ResponseEntity<User> getUser(@PathVariable int userId) {
-        return new ResponseEntity<>(userService.getUser(userId), HttpStatus.OK);
+    public ResponseEntity<Object> getUser(@PathVariable int userId) {
+
+        try {
+            User existingUser = userService.getUser(userId);
+            return new ResponseEntity<>(existingUser, HttpStatus.OK);
+        } catch (BadRequestException bre) {
+            return new ResponseEntity<>(bre.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     /**
-     * Endpoint for updating a User given it's userId.
+     * Endpoint for updating a User given its userId.
      *
-     * @param userId The userId of a registered User.
-     * @param user   containing User data to be updated.
-     * @return The updated User.
+     * @param userId The userId of the registered User to be updated.
+     * @param user   The User object containing the updated data.
+     * @return If successful, returns the updated User.
+     * If unsuccessful, returns a String message indicating the failure reason along with a 400, 401, or 409 status code.
      */
     @PutMapping
     public ResponseEntity<Object> updateUser(@PathVariable Integer userId, @RequestBody User user) {
+
         try {
             User updatedUser = userService.updateUser(userId, user);
-            return ResponseEntity.ok("Password updated");
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+        } catch (BadRequestException bre) {
+            return new ResponseEntity<>(bre.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (UnauthorizedException ue) {
+            return new ResponseEntity<>(ue.getMessage(), HttpStatus.UNAUTHORIZED);
+        } catch (ConflictException ce) {
+            return new ResponseEntity<>(ce.getMessage(), HttpStatus.CONFLICT);
         }
     }
 
     /**
      * Endpoint for deleting a User using that user's credentials.
      *
-     * @param user containing valid username & password to delete their account.
-     * @return The number of rows affected.
+     * @param user The User object containing the valid username and password to delete their account.
+     * @return If successful, returns a 200 status code.
+     * If unsuccessful, returns a String message indicating the failure reason along with a 400 or 401 status code.
      */
     @DeleteMapping
     public ResponseEntity<String> deleteUser(@RequestBody User user) {
 
         try {
             userService.deleteUser(user);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (UnauthorizedException ue) {
-            return new ResponseEntity<>(ue.getMessage(), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (IllegalArgumentException iae) {
             return new ResponseEntity<>(iae.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (UnauthorizedException ue) {
+            return new ResponseEntity<>(ue.getMessage(), HttpStatus.UNAUTHORIZED);
         }
     }
 
@@ -87,18 +108,19 @@ public class UserController {
      *
      * @param userId The userId of User to be deleted.
      * @param admin  containing valid username & password for an admin account.
-     * @return The number of rows affected.
+     * @return If successful, returns a 200 status code.
+     * If unsuccessful, returns a String message indicating the failure reason along with a 400 or 401 status code.
      */
     @DeleteMapping("admin/{userId}")
     public ResponseEntity<String> deleteUserAsAdmin(@PathVariable int userId, @RequestBody User admin) {
 
         try {
             userService.deleteUser(userId, admin);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (UnauthorizedException ue) {
-            return new ResponseEntity<>(ue.getMessage(), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (IllegalArgumentException iae) {
             return new ResponseEntity<>(iae.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (UnauthorizedException ue) {
+            return new ResponseEntity<>(ue.getMessage(), HttpStatus.UNAUTHORIZED);
         }
     }
 
@@ -107,17 +129,18 @@ public class UserController {
     /**
      * Endpoint for verifying a User login.
      *
-     * @param user User containing a username/password combination to be verified.
-     * @return The verified User.
+     * @param user The User object containing the username and password combination to be verified.
+     * @return If successful, returns the verified User along with a 200 status code.
+     * If unsuccessful, returns a String message indicating the failure reason along with a 401 status code.
      */
     @PostMapping("/login")
-    public ResponseEntity<User> loginValidate(@RequestBody User user) {
-        User validatedUser = userService.verifyUser(user);
+    public ResponseEntity<Object> loginUser(@RequestBody User user) {
 
-        if (validatedUser != null) {
-            return ResponseEntity.ok(validatedUser);
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        try {
+            User verifiedUser = userService.verifyUser(user);
+            return new ResponseEntity<>(verifiedUser, HttpStatus.OK);
+        } catch (UnauthorizedException ue) {
+            return new ResponseEntity<>(ue.getMessage(), HttpStatus.UNAUTHORIZED);
         }
     }
 }
