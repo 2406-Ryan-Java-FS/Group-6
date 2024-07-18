@@ -1,0 +1,103 @@
+body {
+    background-color:#F6F6F6;
+}
+
+.mainContainer {
+    /* margin: 20px 20px 20px 20px; */
+    padding-bottom: 200px;
+
+}
+
+h1.admin {
+    display: flex;
+    /* justify-content: center; */
+}
+
+.dataTable {
+    display:flex;
+}
+
+.dataTable>p {
+    margin: 0px 8px 0px 0px;
+}
+
+.errorEl {
+    color:red;
+    font-weight: bold;
+}
+
+tr>th {
+    font-weight: normal;
+    float:left;
+}
+
+tr {
+    margin-bottom: 4px;
+}
+
+.adminTable {
+    background-color:FloralWhite;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding:24px;
+    
+}
+
+th, td {
+    padding: 1px 16px; /* Adjust padding as needed for space between th and td */
+    text-align: left;
+}
+
+
+
+.userContainerMain {
+    display: flex-col;
+    padding: 20px;
+    margin-top: 60px;
+}
+
+.userContainerMain td {
+    font-weight: bold;
+
+}
+
+.userContainerMain table td:first-child {
+    text-align: right;
+
+}
+
+#changePassword {
+    text-align:left;
+    font-weight:600;
+    font-size: 24px;
+    padding-top:20px;
+    
+}
+
+.userContainerContent{
+    /* position: absolute; */
+    display: flex-col;
+}
+
+
+
+.userContainerContent>div {
+    display: flex;
+}
+
+.userContainerContent {
+
+}
+
+.passwordContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.passwordContainer > div {
+    display: flex;
+}
+
+.passwordContainer > div > p {
+    margin-right: 20px;
+}
