@@ -68,7 +68,7 @@ public class UserController {
      * @return If successful, returns the updated User.
      * If unsuccessful, returns a String message indicating the failure reason along with a 400, 401, or 409 status code.
      */
-    @PutMapping
+    @PutMapping("/{userId}")
     public ResponseEntity<Object> updateUser(@PathVariable Integer userId, @RequestBody User user) {
 
         try {

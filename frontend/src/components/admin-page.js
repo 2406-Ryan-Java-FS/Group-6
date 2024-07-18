@@ -1,13 +1,13 @@
 import { useRef, useState } from 'react'
-import '../styles/admin.css'
+import '../styles/user-settings.css'
 
 export default function AdminPage() {
 
     const inputRef = useRef();
 
     const AUTOSHOP_URL = 'http://localhost:8080/users'
-    const [data, setData] = useState([])
     const [errorMessage, setErrorMessage] = useState("");
+    const [data, setData] = useState([])
     const [dataError, setDataError] = useState("");
 
     const fetchUserData = async () => {
@@ -36,11 +36,6 @@ export default function AdminPage() {
         }
     }
 
-    const handleKeyDown = (e) => {
-        if (e.key === 'Enter') {
-            fetchUserData();
-        }
-    }
 
     const deleteUserData = async () => {
         try {
@@ -67,12 +62,18 @@ export default function AdminPage() {
         }
     }
 
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            fetchUserData();
+        }
+    }
+
     return (
         <>
 
             <div className='mainContainer'>
                 <h1 className='admin'>
-                    Admin Dashboard
+                    Admin Settings
                 </h1>
 
                 <div>
@@ -82,7 +83,7 @@ export default function AdminPage() {
                         <button onClick={fetchUserData}>search</button>
 
                         {data.length > 0 && (
-                            <table>
+                            <table className='adminTable'>
                                 <tbody>
                                     <tr>
                                         <th>user_id</th>
