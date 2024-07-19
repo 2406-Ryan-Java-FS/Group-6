@@ -67,9 +67,17 @@ public class UserController {
      * If unsuccessful, returns a String message indicating the failure reason along with a 400 status code.
      */
     @GetMapping("/{userId}")
-    public ResponseEntity<Object> getUser(@PathVariable int userId) {
+    public ResponseEntity<Object> getUser(@PathVariable int userId, Authentication authentication) {
 
         try {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            String username = userDetails.getUsername();
+            User admin = userRepository.findByUsername(username);
+
+            if (!admin.getRole().equalsIgnoreCase("Admin")) {
+                throw new UnauthorizedException("Only Admins can do this");
+            }
+
             User existingUser = userService.getUser(userId);
             return new ResponseEntity<>(existingUser, HttpStatus.OK);
         } catch (BadRequestException bre) {
