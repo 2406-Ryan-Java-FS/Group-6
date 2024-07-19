@@ -175,8 +175,7 @@ export default function UserSettings () {
                 </div>
 
 
-                {
-                data[0].role == 'Admin' &&
+                { data[0].role == 'Admin' &&
                 (<div style={{ marginTop: '100px' }}>
                     <AdminPage />
                 </div>)}
