@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useContext, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { AuthContext } from "../components/auth-context";
 import '../styles/login.css';
 
 export default function LoginPage() {
@@ -7,9 +8,19 @@ export default function LoginPage() {
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
     const [loginSuccess, setLoginSuccess] = useState(false);
+    const { login } = useContext(AuthContext);
     const navigate = useNavigate();
+    const location = useLocation();
+    const [logoutMessage, setLogoutMessage] = useState(null);
+    
+    useEffect(() => {
+        if (location.state?.message) {
+            setLogoutMessage(location.state.message);
+            window.history.replaceState({}, document.title); // Clear the state
+        }
+    }, [location.state]);
 
-    async function login() {
+    async function handleLogin() {
         console.log("Logging in...");
 
         const url = "http://localhost:8080/auth/login";
@@ -24,10 +35,9 @@ export default function LoginPage() {
                 body: JSON.stringify(credentials),
             });
 
-
             if (!httpResponse.ok) {
                 let errorMessage = 'Login failed';
-                
+
                 // Check status code for specific error messages
                 if (httpResponse.status === 401) {
                     errorMessage = 'Invalid username or password';
@@ -46,16 +56,18 @@ export default function LoginPage() {
             // Store the access token in localStorage
             localStorage.setItem('accessToken', accessToken);
 
-            console.log('Access Token:', accessToken);
-
             // Clear any previous errors
             setError(null);
+            setLogoutMessage(null);
 
             // Indicate login success
             setLoginSuccess(true);
 
-             // Redirect to the home page after a short delay
-             setTimeout(() => {
+            // Update the auth context
+            login();
+
+            // Redirect to the home page after a short delay
+            setTimeout(() => {
                 navigate('/');
             }, 2000);
 
@@ -67,12 +79,8 @@ export default function LoginPage() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        login();
-    };
-
-    const handleRegisterClick = () => {
-        navigate('/register');
+        
+        handleLogin();
     };
 
     return (
@@ -82,6 +90,7 @@ export default function LoginPage() {
                 <div className="form">
                     {error && <div className="error">{error}</div>}
                     {loginSuccess && <div className="success">Login successful! Redirecting...</div>}
+                    {logoutMessage && <div className="success">{logoutMessage}</div>}
                     <form onSubmit={handleSubmit}>
                         <div className="formGroup">
                             <label>Username:</label>
@@ -97,7 +106,7 @@ export default function LoginPage() {
                         </div>
                         <button type="submit" className="formButton">Login</button>
                     </form>
-                    <p className="registerLink">Don't have an account? <button onClick={handleRegisterClick}>Register here</button>.</p>
+                    <p className="registerLink">Don't have an account? <button onClick={() => navigate('/register')}>Register here</button>.</p>
                 </div>
             </div>
         </>
