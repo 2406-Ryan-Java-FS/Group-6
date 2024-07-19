@@ -1,22 +1,24 @@
+/* Login and Registration styles */
+
 p, h1, h2, a {
-    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
-.headLogin {
+.heading {
     text-align: center;
     background-color: lightgray;
     padding: 10px;
     border-radius: 3px;
 }
 
-.loginContainer {
+.formContainer {
     display: flex;
     justify-content: center;
     align-items: center;
     height: calc(100vh - 150px);
 }
 
-.loginForm {
+.form {
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -39,7 +41,7 @@ input {
     box-sizing: border-box;
 }
 
-.loginButton {
+.formButton {
     width: 100%;
     padding: 10px;
     background-color: #007BFF;
@@ -49,28 +51,51 @@ input {
     cursor: pointer;
 }
 
-.loginButton:hover {
+.formButton:hover {
     background-color: #0056b3;
 }
 
-.success {
+/* Styles for success and error messages */
+
+.success, .error {
     padding: 10px;
     margin-bottom: 15px;
-    border: 1px solid #4CAF50;
-    background-color: #dff0d8;
-    color: #3c763d;
     border-radius: 4px;
     text-align: center;
     font-weight: bold;
 }
 
+.success {
+    border: 1px solid #4CAF50;
+    background-color: #dff0d8;
+    color: #3c763d;
+}
+
 .error {
-    padding: 10px;
-    margin-bottom: 15px;
     border: 1px solid #dc3545;
     background-color: #f8d7da;
     color: #721c24;
-    border-radius: 4px;
+}
+
+/* Styling for registration link/button */
+
+.registerLink {
     text-align: center;
-    font-weight: bold;
+    margin-top: 10px;
+}
+
+.registerLink button {
+    background: none;
+    border: none;
+    color: #007BFF;
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: inherit;
+    font-family: inherit;
+    padding: 0;
+    margin: 0;
+}
+
+.registerLink button:hover {
+    text-decoration: none;
 }

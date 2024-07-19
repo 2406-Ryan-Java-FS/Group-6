@@ -26,7 +26,18 @@ export default function LoginPage() {
 
 
             if (!httpResponse.ok) {
-                throw new Error('Login failed');
+                let errorMessage = 'Login failed';
+                
+                // Check status code for specific error messages
+                if (httpResponse.status === 401) {
+                    errorMessage = 'Invalid username or password';
+                } else if (httpResponse.status === 403) {
+                    errorMessage = 'Access forbidden';
+                } else if (httpResponse.status === 404) {
+                    errorMessage = 'Resource not found';
+                }
+
+                throw new Error(errorMessage);
             }
 
             const data = await httpResponse.json();
@@ -60,11 +71,15 @@ export default function LoginPage() {
         login();
     };
 
+    const handleRegisterClick = () => {
+        navigate('/register');
+    };
+
     return (
         <>
-            <h1 className="headLogin">Login</h1>
-            <div className="loginContainer">
-                <div className="loginForm">
+            <h1 className="heading">Login</h1>
+            <div className="formContainer">
+                <div className="form">
                     {error && <div className="error">{error}</div>}
                     {loginSuccess && <div className="success">Login successful! Redirecting...</div>}
                     <form onSubmit={handleSubmit}>
@@ -80,8 +95,9 @@ export default function LoginPage() {
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                         </div>
-                        <button type="submit" className="loginButton">Login</button>
+                        <button type="submit" className="formButton">Login</button>
                     </form>
+                    <p className="registerLink">Don't have an account? <button onClick={handleRegisterClick}>Register here</button>.</p>
                 </div>
             </div>
         </>
