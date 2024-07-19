@@ -89,6 +89,29 @@ export default function UserSettings () {
         }
     };
 
+    const deleteAccount = async () => {
+        const token = Cookies.get('accessToken')
+        
+        try {
+            const response = await fetch(`${AUTOSHOP_URL}`,
+                {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    }
+                },
+            )
+            if (response.ok) {
+                console.log("User deleted")
+                // to redirect to home
+            } else {
+                console.error("Error")
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     const handleLogin = async (username, password) => {
         try {
             const response = await fetch('http://localhost:8080/auth/login', {
@@ -172,18 +195,26 @@ export default function UserSettings () {
                     >
                         Save Changes
                     </button>
+                    <button 
+                        type="button" 
+                        class="btn btn-danger"
+                        onClick={deleteAccount}
+                    >
+                        Delete Account
+                    </button>
                 </div>
 
 
                 { data[0].role == 'Admin' &&
                 (<div style={{ marginTop: '100px' }}>
-                    <AdminPage />
+                    <AdminPage  />
                 </div>)}
 
             </div>)
             : (<>
             <div>loading...</div>
-            <button onClick={() => handleLogin("ilovehondas1", "newpassword")}>TEST LOGIN</button>
+            <button onClick={() => handleLogin("ilovehondas1", "hondas")}>TEST LOGIN</button>
+            <button onClick={() => handleLogin("Bobisback", "pass")}>LOGIN TO DELETE</button>
             <button onClick={() => handleLogin("admin", "hashed_password_3")}>TEST LOGIN (ADMIN)</button>
             </>)
 
