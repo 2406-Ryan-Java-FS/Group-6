@@ -17,15 +17,23 @@ export default function LoginPage() {
     return (
         <>
             <h1 className="headLogin">Login</h1>
-            <label>Username:</label>
-            <input type="text" id="username" value={username}
-                onChange={(e) => setUsername(e.target.value)}
-            />
-            <label>Password:</label>
-            <input type="password" id="password" value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
-            <button onClick={handleSubmit} className="loginButton">Login</button>
+            <div className="loginContainer">
+                <div className="loginForm">
+                    <div className="formGroup">
+                        <label>Username:</label>
+                        <input type="text" id="username" value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
+                    </div>
+                    <div className="formGroup">
+                        <label>Password:</label>
+                        <input type="password" id="password" value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </div>
+                    <button onClick={handleSubmit} className="loginButton">Login</button>
+                </div>
+            </div>
         </>
     );
 }
