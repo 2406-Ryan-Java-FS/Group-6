@@ -63,3 +63,14 @@ input {
     text-align: center;
     font-weight: bold;
 }
+
+.error {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #dc3545;
+    background-color: #f8d7da;
+    color: #721c24;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: bold;
+}

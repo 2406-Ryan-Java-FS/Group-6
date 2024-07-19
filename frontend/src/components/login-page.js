@@ -37,6 +37,9 @@ export default function LoginPage() {
 
             console.log('Access Token:', accessToken);
 
+            // Clear any previous errors
+            setError(null);
+
             // Indicate login success
             setLoginSuccess(true);
 
