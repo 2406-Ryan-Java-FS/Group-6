@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../styles/login.css'; // Assuming you reuse the login.css styles
+import '../styles/login.css'; // Reuses the login.css styles
 
 export default function RegisterPage() {
     const [username, setUsername] = useState('');
@@ -115,7 +115,7 @@ export default function RegisterPage() {
                         </div>
                         <button type="submit" className="formButton">Register</button>
                     </form>
-                    <p className="registerLink">Already have an account? <button onClick={() => navigate('/login')}>Login here</button>.</p>
+                    <p className="registerLink">Already have an account? <button type="button" onClick={() => navigate('/login')}>Login here</button>.</p>
                 </div>
             </div>
         </>
