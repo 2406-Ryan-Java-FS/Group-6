@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/orders")
+@CrossOrigin
 public class OrderController {
 
     OrderService orderService;
@@ -26,7 +27,7 @@ public class OrderController {
      * Endpoint for creating a new Order.
      *
      * @param order The Order to be created.
-     * @return If successful, returns the persisted Order including it's newly assigned orderId, along with a 201 status code.
+     * @return If successful, returns the persisted Order including its newly assigned orderId, along with a 201 status code.
      * If unsuccessful, returns a String message indicating the failure reason, along with a 400 or 404 status code.
      */
     @PostMapping
@@ -80,7 +81,7 @@ public class OrderController {
     }
 
     /**
-     * Endpoint for deleting an Order given it's orderId.
+     * Endpoint for deleting an Order given its orderId.
      *
      * @param orderId The orderId of the Order to be deleted.
      * @return Returns a 200 status code if the deletion is successful, and a 404 status code if the Order is not found.

@@ -7,7 +7,7 @@ export default function NavBar(){
             <div className="container-fluid">
                 <Link className="navbar-brand" to="/">AutoParts</Link>
                 <Link className="nav-link" to="/parts">Parts</Link>
-                <Link className="nav-link" to="/">Place Order</Link>
+                <Link className="nav-link" to="/orders">Place Order</Link>
                 <Link className="nav-link" to="/">View Order</Link>
                 <Link className="nav-link" to="/login">Login</Link>
                 {/* <Link className="nav-link" to="#">Pricing</Link> */}

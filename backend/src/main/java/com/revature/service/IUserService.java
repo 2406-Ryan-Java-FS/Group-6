@@ -1,5 +1,6 @@
 package com.revature.service;
 
+import com.revature.dto.UserUpdateDTO;
 import com.revature.model.User;
 
 public interface IUserService {
@@ -8,7 +9,7 @@ public interface IUserService {
 
     User getUser(Integer userId);
 
-    User updateUser(Integer userId, User user);
+    User updateUser(String username, UserUpdateDTO userUpdateDTO);
 
     void deleteUser(User user);
 

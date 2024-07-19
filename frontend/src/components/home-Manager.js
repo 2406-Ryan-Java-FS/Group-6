@@ -5,7 +5,7 @@ export default function Home(){
 
     return(<>
         <div className="headHome">
-            <h1>Auto Parts Store</h1>    
+            <h1>AutoParts Store</h1>    
         </div>
         <div className="introHome">
             <p>
@@ -24,8 +24,6 @@ export default function Home(){
             <div className="accountHome-content">
                 <button onClick={<Link className="accountHome-content-login" to="/" >Login</Link>}>Log In</button><br />
                 <button onClick={<Link className="accountHome-content-createAccount" to="/" >Make New Account</Link>}>Create Account</button>
-                {/* <Link className="accountHome-content-login" to="/" >Login</Link><br />
-                <Link className="accountHome-content-login" to="/" >Make New Account</Link> */}
             </div>
         </div>
         <div className="partsHome">
@@ -33,15 +31,7 @@ export default function Home(){
             <div className="partsHome-content">
                 <div className="partsCatagories">
                     <div className="group1">
-                        {/* <div className="partsOil">
-                            
-                        </div>  
-                        <div className="partsMechanical">
-                            
-                        </div>  */}
-                         {/* <button className="partsButton partsOil" ></button><br></br>
-                         <div className="partsText">Oil</div>
-                         <button className="partsButton partsMechanical">Mechanical</button> */}
+                        {/* ToDo: work on parts page and connect it to the buttons */}
                         <div className="partsContainer">
                             <button className="partsButton partsOil"></button>
                             <div className="partsText">Oil Parts</div>
@@ -52,14 +42,6 @@ export default function Home(){
                         </div>
                     </div>
                     <div className="group2">
-                        {/* <div className="partsLights">
-                            
-                        </div> 
-                        <div className="partsRandom">
-                            
-                        </div>   */}
-                        {/* <button className="partsButton partsLights"><span>Lights</span></button>
-                        <button className="partsButton partsRandom">Random</button> */}
                         <div className="partsContainer">
                             <button className="partsButton partsLights"></button>
                             <div className="partsText">Light Bulbs</div>
@@ -77,8 +59,6 @@ export default function Home(){
             <div className="orderHome-content">
             <button onClick={<Link className="orderHome-content-placeOrder" to="/" >place new order</Link>}>Place Order</button><br />
             <button onClick={<Link className="orderHome-content-viewOrder" to="/" >View orders</Link>}>View Orders</button>
-            {/* <Link className="accountHome-content-login" to="/" >Place Order</Link><br />
-            <Link className="accountHome-content-login" to="/" >View Orders</Link> */}
             </div>
         </div>
     </>)

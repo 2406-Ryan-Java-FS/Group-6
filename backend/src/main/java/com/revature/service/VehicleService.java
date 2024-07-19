@@ -26,7 +26,7 @@ public class VehicleService {
      * Persists a Vehicle to the repository.
      *
      * @param vehicle The Vehicle to be added.
-     * @return The persisted Vehicle including it's newly assigned makeModelId.
+     * @return The persisted Vehicle including its newly assigned makeModelId.
      * @throws BadRequestException if there's an issue with the client's request.
      * @throws NotFoundException   if the Customer does not exist.
      */
@@ -46,7 +46,7 @@ public class VehicleService {
     }
 
     /**
-     * Retrieves a Vehicle from the repository given it's makeModelId.
+     * Retrieves a Vehicle from the repository given its makeModelId.
      *
      * @param makeModelId The makeModelId of a Vehicle.
      * @return The associated Vehicle object.
@@ -62,7 +62,7 @@ public class VehicleService {
     }
 
     /**
-     * Updates a Vehicle in the repository given it's makeModelId.
+     * Updates a Vehicle in the repository given its makeModelId.
      *
      * @param makeModelId The makeModelId of a registered Vehicle.
      * @param vehicle     Vehicle containing updated information.
