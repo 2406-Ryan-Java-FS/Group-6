@@ -10,6 +10,7 @@ export default function PartsManager(){
 
     const partsTableRows = parts.map(p =>(
         <tr key={p.partId}>
+            <td>{p.partId}</td>
             <td>{p.partName}</td>
             <td>{p.description}</td>
             <td>{p.price}</td>
@@ -38,6 +39,7 @@ export default function PartsManager(){
             <Table striped bordered hover>
                 <thead>
                     <tr>
+                        <td>Part ID</td>
                         <td>Part Name</td>
                         <td>Description</td>
                         <td>Price</td>

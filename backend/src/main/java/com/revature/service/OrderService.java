@@ -42,7 +42,7 @@ public class OrderService implements IOrderService {
             throw new NotFoundException("Customer Id does not exist.");
         }
 
-        if (order.getCustomerId() == null || !partRepository.existsById(order.getPartId())) {
+        if (order.getPartId() == null || !partRepository.existsById(order.getPartId())) {
             throw new NotFoundException("Part Id does not exist.");
         }
 

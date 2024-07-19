@@ -2,9 +2,23 @@ p, h1, h2, a{
     font-family:Georgia, 'Times New Roman', Times, serif;
 }
 
-.headParts h1{
+.headPlcOrder h1{
     text-align: center;
     background-color: lightgray;
     padding: 10px;
     border-radius: 3px;
+}
+
+.containerPlcOrder{
+    border: 1px solid black;
+    background-color: lightgrey;
+    margin-top:3%;
+    margin-left:25% ;
+    margin-right: 25%;
+    padding: 1%;
+    border-radius: 5px;
+}
+
+.containerPlcOrder h2{
+    text-align: center;
 }
