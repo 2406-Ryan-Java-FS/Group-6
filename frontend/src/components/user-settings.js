@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import AdminPage from "./admin-page";
 import Cookies from "js-cookie";
 
@@ -12,27 +12,7 @@ export default function UserSettings () {
     const AUTOSHOP_URL = 'http://localhost:8080/users'
     const [data, setData] = useState([])
     const [dataError, setDataError] = useState("");
-
-    // useEffect(() => {
-    //     const fetchUserData = async () => {
-    //         try {
-    //             const response = await fetch(`${AUTOSHOP_URL}/2`);
-    //             // const response = await fetch(`${AUTO_SHOP_URL}1`);
-    //             if (!response.ok) {
-    //                 throw new Error('Network response was not ok');
-    //             }
-    //             const json = await response.json();
-    //                 setData([json]);
-    //                 console.log(json);
-    //                 setDataError("");
-                
-    //         } catch (error) {
-    //             setDataError("An error occurred while fetching data");
-    //             console.error(error);
-    //         }
-    //     };
-    //     fetchUserData();
-    // }, []);
+    const [reducerValue, forceUpdate] = useReducer(x => x + 1, 0)
 
     useEffect(() => {
         const fetchUserInfo = async () => {
@@ -61,7 +41,7 @@ export default function UserSettings () {
             }
         };
         fetchUserInfo();
-    }, []);
+    }, [reducerValue]);
 
     const changeCredentials = async () => {
         const token = Cookies.get('accessToken');
@@ -91,7 +71,16 @@ export default function UserSettings () {
                 });
     
                 const json = await response.json();
+                const { accessToken } = json;
                 console.log('Password or username changed' + json);
+
+                Cookies.set('accessToken', accessToken, { expires: 7 });
+                console.log('Token set in cookies:', accessToken);
+
+                usernameRef.current.value = '';
+                passwordRef.current.value = '';
+
+                forceUpdate();
             } else {
                 console.log('No new credentials provided');
             }
@@ -195,7 +184,7 @@ export default function UserSettings () {
             </div>)
             : (<>
             <div>loading...</div>
-            <button onClick={() => handleLogin("ilovehondas1", "hondas")}>TEST LOGIN</button>
+            <button onClick={() => handleLogin("ilovehondas1", "newpassword")}>TEST LOGIN</button>
             <button onClick={() => handleLogin("admin", "hashed_password_3")}>TEST LOGIN (ADMIN)</button>
             </>)
 
