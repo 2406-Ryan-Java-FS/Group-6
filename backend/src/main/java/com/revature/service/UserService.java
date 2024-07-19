@@ -1,5 +1,6 @@
 package com.revature.service;
 
+import com.revature.dto.UserUpdateDTO;
 import com.revature.exception.BadRequestException;
 import com.revature.exception.ConflictException;
 import com.revature.exception.UnauthorizedException;
@@ -74,40 +75,33 @@ public class UserService implements IUserService {
      * @throws UnauthorizedException if trying to change roles without sufficient privileges.
      * @throws ConflictException     if the updated username or email are already taken.
      */
-    public User updateUser(Integer userId, User user) {
+    public User updateUser(String username, UserUpdateDTO userUpdateDTO) {
 
-        if (userId == null || !userRepository.existsById(userId)) {
-            throw new BadRequestException("User Id is invalid.");
+        User updatedUser = userRepository.findByUsername(username);
+
+        if (updatedUser == null) {
+            throw new BadRequestException("User not found.");
         }
 
-        User updatedUser = userRepository.findByUserId(userId);
-
-        if (user.getUsername() != null && !updatedUser.getUsername().equals(user.getUsername())) {
-            if (userRepository.existsByUsername(user.getUsername())) {
+        if (userUpdateDTO.getUsernameNew() != null && !userUpdateDTO.getUsernameNew().isEmpty()
+                && !updatedUser.getUsername().equals(userUpdateDTO.getUsernameNew())) {
+            if (userRepository.existsByUsername(userUpdateDTO.getUsernameNew())) {
                 throw new ConflictException("Username is already taken");
             }
-            updatedUser.setUsername(user.getUsername());
+            updatedUser.setUsername(userUpdateDTO.getUsernameNew());
         }
 
-        if (user.getPassword() != null && !updatedUser.getPassword().equals(user.getPassword())) {
-            updatedUser.setPassword(user.getPassword());
+        if (userUpdateDTO.getPasswordNew() != null && !userUpdateDTO.getPasswordNew().isEmpty()
+                && !updatedUser.getPassword().equals(userUpdateDTO.getPasswordNew())) {
+            updatedUser.setPassword(userUpdateDTO.getPasswordNew());
         }
 
-        if (user.getEmail() != null && !updatedUser.getEmail().equals(user.getEmail())) {
-            if (userRepository.existsByEmail(user.getEmail())) {
-                throw new ConflictException("Email is already registered");
-            }
-            updatedUser.setEmail(user.getEmail());
+        // Ensure the email and role fields remain unchanged
+        if (userUpdateDTO.getUsernameNew() == null && userUpdateDTO.getPasswordNew() == null) {
+            throw new BadRequestException("No fields to update.");
         }
 
-        if ((updatedUser.getRole().equalsIgnoreCase("Customer")
-                && !user.getRole().equalsIgnoreCase("Customer"))
-                || (updatedUser.getRole().equalsIgnoreCase("Seller")
-                && !user.getRole().equalsIgnoreCase("Seller"))) {
-            throw new UnauthorizedException("You are not allowed to change your role");
-        }
-
-        return userRepository.save(user);
+        return userRepository.save(updatedUser);
     }
 
     /**
@@ -137,6 +131,15 @@ public class UserService implements IUserService {
         }
 
         userRepository.deleteById(userId);
+    }
+
+    public void deleteUser(int userId) throws IllegalArgumentException {
+        User existingUser = userRepository.findByUserId(userId);
+        if (existingUser != null) {
+            userRepository.deleteById(userId);
+        } else if (existingUser == null) {
+            throw new IllegalArgumentException("User already deleted or does not exist.");
+        }
     }
 
     /**
