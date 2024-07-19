@@ -38,13 +38,13 @@ public class OrderService implements IOrderService {
      */
     public Order addOrder(Order order) {
 
-        if (order.getCustomerId() == null || !userRepository.existsById(order.getCustomerId())) {
-            throw new NotFoundException("Customer Id does not exist.");
-        }
+//        if (order.getCustomerId() == null || !userRepository.existsById(order.getCustomerId())) {
+//            throw new NotFoundException("Customer Id does not exist.");
+//        }
 
-        if (order.getPartId() == null || !partRepository.existsById(order.getPartId())) {
-            throw new NotFoundException("Part Id does not exist.");
-        }
+//        if (order.getPartId() == null || !partRepository.existsById(order.getPartId())) {
+//            throw new NotFoundException("Part Id does not exist.");
+//        }
 
         Part orderedPart = partRepository.findByPartId(order.getPartId());
 
