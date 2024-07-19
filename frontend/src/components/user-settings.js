@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import AdminPage from "./admin-page";
+import Cookies from "js-cookie";
 
 export default function UserSettings () {
 
@@ -12,46 +13,119 @@ export default function UserSettings () {
     const [data, setData] = useState([])
     const [dataError, setDataError] = useState("");
 
-    useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const response = await fetch(`${AUTOSHOP_URL}/2`);
-                // const response = await fetch(`${AUTO_SHOP_URL}1`);
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const json = await response.json();
-                    setData([json]);
-                    console.log(json);
-                    setDataError("");
+    // useEffect(() => {
+    //     const fetchUserData = async () => {
+    //         try {
+    //             const response = await fetch(`${AUTOSHOP_URL}/2`);
+    //             // const response = await fetch(`${AUTO_SHOP_URL}1`);
+    //             if (!response.ok) {
+    //                 throw new Error('Network response was not ok');
+    //             }
+    //             const json = await response.json();
+    //                 setData([json]);
+    //                 console.log(json);
+    //                 setDataError("");
                 
+    //         } catch (error) {
+    //             setDataError("An error occurred while fetching data");
+    //             console.error(error);
+    //         }
+    //     };
+    //     fetchUserData();
+    // }, []);
+
+    useEffect(() => {
+        const fetchUserInfo = async () => {
+            const token = Cookies.get('accessToken');
+        
+            try {
+                const response = await fetch('http://localhost:8080/users/current', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+        
+                if (!response.ok) {
+                    throw new Error('Failed to fetch user info');
+                }
+        
+                const json = await response.json();
+                console.log('User info:', json);
+                setData([json])
+                setDataError("");
             } catch (error) {
                 setDataError("An error occurred while fetching data");
                 console.error(error);
             }
         };
-        fetchUserData();
+        fetchUserInfo();
     }, []);
 
-    // const changeCredentials = () => {
+    const changeCredentials = async () => {
+        const token = Cookies.get('accessToken');
+        console.log(usernameRef.current.value)
+        console.log(passwordRef.current.value)
+        try {
+            // Create an empty object to hold the fields
+            const requestBody = {};
+    
+            // Conditionally add fields based on whether the refs have values
+            if (usernameRef.current.value) {
+                requestBody.usernameNew = usernameRef.current.value;
+            }
+            if (passwordRef.current.value) {
+                requestBody.passwordNew = passwordRef.current.value;
+            }
+    
+            // Send the request only if there's at least one field to update
+            if (Object.keys(requestBody).length > 0) {
+                const response = await fetch(`${AUTOSHOP_URL}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestBody),
+                });
+    
+                const json = await response.json();
+                console.log('Password or username changed' + json);
+            } else {
+                console.log('No new credentials provided');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
 
-    //     const putUserCredentials = async () => {
-    //         try {
-    //             const response = await fetch(`${AUTOSHOP_URL}/2`,
-    //                 {
-    //                     method: 'PUT',
-    //                     headers: {
-    //                         'Content-Type': 'application/json'
-    //                     },
-    //                     body: JSON.stringify({
-    //                         "user_id": usernameRef.current.value
-    //                     }),
-    //                 }
-    //             );
-    //         }
-    //     }
-
-    // }
+    const handleLogin = async (username, password) => {
+        try {
+            const response = await fetch('http://localhost:8080/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password }),
+            });
+    
+            if (!response.ok) {
+                throw new Error('Login failed');
+            }
+    
+            const data = await response.json();
+            const { accessToken } = data;
+    
+            // Set the token in a cookie
+            Cookies.set('accessToken', accessToken, { expires: 7 }); // Set the cookie to expire in 7 days (you can adjust this as needed)
+            console.log('Token set in cookies:', accessToken);
+    
+            // Proceed with other login actions, such as redirecting the user
+        } catch (error) {
+            console.error('Error during login:', error);
+        }
+    };
 
 
     return (
@@ -101,16 +175,29 @@ export default function UserSettings () {
                         </tr> */}
 
                     </table>
-                    <button type="button" className="btn btn-primary" style={{ marginTop: "20px" }}>Save Changes</button>
+                    <button 
+                        type="button" 
+                        className="btn btn-primary" 
+                        style={{ marginTop: "20px" }}
+                        onClick={changeCredentials}
+                    >
+                        Save Changes
+                    </button>
                 </div>
 
 
-                <div style={{ marginTop: '100px' }}>
+                {
+                data[0].role == 'Admin' &&
+                (<div style={{ marginTop: '100px' }}>
                     <AdminPage />
-                </div>
+                </div>)}
 
             </div>)
-            : (<div>loading...</div>)
+            : (<>
+            <div>loading...</div>
+            <button onClick={() => handleLogin("ilovehondas1", "hondas")}>TEST LOGIN</button>
+            <button onClick={() => handleLogin("admin", "hashed_password_3")}>TEST LOGIN (ADMIN)</button>
+            </>)
 
         }
         </>
