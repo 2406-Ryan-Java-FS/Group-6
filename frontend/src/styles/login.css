@@ -52,3 +52,14 @@ input {
 .loginButton:hover {
     background-color: #0056b3;
 }
+
+.success {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #4CAF50;
+    background-color: #dff0d8;
+    color: #3c763d;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: bold;
+}
