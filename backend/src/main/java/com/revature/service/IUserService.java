@@ -9,7 +9,7 @@ public interface IUserService {
 
     User getUser(Integer userId);
 
-    User updateUser(Integer userId, UserUpdateDTO userUpdateDTO);
+    User updateUser(String username, UserUpdateDTO userUpdateDTO);
 
     void deleteUser(User user);
 

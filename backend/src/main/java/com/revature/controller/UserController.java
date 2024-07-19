@@ -87,16 +87,20 @@ public class UserController {
     /**
      * Endpoint for updating a User given its userId.
      *
-     * @param userId The userId of the registered User to be updated.
-     * @param user   The User object containing the updated data.
+     * @param UserUpdateDTO has usernameNew and passwordNew fields
+     *                      Will invalidate the token if pass empty field; Only pass field to change
+     * @param authentication will update that account's username and or password
      * @return If successful, returns the updated User.
      * If unsuccessful, returns a String message indicating the failure reason along with a 400, 401, or 409 status code.
      */
-    @PutMapping("/{userId}")
-    public ResponseEntity<Object> updateUser(@PathVariable Integer userId, @RequestBody UserUpdateDTO userUpdateDTO) {
+    @PutMapping
+    public ResponseEntity<Object> updateUser(Authentication authentication, @RequestBody UserUpdateDTO userUpdateDTO) {
 
         try {
-            User updatedUser = userService.updateUser(userId, userUpdateDTO);
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+            String username = userDetails.getUsername();
+            User updatedUser = userService.updateUser(username, userUpdateDTO);
             return new ResponseEntity<>(updatedUser, HttpStatus.OK);
         } catch (BadRequestException bre) {
             return new ResponseEntity<>(bre.getMessage(), HttpStatus.BAD_REQUEST);
@@ -110,7 +114,7 @@ public class UserController {
     /**
      * Endpoint for deleting a User using that user's credentials.
      *
-     * @authHeader authentication deletes user tied to the token.
+     * @param authentication deletes user tied to the token.
      * @return If successful, returns a 200 status code.
      * If unsuccessful, returns a String message indicating the failure reason along with a 400 or 401 status code.
      */
@@ -140,7 +144,7 @@ public class UserController {
      * Endpoint for deleting a User as an Admin.
      *
      * @param userId The userId of User to be deleted.
-     * @authHeader authentication checks if token has admin role.
+     * @param authentication checks if token has admin role.
      * @return If successful, returns a 200 status code.
      * If unsuccessful, returns a String message indicating the failure reason along with a 400 or 401 status code.
      */

@@ -75,13 +75,13 @@ public class UserService implements IUserService {
      * @throws UnauthorizedException if trying to change roles without sufficient privileges.
      * @throws ConflictException     if the updated username or email are already taken.
      */
-    public User updateUser(Integer userId, UserUpdateDTO userUpdateDTO) {
+    public User updateUser(String username, UserUpdateDTO userUpdateDTO) {
 
-        if (userId == null || !userRepository.existsById(userId)) {
-            throw new BadRequestException("User Id is invalid.");
+        User updatedUser = userRepository.findByUsername(username);
+
+        if (updatedUser == null) {
+            throw new BadRequestException("User not found.");
         }
-
-        User updatedUser = userRepository.findByUserId(userId);
 
         if (userUpdateDTO.getUsernameNew() != null && !userUpdateDTO.getUsernameNew().isEmpty()
                 && !updatedUser.getUsername().equals(userUpdateDTO.getUsernameNew())) {
