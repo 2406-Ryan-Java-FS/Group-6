@@ -5,6 +5,7 @@ import '../styles/plcOrder.css'
 import '../styles/nav.css'
 
 export default function PlaceOrder(){
+    // too do, find the customer token and us it to add the orders
     const customerID = 1;
     const [partID, setPartID] = useState('');
     const [quantity, setQuantitiy] = useState(1);
