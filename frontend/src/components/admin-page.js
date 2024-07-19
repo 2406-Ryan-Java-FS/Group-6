@@ -13,7 +13,8 @@ export default function AdminPage() {
     const [dataError, setDataError] = useState("");
 
     const fetchUserData = async () => {
-        const token = Cookies.get('accessToken')
+        // const token = Cookies.get('accessToken')
+        const token = localStorage.getItem('accessToken');
 
         if (inputRef.current.value > 0) {
             try {
@@ -46,7 +47,8 @@ export default function AdminPage() {
     }
 
     const fetchAllUserData = async () => {
-        const token = Cookies.get('accessToken')
+        // const token = Cookies.get('accessToken')
+        const token = localStorage.getItem('accessToken');
 
         try {
             const response = await fetch(AUTOSHOP_URL, {
@@ -74,7 +76,8 @@ fetchAllUserData()
 
 
     const deleteUserData = async () => {
-        const token = Cookies.get('accessToken')
+        // const token = Cookies.get('accessToken')
+        const token = localStorage.getItem('accessToken');
         
         try {
             const response = await fetch(`${AUTOSHOP_URL}/admin/${inputRef.current.value}`,
