@@ -22,8 +22,12 @@ export default function Home(){
         <div className="accountHome">
             <h2>Account</h2>
             <div className="accountHome-content">
-                <button onClick={<Link className="accountHome-content-login" to="/" >Login</Link>}>Log In</button><br />
-                <button onClick={<Link className="accountHome-content-createAccount" to="/" >Make New Account</Link>}>Create Account</button>
+                <Link className="accountHome-content-login" to="/" >
+                    <button>Log In</button><br />
+                </Link>
+                <Link className="accountHome-content-createAccount" to="/">
+                    <button>Create Account</button>
+                </Link>
             </div>
         </div>
         <div className="partsHome">
@@ -38,7 +42,7 @@ export default function Home(){
                         </div>
                         <div className="partsContainer">
                             <button className="partsButton partsMechanical"></button>
-                            <div className="partsText">Mechanical Parts</div>
+                            <div className="partsText">Bateries</div>
                         </div>
                     </div>
                     <div className="group2">
@@ -47,8 +51,10 @@ export default function Home(){
                             <div className="partsText">Light Bulbs</div>
                         </div>
                         <div className="partsContainer">
-                            <button className="partsButton partsRandom"></button>
-                            <div className="partsText">All Parts</div>
+                            <Link to="/parts">
+                                <button className="partsButton partsRandom"></button>
+                                <div className="partsText">All Parts</div>
+                            </Link>
                         </div>
                     </div>                                  
                 </div>
@@ -57,8 +63,12 @@ export default function Home(){
         <div className="ordersHome">
             <h2>Orders</h2>
             <div className="orderHome-content">
-            <button onClick={<Link className="orderHome-content-placeOrder" to="/" >place new order</Link>}>Place Order</button><br />
-            <button onClick={<Link className="orderHome-content-viewOrder" to="/" >View orders</Link>}>View Orders</button>
+                <Link to="/orders">
+                    <button>Place Order</button><br />
+                </Link>
+                <Link to="/">
+                    <button>View Orders</button>
+                </Link>
             </div>
         </div>
     </>)

@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 export default function NavBar(){
 
@@ -12,8 +14,17 @@ export default function NavBar(){
                 <Link className="nav-link" to="/">Login</Link>
                 {/* <Link className="nav-link" to="#">Pricing</Link> */}
                 <form className="d-flex" role="search">
-                    <input className="form-control me-2" type="search" placeholder="Search for Part" aria-label="Search" />
-                    <button className="btn btn-outline-success" type="submit">Search</button>
+                    <input 
+                        className="form-control me-2" 
+                        type="search" 
+                        placeholder="Search for a Part" 
+                        aria-label="Search"
+                     />
+                    <button 
+                    className="btn btn-outline-success" 
+                    type="submit">
+                        Search
+                    </button>
                 </form>
             </div>
         </nav>
