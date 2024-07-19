@@ -1,19 +1,27 @@
 package com.revature.controller;
 
+import com.revature.dto.AuthResponseDTO;
 import com.revature.dto.UserUpdateDTO;
 import com.revature.exception.BadRequestException;
 import com.revature.exception.ConflictException;
 import com.revature.exception.UnauthorizedException;
 import com.revature.model.User;
 import com.revature.repository.UserRepository;
+import com.revature.security.JwtGenerator;
 import com.revature.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -22,11 +30,15 @@ public class UserController {
 
     UserService userService;
     UserRepository userRepository;
+    JwtGenerator jwtGenerator;
+    AuthenticationManager authenticationManager;
 
     @Autowired
-    public UserController(UserService userService, UserRepository userRepository) {
+    public UserController(UserService userService, UserRepository userRepository, JwtGenerator jwtGenerator, AuthenticationManager authenticationManager) {
         this.userService = userService;
         this.userRepository = userRepository;
+        this.jwtGenerator = jwtGenerator;
+        this.authenticationManager = authenticationManager;
     }
 
     /**
@@ -57,13 +69,39 @@ public class UserController {
      * If unsuccessful, returns a String message indicating the failure reason along with a 400 status code.
      */
     @GetMapping("/{userId}")
-    public ResponseEntity<Object> getUser(@PathVariable int userId) {
+    public ResponseEntity<Object> getUser(@PathVariable int userId, Authentication authentication) {
 
         try {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            String username = userDetails.getUsername();
+            User admin = userRepository.findByUsername(username);
+
+            if (!admin.getRole().equalsIgnoreCase("Admin")) {
+                throw new UnauthorizedException("Only Admins can do this");
+            }
+
             User existingUser = userService.getUser(userId);
             return new ResponseEntity<>(existingUser, HttpStatus.OK);
         } catch (BadRequestException bre) {
             return new ResponseEntity<>(bre.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping
+    public ResponseEntity<Object> getAllUsers(Authentication authentication) {
+        try {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            String username = userDetails.getUsername();
+            User admin = userRepository.findByUsername(username);
+
+            if (!admin.getRole().equalsIgnoreCase("Admin")) {
+                throw new UnauthorizedException("Only Admins can do this!");
+            }
+
+            List<User> users = userService.getAllUsers();
+            return new ResponseEntity<>(users, HttpStatus.OK);
+        } catch (UnauthorizedException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
         }
     }
 
@@ -101,7 +139,18 @@ public class UserController {
 
             String username = userDetails.getUsername();
             User updatedUser = userService.updateUser(username, userUpdateDTO);
-            return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+
+            // Generate a new JWT token based on new credentials
+            Authentication newAuthentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(updatedUser.getUsername(), updatedUser.getPassword()));
+
+            SecurityContextHolder.getContext().setAuthentication(newAuthentication);
+            String newToken = jwtGenerator.generateToken(newAuthentication);
+
+            // Set the new token in the response headers
+            AuthResponseDTO response = new AuthResponseDTO(newToken);
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (BadRequestException bre) {
             return new ResponseEntity<>(bre.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (UnauthorizedException ue) {
