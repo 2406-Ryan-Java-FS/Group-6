@@ -16,7 +16,10 @@ export default function UserSettings () {
 
     useEffect(() => {
         const fetchUserInfo = async () => {
-            const token = Cookies.get('accessToken');
+            // const token = Cookies.get('accessToken');
+
+            // localStorage.setItem('accessToken', accessToken);
+            const token = localStorage.getItem('accessToken')
         
             try {
                 const response = await fetch('http://localhost:8080/users/current', {
@@ -44,7 +47,8 @@ export default function UserSettings () {
     }, [reducerValue]);
 
     const changeCredentials = async () => {
-        const token = Cookies.get('accessToken');
+        // const token = Cookies.get('accessToken');
+        const token = localStorage.getItem('accessToken');
         console.log(usernameRef.current.value)
         console.log(passwordRef.current.value)
         try {
@@ -74,8 +78,9 @@ export default function UserSettings () {
                 const { accessToken } = json;
                 console.log('Password or username changed' + json);
 
-                Cookies.set('accessToken', accessToken, { expires: 7 });
-                console.log('Token set in cookies:', accessToken);
+                // Cookies.set('accessToken', accessToken, { expires: 7 });
+                localStorage.setItem('accessToken', accessToken);
+                console.log('Token set in cookies:');
 
                 usernameRef.current.value = '';
                 passwordRef.current.value = '';
@@ -90,7 +95,8 @@ export default function UserSettings () {
     };
 
     const deleteAccount = async () => {
-        const token = Cookies.get('accessToken')
+        // const token = Cookies.get('accessToken')
+        const token = localStorage.getItem('accessToken');
         
         try {
             const response = await fetch(`${AUTOSHOP_URL}`,
@@ -130,7 +136,9 @@ export default function UserSettings () {
             const { accessToken } = data;
     
             // Set the token in a cookie
-            Cookies.set('accessToken', accessToken, { expires: 7 }); // Set the cookie to expire in 7 days (you can adjust this as needed)
+            // Cookies.set('accessToken', accessToken, { expires: 7 }); // Set the cookie to expire in 7 days (you can adjust this as needed)
+            localStorage.setItem('accessToken', accessToken);
+            
             console.log('Token set in cookies:', accessToken);
     
             // Proceed with other login actions, such as redirecting the user
