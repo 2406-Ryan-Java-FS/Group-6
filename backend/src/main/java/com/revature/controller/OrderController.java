@@ -122,4 +122,15 @@ public class OrderController {
         List<Order> orders = orderService.viewOrders();
         return new ResponseEntity<>(orders, HttpStatus.OK);
     }
+
+    @GetMapping("/current")
+    public ResponseEntity<List<Order>> viewUserOrders(Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String username = userDetails.getUsername();
+        User user = userRepository.findByUsername(username);
+
+        List<Order> orders = orderService.viewUserOrders(user);
+            return ResponseEntity.ok(orders);
+    }
+
 }
