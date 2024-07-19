@@ -4,6 +4,7 @@ import com.revature.exception.BadRequestException;
 import com.revature.exception.NotFoundException;
 import com.revature.model.Order;
 import com.revature.model.Part;
+import com.revature.model.User;
 import com.revature.repository.OrderRepository;
 import com.revature.repository.PartRepository;
 import com.revature.repository.UserRepository;
@@ -161,5 +162,11 @@ public class OrderService implements IOrderService {
      */
     public List<Order> viewOrders() {
         return orderRepository.findAll();
+    }
+
+    public List<Order> viewUserOrders(User user) {
+        Integer customerId = user.getUserId();
+
+        return orderRepository.findAllByCustomerId(customerId);
     }
 }

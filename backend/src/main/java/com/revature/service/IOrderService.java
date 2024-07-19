@@ -1,6 +1,7 @@
 package com.revature.service;
 
 import com.revature.model.Order;
+import com.revature.model.User;
 
 import java.util.List;
 
@@ -15,5 +16,7 @@ public interface IOrderService {
     boolean deleteOrder(Integer orderId);
 
     List<Order> viewOrders();
+
+    List<Order> viewUserOrders(User user);
 
 }
