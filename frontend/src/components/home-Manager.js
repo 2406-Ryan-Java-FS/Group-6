@@ -42,7 +42,7 @@ export default function Home(){
                         </div>
                         <div className="partsContainer">
                             <button className="partsButton partsMechanical"></button>
-                            <div className="partsText">Bateries</div>
+                            <div className="partsText">Batteries</div>
                         </div>
                     </div>
                     <div className="group2">
