@@ -2,10 +2,39 @@ body {
     background-color:#F6F6F6;
 }
 
-.mainContainer {
+.adminMainContainer {
     /* margin: 20px 20px 20px 20px; */
     padding-bottom: 200px;
+}
 
+.adminContent {
+    display: flex;
+    gap:200px;
+}
+
+.userTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+}
+
+.userTable th,
+.userTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.userTable th {
+    background-color: #f4f4f4;
+}
+
+.userTable tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.userTable tr:hover {
+    background-color: #f1f1f1;
 }
 
 h1.admin {

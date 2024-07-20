@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import AdminPage from "./admin-page";
+import Cookies from "js-cookie";
 
 export default function UserSettings () {
 
@@ -11,47 +12,140 @@ export default function UserSettings () {
     const AUTOSHOP_URL = 'http://localhost:8080/users'
     const [data, setData] = useState([])
     const [dataError, setDataError] = useState("");
+    const [reducerValue, forceUpdate] = useReducer(x => x + 1, 0)
 
     useEffect(() => {
-        const fetchUserData = async () => {
+        const fetchUserInfo = async () => {
+            // const token = Cookies.get('accessToken');
+
+            // localStorage.setItem('accessToken', accessToken);
+            const token = localStorage.getItem('accessToken')
+        
             try {
-                const response = await fetch(`${AUTOSHOP_URL}/2`);
-                // const response = await fetch(`${AUTO_SHOP_URL}1`);
+                const response = await fetch('http://localhost:8080/users/current', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+        
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    throw new Error('Failed to fetch user info');
                 }
+        
                 const json = await response.json();
-                    setData([json]);
-                    console.log(json);
-                    setDataError("");
-                
+                console.log('User info:', json);
+                setData([json])
+                setDataError("");
             } catch (error) {
                 setDataError("An error occurred while fetching data");
                 console.error(error);
             }
         };
-        fetchUserData();
-    }, []);
+        fetchUserInfo();
+    }, [reducerValue]);
 
-    // const changeCredentials = () => {
+    const changeCredentials = async () => {
+        // const token = Cookies.get('accessToken');
+        const token = localStorage.getItem('accessToken');
+        console.log(usernameRef.current.value)
+        console.log(passwordRef.current.value)
+        try {
+            // Create an empty object to hold the fields
+            const requestBody = {};
+    
+            // Conditionally add fields based on whether the refs have values
+            if (usernameRef.current.value) {
+                requestBody.usernameNew = usernameRef.current.value;
+            }
+            if (passwordRef.current.value) {
+                requestBody.passwordNew = passwordRef.current.value;
+            }
+    
+            // Send the request only if there's at least one field to update
+            if (Object.keys(requestBody).length > 0) {
+                const response = await fetch(`${AUTOSHOP_URL}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestBody),
+                });
+    
+                const json = await response.json();
+                const { accessToken } = json;
+                console.log('Password or username changed' + json);
 
-    //     const putUserCredentials = async () => {
-    //         try {
-    //             const response = await fetch(`${AUTOSHOP_URL}/2`,
-    //                 {
-    //                     method: 'PUT',
-    //                     headers: {
-    //                         'Content-Type': 'application/json'
-    //                     },
-    //                     body: JSON.stringify({
-    //                         "user_id": usernameRef.current.value
-    //                     }),
-    //                 }
-    //             );
-    //         }
-    //     }
+                // Cookies.set('accessToken', accessToken, { expires: 7 });
+                localStorage.setItem('accessToken', accessToken);
+                console.log('Token set in cookies:');
 
-    // }
+                usernameRef.current.value = '';
+                passwordRef.current.value = '';
+
+                forceUpdate();
+            } else {
+                console.log('No new credentials provided');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
+    const deleteAccount = async () => {
+        // const token = Cookies.get('accessToken')
+        const token = localStorage.getItem('accessToken');
+        
+        try {
+            const response = await fetch(`${AUTOSHOP_URL}`,
+                {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    }
+                },
+            )
+            if (response.ok) {
+                console.log("User deleted")
+                // to redirect to home
+            } else {
+                console.error("Error")
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const handleLogin = async (username, password) => {
+        try {
+            const response = await fetch('http://localhost:8080/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password }),
+            });
+    
+            if (!response.ok) {
+                throw new Error('Login failed');
+            }
+    
+            const data = await response.json();
+            const { accessToken } = data;
+    
+            // Set the token in a cookie
+            // Cookies.set('accessToken', accessToken, { expires: 7 }); // Set the cookie to expire in 7 days (you can adjust this as needed)
+            localStorage.setItem('accessToken', accessToken);
+            
+            console.log('Token set in cookies:', accessToken);
+    
+            // Proceed with other login actions, such as redirecting the user
+        } catch (error) {
+            console.error('Error during login:', error);
+        }
+    };
 
 
     return (
@@ -101,16 +195,36 @@ export default function UserSettings () {
                         </tr> */}
 
                     </table>
-                    <button type="button" className="btn btn-primary" style={{ marginTop: "20px" }}>Save Changes</button>
+                    <button 
+                        type="button" 
+                        className="btn btn-primary" 
+                        style={{ marginTop: "20px" }}
+                        onClick={changeCredentials}
+                    >
+                        Save Changes
+                    </button>
+                    <button 
+                        type="button" 
+                        class="btn btn-danger"
+                        onClick={deleteAccount}
+                    >
+                        Delete Account
+                    </button>
                 </div>
 
 
-                <div style={{ marginTop: '100px' }}>
-                    <AdminPage />
-                </div>
+                { data[0].role == 'Admin' &&
+                (<div style={{ marginTop: '100px' }}>
+                    <AdminPage  />
+                </div>)}
 
             </div>)
-            : (<div>loading...</div>)
+            : (<>
+            <div>loading...</div>
+            <button onClick={() => handleLogin("ilovehondas1", "hondas")}>TEST LOGIN</button>
+            <button onClick={() => handleLogin("Bobisback", "pass")}>LOGIN TO DELETE</button>
+            <button onClick={() => handleLogin("admin", "hashed_password_3")}>TEST LOGIN (ADMIN)</button>
+            </>)
 
         }
         </>

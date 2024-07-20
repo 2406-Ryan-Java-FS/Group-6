@@ -1,0 +1,101 @@
+/* Login and Registration styles */
+
+p, h1, h2, a {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.heading {
+    text-align: center;
+    background-color: lightgray;
+    padding: 10px;
+    border-radius: 3px;
+}
+
+.formContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 150px);
+}
+
+.form {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    width: 300px;
+}
+
+.formGroup {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.formButton {
+    width: 100%;
+    padding: 10px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.formButton:hover {
+    background-color: #0056b3;
+}
+
+/* Styles for success and error messages */
+
+.success, .error {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.success {
+    border: 1px solid #4CAF50;
+    background-color: #dff0d8;
+    color: #3c763d;
+}
+
+.error {
+    border: 1px solid #dc3545;
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* Styling for registration link/button */
+
+.registerLink {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.registerLink button {
+    background: none;
+    border: none;
+    color: #007BFF;
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: inherit;
+    font-family: inherit;
+    padding: 0;
+    margin: 0;
+}
+
+.registerLink button:hover {
+    text-decoration: none;
+}

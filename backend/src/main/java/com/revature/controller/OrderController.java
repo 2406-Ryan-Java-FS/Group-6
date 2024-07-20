@@ -1,12 +1,17 @@
 package com.revature.controller;
 
+import com.revature.dto.AddOrderDTO;
 import com.revature.exception.BadRequestException;
 import com.revature.exception.NotFoundException;
 import com.revature.model.Order;
+import com.revature.model.User;
+import com.revature.repository.UserRepository;
 import com.revature.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,10 +22,12 @@ import java.util.List;
 public class OrderController {
 
     OrderService orderService;
+    UserRepository userRepository;
 
     @Autowired
-    public OrderController(OrderService orderService) {
+    public OrderController(OrderService orderService, UserRepository userRepository) {
         this.orderService = orderService;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -31,8 +38,17 @@ public class OrderController {
      * If unsuccessful, returns a String message indicating the failure reason, along with a 400 or 404 status code.
      */
     @PostMapping
-    public ResponseEntity<Object> addOrder(@RequestBody Order order) {
+    public ResponseEntity<Object> addOrder(@RequestBody AddOrderDTO addOrderDTO, Authentication authentication) {
         try {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            String username = userDetails.getUsername();
+            User user = userRepository.findByUsername(username);
+
+            Order order = new Order();
+            order.setCustomerId(user.getUserId());
+            order.setPartId(addOrderDTO.getPartId());
+            order.setQuantity(addOrderDTO.getQuantity());
+
             Order addedOrder = orderService.addOrder(order);
             return new ResponseEntity<>(addedOrder, HttpStatus.CREATED);
         } catch (BadRequestException bre) {
@@ -106,4 +122,15 @@ public class OrderController {
         List<Order> orders = orderService.viewOrders();
         return new ResponseEntity<>(orders, HttpStatus.OK);
     }
+
+    @GetMapping("/current")
+    public ResponseEntity<List<Order>> viewUserOrders(Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String username = userDetails.getUsername();
+        User user = userRepository.findByUsername(username);
+
+        List<Order> orders = orderService.viewUserOrders(user);
+            return ResponseEntity.ok(orders);
+    }
+
 }
