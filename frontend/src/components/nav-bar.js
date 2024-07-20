@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useHistory } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../components/auth-context";
 
@@ -26,8 +26,17 @@ export default function NavBar() {
                 {/* <Link className="nav-link" to="#">Pricing</Link> */}
                 <Link className="nav-link" to="/settings">Settings</Link>
                 <form className="d-flex" role="search">
-                    <input className="form-control me-2" type="search" placeholder="Search for Part" aria-label="Search" />
-                    <button className="btn btn-outline-success" type="submit">Search</button>
+                    <input 
+                        className="form-control me-2" 
+                        type="search" 
+                        placeholder="Search for a Part" 
+                        aria-label="Search"
+                     />
+                    <button 
+                    className="btn btn-outline-success" 
+                    type="submit">
+                        Search
+                    </button>
                 </form>
             </div>
         </nav>
