@@ -1,5 +1,6 @@
-import { useEffect, useReducer, useRef, useState } from "react";
+import { useEffect, useReducer, useRef, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "./auth-context";
 import AdminPage from "./admin-page";
 import Cookies from "js-cookie";
 
@@ -21,6 +22,8 @@ export default function UserSettings () {
     const [confirmDelete, setConfirmDelete] = useState(false);
 
     const navigate = useNavigate();
+
+    const { logout } = useContext(AuthContext);
 
     useEffect(() => {
         const fetchUserInfo = async () => {
@@ -120,6 +123,7 @@ export default function UserSettings () {
                 // to redirect to home
                 const userConfirmed = window.confirm("Your account has been deleted. You will be redirected to the home page.");
                 if (userConfirmed) {
+                  logout();
                   navigate('/'); // Redirect to the root URL if the user confirms
                 }
             } else {
@@ -229,10 +233,22 @@ export default function UserSettings () {
                                     )}
                                     
                                     { confirmDelete ?
-                                    (<div>
-                                        <div onClick={deleteAccount}>
-                                        delete?
-                                        </div>
+                                    (<div className="deleteConfirmContainer">
+                                            <div className="deleteText">
+                                                DELETE ACCOUNT?
+                                            </div>
+                                            <div className="yesContainer" onClick={deleteAccount}>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="green" class="bi bi-check-lg" viewBox="0 0 16 16">
+                                                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z" />
+                                                </svg>
+                                                <div> Yes </div>
+                                            </div>
+                                            <div className="noContainer" onClick={() => setConfirmDelete(false)}>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="red" class="bi bi-x-lg" viewBox="0 0 16 16">
+                                                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
+                                                </svg>
+                                                <div>No</div>
+                                            </div>
                                         </div> ):
 
                                     (

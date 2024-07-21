@@ -158,3 +158,47 @@ th, td {
     position: absolute;
     left: 3rem;
 }
+
+.bi-check-lg {
+
+}
+
+.bi-x-lg {
+
+}
+
+.yesContainer {
+    cursor: pointer;
+}
+
+.yesContainer:hover {
+    background-color: grey;
+}
+
+.noContainer {
+    cursor: pointer;
+}
+
+.noContainer:hover {
+    background-color:grey;
+}
+
+.deleteConfirmContainer {
+    position: absolute;
+    right: 3rem;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+}
+
+.deleteConfirmContainer>* {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.deleteText {
+    cursor: default;
+}
