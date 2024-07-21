@@ -8,8 +8,14 @@ import UserSettings from './components/user-settings';
 import LoginPage from './components/login-page';
 import RegisterPage from './components/register-page';
 import { AuthProvider } from './components/auth-context';
+import { useEffect } from 'react';
 
 function App() {
+
+  useEffect(() => {
+    document.title = 'AutoParts';
+  }, [])
+
   return (<>
     <AuthProvider>
         <NavBar />
