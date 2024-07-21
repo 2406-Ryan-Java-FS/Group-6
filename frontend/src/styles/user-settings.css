@@ -83,6 +83,15 @@ th, td {
     display: flex-col;
     padding: 20px;
     margin-top: 60px;
+    
+}
+
+.userContainerMainHolder {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
 }
 
 .userContainerMain td {
@@ -100,12 +109,16 @@ th, td {
     font-weight:600;
     font-size: 24px;
     padding-top:20px;
+    width: 240px;
     
 }
 
 .userContainerContent{
     /* position: absolute; */
     display: flex-col;
+    border: 2px solid #ddd;
+    padding: 8px 8px 60px 8px;
+    border-radius: 4px;
 }
 
 
@@ -129,4 +142,19 @@ th, td {
 
 .passwordContainer > div > p {
     margin-right: 20px;
+}
+
+.buttonContainer {
+    display: flex;
+    padding-top: 40px;
+}
+
+.deleteButton {
+    position: absolute;
+    right: 3rem;
+}
+
+.saveButton {
+    position: absolute;
+    left: 3rem;
 }

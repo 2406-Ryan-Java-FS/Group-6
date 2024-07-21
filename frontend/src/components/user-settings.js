@@ -1,4 +1,5 @@
 import { useEffect, useReducer, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AdminPage from "./admin-page";
 import Cookies from "js-cookie";
 
@@ -13,6 +14,13 @@ export default function UserSettings () {
     const [data, setData] = useState([])
     const [dataError, setDataError] = useState("");
     const [reducerValue, forceUpdate] = useReducer(x => x + 1, 0)
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+    const [showAlert, setShowAlert] = useState(false);
+
+    const [confirmDelete, setConfirmDelete] = useState(false);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchUserInfo = async () => {
@@ -110,6 +118,10 @@ export default function UserSettings () {
             if (response.ok) {
                 console.log("User deleted")
                 // to redirect to home
+                const userConfirmed = window.confirm("Your account has been deleted. You will be redirected to the home page.");
+                if (userConfirmed) {
+                  navigate('/'); // Redirect to the root URL if the user confirms
+                }
             } else {
                 console.error("Error")
             }
@@ -147,12 +159,20 @@ export default function UserSettings () {
         }
     };
 
+    const handleInputChange = () => {
+        setUsername(usernameRef.current.value)
+        setPassword(passwordRef.current.value)
+    }
+
 
     return (
         <>
         {data.length > 0 ?
 
-            (<div className="userContainerMain">
+            (
+            
+                <div className="userContainerMainHolder">
+            <div className="userContainerMain">
                 <h1 style={{ marginBottom: "60px" }}>User Settings</h1>
                 <div className="userContainerContent">
                     <div style={{ fontWeight: "600", fontSize: "24px", marginLeft: "20px", paddingBottom: "10px" }}>Account details</div>
@@ -163,6 +183,7 @@ export default function UserSettings () {
                                 <input 
                                     placeholder={data && data[0].username} 
                                     ref={usernameRef} 
+                                    onChange={handleInputChange}
                                 />
                             </td>
                         </tr>
@@ -187,6 +208,7 @@ export default function UserSettings () {
                                 <input 
                                     type="password" 
                                     ref={passwordRef} 
+                                    onChange={handleInputChange}
                                 />
                             </td>
                         </tr>
@@ -194,22 +216,37 @@ export default function UserSettings () {
                             <td>Confirm new password</td>
                         </tr> */}
 
-                    </table>
-                    <button 
-                        type="button" 
-                        className="btn btn-primary" 
-                        style={{ marginTop: "20px" }}
-                        onClick={changeCredentials}
-                    >
-                        Save Changes
-                    </button>
-                    <button 
-                        type="button" 
-                        class="btn btn-danger"
-                        onClick={deleteAccount}
-                    >
-                        Delete Account
-                    </button>
+                                </table>
+                                <div className="buttonContainer">
+                                    {(username.length || password) && (
+                                    <button
+                                        type="button"
+                                        className="btn btn-primary saveButton"
+                                        onClick={changeCredentials}
+                                    >
+                                        Save Changes
+                                    </button>
+                                    )}
+                                    
+                                    { confirmDelete ?
+                                    (<div>
+                                        <div onClick={deleteAccount}>
+                                        delete?
+                                        </div>
+                                        </div> ):
+
+                                    (
+                                        <button
+                                        type="button"
+                                        class="btn btn-danger deleteButton"
+                                        onClick={() => setConfirmDelete(true)}
+                                    >
+                                        Delete Account
+                                    </button>
+                                    )
+                                    }
+
+                                </div>
                 </div>
 
 
@@ -217,6 +254,7 @@ export default function UserSettings () {
                 (<div style={{ marginTop: '100px' }}>
                     <AdminPage  />
                 </div>)}
+                </div>
 
             </div>)
             : (<>
