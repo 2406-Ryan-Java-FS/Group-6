@@ -17,7 +17,7 @@ export default function UserSettings () {
     const [reducerValue, forceUpdate] = useReducer(x => x + 1, 0)
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    const [showAlert, setShowAlert] = useState(false);
+    const [updatedCredentials, setUpdatedCredentials] = useState(false);
 
     const [confirmDelete, setConfirmDelete] = useState(false);
 
@@ -92,11 +92,20 @@ export default function UserSettings () {
                 // Cookies.set('accessToken', accessToken, { expires: 7 });
                 localStorage.setItem('accessToken', accessToken);
                 console.log('Token set in cookies:');
+                
+                forceUpdate();
 
                 usernameRef.current.value = '';
                 passwordRef.current.value = '';
 
-                forceUpdate();
+                setUsername("")
+                setPassword("")
+
+                setUpdatedCredentials(true);
+                setTimeout(() => {
+                    setUpdatedCredentials(false); // Set credentials back to false after 2 seconds
+                  }, 800); // 2000 milliseconds = 2 seconds
+
             } else {
                 console.log('No new credentials provided');
             }
@@ -180,7 +189,7 @@ export default function UserSettings () {
                 <h1 style={{ marginBottom: "60px" }}>User Settings</h1>
                 <div className="userContainerContent">
                     <div style={{ fontWeight: "600", fontSize: "24px", marginLeft: "20px", paddingBottom: "10px" }}>Account details</div>
-                    <table>
+                    <table className="userSettingContainer">
                         <tr>
                             <td>Username</td>
                             <td>
@@ -222,16 +231,24 @@ export default function UserSettings () {
 
                                 </table>
                                 <div className="buttonContainer">
-                                    {(username.length || password) && (
+                                    {(username.length || password) && !updatedCredentials && (
                                     <button
                                         type="button"
                                         className="btn btn-primary saveButton"
-                                        onClick={changeCredentials}
-                                    >
-                                        Save Changes
-                                    </button>
+                                            onClick={changeCredentials}
+                                        >
+                                            Save Changes
+                                        </button>
                                     )}
-                                    
+
+                                    {updatedCredentials && (
+                                        <div
+                                            className="updatedButton"
+                                        >
+                                            Updated!
+                                        </div>
+                                    )}
+
                                     { confirmDelete ?
                                     (<div className="deleteConfirmContainer">
                                             <div className="deleteText">

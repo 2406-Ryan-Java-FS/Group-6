@@ -5,49 +5,46 @@ body {
 .adminMainContainer {
     /* margin: 20px 20px 20px 20px; */
     padding-bottom: 200px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
 }
 
 .adminContent {
-    display: flex;
+    display: flex-col;
     gap:200px;
 }
 
-.userTable {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 16px 0;
+.adminViewAllContainer {
+    margin-top:80px;
 }
 
-.userTable th,
-.userTable td {
+.userTable thead tr {
+    background-color: grey; /* Set the background color for the first row (thead tr) */
+    color: white; /* Set text color to white for contrast */
+}
+
+.userTable {
+    width: 100%; /* Ensure the table takes up the full width */
+    border-collapse: collapse; /* Collapse borders for cleaner look */
+}
+
+.userTable th, .userTable td {
+    padding: 10px;
     border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
+    
 }
 
 .userTable th {
-    background-color: #f4f4f4;
+    text-align: left;
 }
 
-.userTable tr:nth-child(even) {
-    background-color: #f9f9f9;
+.userTable td {
+    text-align: left;
 }
 
-.userTable tr:hover {
-    background-color: #f1f1f1;
-}
-
-h1.admin {
-    display: flex;
-    /* justify-content: center; */
-}
-
-.dataTable {
-    display:flex;
-}
-
-.dataTable>p {
-    margin: 0px 8px 0px 0px;
+.userTable th, .userTable td {
+    padding-right: 20px;
 }
 
 .errorEl {
@@ -55,24 +52,17 @@ h1.admin {
     font-weight: bold;
 }
 
-tr>th {
+.userSettingContainer tr>th {
     font-weight: normal;
     float:left;
 }
 
-tr {
+.userSettingContainer tr {
     margin-bottom: 4px;
 }
 
-.adminTable {
-    background-color:FloralWhite;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    padding:24px;
-    
-}
 
-th, td {
+.userSettingContainer th, td {
     padding: 1px 16px; /* Adjust padding as needed for space between th and td */
     text-align: left;
 }
@@ -157,6 +147,15 @@ th, td {
 .saveButton {
     position: absolute;
     left: 3rem;
+}
+
+.updatedButton {
+    position: absolute;
+    left: 3rem;
+    background-color: transparent;
+    color:green;
+    padding:6px;
+    
 }
 
 .bi-check-lg {

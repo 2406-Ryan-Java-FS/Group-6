@@ -117,66 +117,62 @@ fetchAllUserData()
                 </h1>
 
                 <div className='adminContent'>
-                <div className='adminDeleteContainer'>
-                    <p>Delete user</p>
-                    <div>
-                        <input ref={inputRef} onKeyDown={handleKeyDown} />
-                        <button onClick={fetchUserData}>search</button>
+                    <div className='adminDeleteContainer'>
+                        <p>Search for user</p>
+                        <div>
+                            <input ref={inputRef} onKeyDown={handleKeyDown} />
+                            <button onClick={fetchUserData}>search</button>
 
-                        {data.length > 0 && (
-                            <table className='adminTable'>
-                                <tbody>
-                                    <tr>
+                            {data.length > 0 && (
+                                <table className='userTable'>
+                                    <thead>
+                                        <tr>
                                         <th>user_id</th>
-                                        <td>{data[0].userId}</td>
-                                    </tr>
-                                    <tr>
                                         <th>Username</th>
-                                        <td>{data[0].username}</td>
-                                    </tr>
-                                    <tr>
                                         <th>Email</th>
-                                        <td>{data[0].email}</td>
-                                    </tr>
-                                    <tr>
                                         <th>Role</th>
-                                        <td>{data[0].role}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        )}
-                        {dataError && (
-                            <div className='errorEl'>{dataError}</div>
-                        )}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>{data[0].userId}</td>
+                                            <td>{data[0].username}</td>
+                                            <td>{data[0].email}</td>
+                                            <td>{data[0].role}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            )}
+                            {dataError && (
+                                <div className='errorEl'>{dataError}</div>
+                            )}
 
-                        {data.length > 0 && (
-                            <button onClick={deleteUserData}>delete user</button>
-                        )}
-                        {errorMessage && (<div className='errorEl'>{errorMessage}</div>)}
+                            {data.length > 0 && (
+                                <button onClick={deleteUserData}>delete user</button>
+                            )}
+                            {errorMessage && (<div className='errorEl'>{errorMessage}</div>)}
                         </div>
                     </div>
 
                     <div className='adminViewAllContainer'>
-                        All Users
+                        AutoParts Users
                         <div>
                             <table className='userTable'>
                                 <thead>
                                     <tr>
+                                        <th>ID</th>
                                         <th>Username</th>
-                                        <th>User ID</th>
                                         <th>Email</th>
                                         <th>Role</th>
-                                        <th>TEST</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {dataList && dataList.map((x, index) => (
                                         <tr key={index}>
-                                            <td>{x.username}</td>
                                             <td>{x.userId}</td>
+                                            <td>{x.username}</td>
                                             <td>{x.email}</td>
                                             <td>{x.role}</td>
-                                            <td>{/* Add any test value here if needed */}</td>
                                         </tr>
                                     ))}
                                 </tbody>
