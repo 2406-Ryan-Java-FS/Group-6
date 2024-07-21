@@ -1,35 +1,31 @@
 import { useEffect, useRef, useState } from 'react'
 import '../styles/user-settings.css'
-import Cookies from "js-cookie"
 
-export default function AdminPage() {
+export default function AdminPage({ AUTOSHOP_USER_URL }) {
 
     const inputRef = useRef();
 
-    const AUTOSHOP_URL = 'http://localhost:8080/users'
     const [errorMessage, setErrorMessage] = useState("");
     const [data, setData] = useState([])
     const [dataList, setDataList] = useState([])
     const [dataError, setDataError] = useState("");
 
     const fetchUserData = async () => {
-        // const token = Cookies.get('accessToken')
         const token = localStorage.getItem('accessToken');
 
         if (inputRef.current.value > 0) {
             try {
-                const response = await fetch(`${AUTOSHOP_URL}/${inputRef.current.value}`, {
+                const response = await fetch(`${AUTOSHOP_USER_URL}/${inputRef.current.value}`, {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`,
                     }
                 })
-                // const response = await fetch(`${AUTO_SHOP_URL}1`)
                 const json = await response.json()
 
                 if (response.ok) {
                     setData([json])
-                    console.log(json)
+                    // console.log(json)
                     setDataError("")
                 }
             } catch (error) {
@@ -47,11 +43,10 @@ export default function AdminPage() {
     }
 
     const fetchAllUserData = async () => {
-        // const token = Cookies.get('accessToken')
         const token = localStorage.getItem('accessToken');
 
         try {
-            const response = await fetch(AUTOSHOP_URL, {
+            const response = await fetch(AUTOSHOP_USER_URL, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -60,8 +55,9 @@ export default function AdminPage() {
             const json = await response.json()
 
             if (response.ok) {
-                setDataList(json)
-                console.log(json)
+                const sortedUsers = json.sort((a, b) => a.userId - b.userId)
+                setDataList(sortedUsers)
+                console.log("Retrieved all user information")
             }
         } catch (error) {
             setDataList([])
@@ -71,16 +67,15 @@ export default function AdminPage() {
     }
 
     useEffect(() => {
-fetchAllUserData()
+        fetchAllUserData()
     }, [data])
 
 
     const deleteUserData = async () => {
-        // const token = Cookies.get('accessToken')
         const token = localStorage.getItem('accessToken');
-        
+
         try {
-            const response = await fetch(`${AUTOSHOP_URL}/admin/${inputRef.current.value}`,
+            const response = await fetch(`${AUTOSHOP_USER_URL}/admin/${inputRef.current.value}`,
                 {
                     method: 'DELETE',
                     headers: {
@@ -112,13 +107,14 @@ fetchAllUserData()
         <>
 
             <div className='adminMainContainer'>
+                <hr style={{ "paddingBottom": "10px" }}/>
                 <h1 className='admin'>
                     Admin Settings
                 </h1>
 
                 <div className='adminContent'>
                     <div className='adminDeleteContainer'>
-                        <p>Search User to delete</p>
+                        <p style={{ "marginBottom": "0px" }}>Search User to delete</p>
                         <div>
                             <div className='deleteUserSearchContainer'>
                                 <div>
@@ -158,9 +154,6 @@ fetchAllUserData()
                                 <div className='errorEl'>{dataError}</div>
                             )}
 
-                            {/* {data.length > 0 && (
-                                <button className="btn btn-danger deleteButtonAdmin" onClick={deleteUserData}>delete user</button>
-                            )} */}
                             {errorMessage && (<div className='errorEl'>{errorMessage}</div>)}
                         </div>
                     </div>
