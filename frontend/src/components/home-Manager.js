@@ -1,7 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
 import '../styles/home.css'
 import '../styles/nav.css'
+import { AuthContext } from "../components/auth-context";
+
+
 export default function Home(){
+
+    const { isLoggedIn } = useContext(AuthContext);
 
     return(<>
         <div className="headHome">
@@ -19,47 +25,117 @@ export default function Home(){
                 Your Car, Our Parts, Perfect Fit.
             </p>
         </div>
-        <div className="accountHome">
-            <h2>Account</h2>
-            <div className="accountHome-content">
-                <button onClick={<Link className="accountHome-content-login" to="/" >Login</Link>}>Log In</button><br />
-                <button onClick={<Link className="accountHome-content-createAccount" to="/" >Make New Account</Link>}>Create Account</button>
-            </div>
-        </div>
-        <div className="partsHome">
-            <h2>Parts</h2>
-            <div className="partsHome-content">
-                <div className="partsCatagories">
-                    <div className="group1">
-                        {/* ToDo: work on parts page and connect it to the buttons */}
-                        <div className="partsContainer">
-                            <button className="partsButton partsOil"></button>
-                            <div className="partsText">Oil Parts</div>
+        <div>
+            {isLoggedIn ? (
+                        <div>
+                            <div className="accountHome"> 
+                                <h2>Account</h2>
+                                <div className="accountHome-content">
+                                    <h3>Welcome AutoParts customer! You are logged in!</h3>
+                                </div>
+                            </div>
+                            <div className="partsHome">
+                                    <h2>Parts</h2>
+                                    <div className="partsHome-content">
+                                        <div className="partsCatagories">
+                                            <div className="group1">
+                                                {/* ToDo: work on parts page and connect it to the buttons */}
+                                                <div className="partsContainer">
+                                                    <Link to="/parts/searchsearch?partName=Engine%20Oil%20Filter">
+                                                        <button className="partsButton partsOil"></button>
+                                                        <div className="partsText">Oil Parts</div>
+                                                    </Link>
+                                                </div>
+                                                <div className="partsContainer">
+                                                    <Link>
+                                                        <button className="partsButton partsMechanical"></button>
+                                                        <div className="partsText">Batteries</div>
+                                                    </Link>
+                                                </div>
+                                            </div>
+                                            <div className="group2">
+                                                <div className="partsContainer">
+                                                    <Link>
+                                                        <button className="partsButton partsLights"></button>
+                                                        <div className="partsText">Light Bulbs</div>
+                                                    </Link>
+                                                </div>
+                                                <div className="partsContainer">
+                                                    <Link to="/parts">
+                                                        <button className="partsButton partsRandom"></button>
+                                                        <div className="partsText">All Parts</div>
+                                                    </Link>
+                                                </div>
+                                            </div>                                  
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="ordersHome">
+                                    <h2>Orders</h2>
+                                    <div className="orderHome-content">
+                                        <Link to="/orders">
+                                            <button>Place Order</button><br />
+                                        </Link>
+                                        <div className="ordersHome">
+                                          <Link className="orderHome-content-viewOrder" to="/order">
+                                              <button>View Orders</button>
+                                          </Link>
+                                        </div>
+                                    </div>
+                                </div>
                         </div>
-                        <div className="partsContainer">
-                            <button className="partsButton partsMechanical"></button>
-                            <div className="partsText">Mechanical Parts</div>
+                    ) : (
+                        <div>
+                            <div className="accountHome">
+                                <h2>Account</h2>
+                                <div className="accountHome-content">
+                                    <Link className="accountHome-content-login" to="/login" >
+                                        <button>Log In</button><br />
+                                    </Link>
+                                    <Link className="accountHome-content-createAccount" to="/register">
+                                        <button>Create Account</button>
+                                    </Link>
+                                </div>
+                            </div>
+                            <div className="partsHome">
+                                <h2>Parts</h2>
+                                <div className="partsHome-content">
+                                    <div className="partsCatagories">
+                                        <div className="group1">
+                                            <div className="partsContainer">
+                                                <Link to="/parts/searchsearch?partName=Engine%20Oil%20Filter">
+                                                    <button className="partsButton partsOil"></button>
+                                                    <div className="partsText">Oil Parts</div>
+                                                </Link>
+                                            </div>
+                                            <div className="partsContainer">
+                                                <Link>
+                                                    <button className="partsButton partsMechanical"></button>
+                                                    <div className="partsText">Batteries</div>
+                                                </Link>
+                                            </div>
+                                        </div>
+                                        <div className="group2">
+                                            <div className="partsContainer">
+                                                <Link>
+                                                    <button className="partsButton partsLights"></button>
+                                                    <div className="partsText">Light Bulbs</div>
+                                                </Link>
+                                            </div>
+                                            <div className="partsContainer">
+                                                <Link to="/parts">
+                                                    <button className="partsButton partsRandom"></button>
+                                                    <div className="partsText">All Parts</div>
+                                                </Link>
+                                            </div>
+                                        </div>                                  
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
-                    </div>
-                    <div className="group2">
-                        <div className="partsContainer">
-                            <button className="partsButton partsLights"></button>
-                            <div className="partsText">Light Bulbs</div>
-                        </div>
-                        <div className="partsContainer">
-                            <button className="partsButton partsRandom"></button>
-                            <div className="partsText">All Parts</div>
-                        </div>
-                    </div>                                  
-                </div>
-            </div>
-        </div>
-        <div className="ordersHome">
-            <h2>Orders</h2>
-            <div className="orderHome-content">
-            <button onClick={<Link className="orderHome-content-placeOrder" to="/" >place new order</Link>}>Place Order</button><br />
-            <button onClick={<Link className="orderHome-content-viewOrder" to="/order" >View orders</Link>}>View Orders</button>
-            </div>
+
+                    )}
         </div>
     </>)
 }

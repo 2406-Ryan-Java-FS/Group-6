@@ -2,52 +2,75 @@ body {
     background-color:#F6F6F6;
 }
 
+.loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 .adminMainContainer {
     /* margin: 20px 20px 20px 20px; */
     padding-bottom: 200px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
 }
 
 .adminContent {
-    display: flex;
+    display: flex-col;
     gap:200px;
 }
 
-.userTable {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 16px 0;
+.userToDeleteContainer {
+    /* background-color:black; */
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+    
 }
 
-.userTable th,
-.userTable td {
+.deleteUserSearchContainer {
+    display: flex;
+}
+
+.deleteButtonAdmin {
+    /* position: absolute;
+    left: 1rem;
+    margin-top: 10px; */
+    margin: 10px;
+}
+
+.adminViewAllContainer {
+    margin-top:80px;
+}
+
+.userTable thead tr {
+    background-color: grey; /* Set the background color for the first row (thead tr) */
+    color: white; /* Set text color to white for contrast */
+}
+
+.userTable {
+    width: 100%; /* Ensure the table takes up the full width */
+    border-collapse: collapse; /* Collapse borders for cleaner look */
+}
+
+.userTable th, .userTable td {
+    padding: 10px;
     border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
+    
 }
 
 .userTable th {
-    background-color: #f4f4f4;
+    text-align: left;
 }
 
-.userTable tr:nth-child(even) {
-    background-color: #f9f9f9;
+.userTable td {
+    text-align: left;
 }
 
-.userTable tr:hover {
-    background-color: #f1f1f1;
-}
-
-h1.admin {
-    display: flex;
-    /* justify-content: center; */
-}
-
-.dataTable {
-    display:flex;
-}
-
-.dataTable>p {
-    margin: 0px 8px 0px 0px;
+.userTable th, .userTable td {
+    padding-right: 20px;
 }
 
 .errorEl {
@@ -55,24 +78,17 @@ h1.admin {
     font-weight: bold;
 }
 
-tr>th {
+.userSettingContainer tr>th {
     font-weight: normal;
     float:left;
 }
 
-tr {
+.userSettingContainer tr {
     margin-bottom: 4px;
 }
 
-.adminTable {
-    background-color:FloralWhite;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    padding:24px;
-    
-}
 
-th, td {
+.userSettingContainer th, td {
     padding: 1px 16px; /* Adjust padding as needed for space between th and td */
     text-align: left;
 }
@@ -83,6 +99,15 @@ th, td {
     display: flex-col;
     padding: 20px;
     margin-top: 60px;
+    
+}
+
+.userContainerMainHolder {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
 }
 
 .userContainerMain td {
@@ -100,12 +125,16 @@ th, td {
     font-weight:600;
     font-size: 24px;
     padding-top:20px;
+    width: 240px;
     
 }
 
 .userContainerContent{
     /* position: absolute; */
     display: flex-col;
+    border: 2px solid #ddd;
+    padding: 8px 8px 60px 8px;
+    border-radius: 4px;
 }
 
 
@@ -129,4 +158,72 @@ th, td {
 
 .passwordContainer > div > p {
     margin-right: 20px;
+}
+
+.buttonContainer {
+    display: flex;
+    padding-top: 40px;
+}
+
+.deleteButton {
+    position: absolute;
+    right: 3rem;
+}
+
+.saveButton {
+    position: absolute;
+    left: 3rem;
+}
+
+.updatedButton {
+    position: absolute;
+    left: 3rem;
+    background-color: transparent;
+    color:green;
+    padding:6px;
+    
+}
+
+.bi-check-lg {
+
+}
+
+.bi-x-lg {
+
+}
+
+.yesContainer {
+    cursor: pointer;
+}
+
+.yesContainer:hover {
+    background-color: grey;
+}
+
+.noContainer {
+    cursor: pointer;
+}
+
+.noContainer:hover {
+    background-color:grey;
+}
+
+.deleteConfirmContainer {
+    position: absolute;
+    right: 3rem;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+}
+
+.deleteConfirmContainer>* {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.deleteText {
+    cursor: default;
 }
