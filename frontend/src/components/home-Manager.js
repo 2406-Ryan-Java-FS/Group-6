@@ -58,7 +58,7 @@ export default function Home(){
             <h2>Orders</h2>
             <div className="orderHome-content">
             <button onClick={<Link className="orderHome-content-placeOrder" to="/" >place new order</Link>}>Place Order</button><br />
-            <button onClick={<Link className="orderHome-content-viewOrder" to="/" >View orders</Link>}>View Orders</button>
+            <button onClick={<Link className="orderHome-content-viewOrder" to="/order" >View orders</Link>}>View Orders</button>
             </div>
         </div>
     </>)

@@ -17,7 +17,7 @@ export default function NavBar() {
                 <Link className="navbar-brand" to="/">AutoParts</Link>
                 <Link className="nav-link" to="/parts">Parts</Link>
                 <Link className="nav-link" to="/orders">Place Order</Link>
-                <Link className="nav-link" to="/">View Order</Link>
+                <Link className="nav-link" to="/order">View Order</Link>
                 {isLoggedIn ? (
                     <button className="nav-link btn" onClick={handleLogout}>Logout</button>
                 ) : (
