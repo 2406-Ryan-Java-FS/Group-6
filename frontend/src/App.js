@@ -14,7 +14,7 @@ function App() {
 
   useEffect(() => {
     document.title = 'AutoParts';
-  })
+  }, [])
 
   return (<>
     <AuthProvider>
