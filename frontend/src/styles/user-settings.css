@@ -2,6 +2,13 @@ body {
     background-color:#F6F6F6;
 }
 
+.loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 .adminMainContainer {
     /* margin: 20px 20px 20px 20px; */
     padding-bottom: 200px;
@@ -13,6 +20,24 @@ body {
 .adminContent {
     display: flex-col;
     gap:200px;
+}
+
+.userToDeleteContainer {
+    /* background-color:black; */
+    display: flex;
+    gap: 20px;
+    
+}
+
+.deleteUserSearchContainer {
+    display: flex;
+}
+
+.deleteButtonAdmin {
+    /* position: absolute;
+    left: 1rem;
+    margin-top: 10px; */
+    margin: 10px;
 }
 
 .adminViewAllContainer {

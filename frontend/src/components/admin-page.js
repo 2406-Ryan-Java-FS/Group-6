@@ -118,38 +118,49 @@ fetchAllUserData()
 
                 <div className='adminContent'>
                     <div className='adminDeleteContainer'>
-                        <p>Search for user</p>
+                        <p>Search User to delete</p>
                         <div>
-                            <input ref={inputRef} onKeyDown={handleKeyDown} />
-                            <button onClick={fetchUserData}>search</button>
+                            <div className='deleteUserSearchContainer'>
+                                <div>
+                                    <input ref={inputRef} placeholder='Search User ID' onKeyDown={handleKeyDown} />
+
+                                </div>
+                                <button onClick={fetchUserData}>search</button>
+                            </div>
 
                             {data.length > 0 && (
-                                <table className='userTable'>
-                                    <thead>
-                                        <tr>
-                                        <th>user_id</th>
-                                        <th>Username</th>
-                                        <th>Email</th>
-                                        <th>Role</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>{data[0].userId}</td>
-                                            <td>{data[0].username}</td>
-                                            <td>{data[0].email}</td>
-                                            <td>{data[0].role}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <div className='userToDeleteContainer'>
+                                    <table className='userTable'>
+                                        <thead>
+                                            <tr>
+                                                <th>user_id</th>
+                                                <th>Username</th>
+                                                <th>Email</th>
+                                                <th>Role</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>{data[0].userId}</td>
+                                                <td>{data[0].username}</td>
+                                                <td>{data[0].email}</td>
+                                                <td>{data[0].role}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                        <button className="btn btn-danger deleteButtonAdmin" onClick={deleteUserData}>
+                                            Delete {data[0].username}
+                                        </button>
+
+                                </div>
                             )}
                             {dataError && (
                                 <div className='errorEl'>{dataError}</div>
                             )}
 
-                            {data.length > 0 && (
-                                <button onClick={deleteUserData}>delete user</button>
-                            )}
+                            {/* {data.length > 0 && (
+                                <button className="btn btn-danger deleteButtonAdmin" onClick={deleteUserData}>delete user</button>
+                            )} */}
                             {errorMessage && (<div className='errorEl'>{errorMessage}</div>)}
                         </div>
                     </div>

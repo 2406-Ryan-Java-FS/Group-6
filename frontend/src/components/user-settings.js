@@ -291,10 +291,10 @@ export default function UserSettings () {
 
             </div>)
             : (<>
-            <div>loading...</div>
-            <button onClick={() => handleLogin("ilovehondas1", "hondas")}>TEST LOGIN</button>
+            <div className="loading">loading...</div>
+            {/* <button onClick={() => handleLogin("ilovehondas1", "hondas")}>TEST LOGIN</button>
             <button onClick={() => handleLogin("Bobisback", "pass")}>LOGIN TO DELETE</button>
-            <button onClick={() => handleLogin("admin", "hashed_password_3")}>TEST LOGIN (ADMIN)</button>
+            <button onClick={() => handleLogin("admin", "hashed_password_3")}>TEST LOGIN (ADMIN)</button> */}
             </>)
 
         }
