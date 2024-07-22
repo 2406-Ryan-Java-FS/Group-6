@@ -125,7 +125,7 @@ INSERT INTO orders (customer_id, status, total, part_id, quantity) VALUES
 ```
 
 ## User Stories
-### SAll Users
+### All Users
 - [x] As a user, I can log into my account.
 - [x] As a user, I can log out of my account.
 - [x] As a user, I can update my account.
