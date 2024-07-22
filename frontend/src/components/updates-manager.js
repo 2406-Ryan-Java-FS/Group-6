@@ -1,7 +1,7 @@
 import { useEffect, useContext, useState, useRef } from 'react';
 //import { AppContext } from '../AppContext';
 import Table from 'react-bootstrap/Table';
-import '../styles/order.css'
+import '../styles/updates.css'
 import '../styles/nav.css'
 
 
@@ -31,7 +31,8 @@ export default function UpdatesManager() {
             console.log(httpResponse.status);
             const body = await httpResponse.json();
             console.log(body)
-            
+            return(
+                window.location.href = '/order')
         } catch (e) {
             console.log(e);
             alert("Didn't work")
@@ -43,7 +44,7 @@ export default function UpdatesManager() {
     return (<>
         
         <div class="container">
-        <h1>View Orders</h1>
+        <h1>Update Order</h1>
             <div class="button-holder">
             <input type="number" ref={orderInput1} placeholder='Enter Order ID' class = "order-input"/>
             <input type="number" ref={orderInput2} placeholder='Enter Part ID' class = "order-input"/>
