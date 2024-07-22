@@ -1,17 +1,14 @@
-
-
+import { redirect } from 'react-router-dom';
 import { useEffect, useContext, useState, useRef } from 'react';
 //import { AppContext } from '../AppContext';
-import PlaceOrder from './plcOrder-Manager';
 import Table from 'react-bootstrap/Table';
-import '../styles/parts.css'
+import '../styles/order.css'
 import '../styles/nav.css'
 
 
 export default function OrderTable() {
 
 
-    const [authUser, setAuthUser] = useState(0)
 
     const orderInput = useRef();
     function formDate(date) { 
@@ -87,7 +84,10 @@ export default function OrderTable() {
 
     function updateOrder(or) {
         console.log(or)
-        
+        return(
+            
+                window.location.href = '/updates')
+            
     }
 
     async function deleteOrder(o) {
