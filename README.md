@@ -163,7 +163,7 @@ INSERT INTO orders (customer_id, status, total, part_id, quantity) VALUES
 - [ ] Integrate with a third-party API.
 
 ## Presentation
-The project presentation is scheduled for the morning of July 21st, 2024. Each team member will present a section of the application, accompanied by a PowerPoint slideshow.
+The project presentation is scheduled for the morning of July 22nd, 2024. Each team member will present a section of the application, accompanied by a PowerPoint slideshow.
 
 ## Relevant Information for New Team Members
 - Repository Structure: The project repository is divided into backend and frontend directories.
