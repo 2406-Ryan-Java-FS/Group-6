@@ -144,16 +144,16 @@ INSERT INTO orders (customer_id, status, total, part_id, quantity) VALUES
 - [x] As an admin, I can view all users.
 - [x] As an admin, I can lookup and cancel an order by order id.
 - [x] As an admin, I can lookup and delete a user by user id.
+- [x] As an admin, I can update orders.
 - [ ] As an admin, I can view all orders.
-- [ ] As an admin, I can update orders.
 - [ ] As an admin, I can update part price and inventory.
-- [ ] As an admin, I can promote a customer account to seller.
-- [ ] As an admin, I can promote a customer account to admin.
+- [ ] As an admin, I can promote an account to seller.
+- [ ] As an admin, I can promote an account to admin.
 
 ### Seller
 - [ ] As a seller, I can place an order for a customer.
-- [ ] As an admin, I can update part price.
-- [ ] As an admin, I can update part inventory.
+- [ ] As a seller, I can update part price.
+- [ ] As a seller, I can update part inventory.
 
 ## Stretch Goals
 - [ ] Implement unit and integration testing using Spring Test/JUnit and Postman collections.
