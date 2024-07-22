@@ -1,3 +1,6 @@
+h1 {
+    text-align: center;
+}
 .buttons {
     box-shadow: 2px 2px 2px rgb(0, 0, 100);
     border-radius: 10px;
@@ -19,4 +22,8 @@
     display: inline;
     justify-content: center;
     align-items: center; 
+  }
+
+  .order-input {
+    width: 200px
   }
