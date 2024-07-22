@@ -125,7 +125,7 @@ public class UserController {
     /**
      * Endpoint for updating a User given its userId.
      *
-     * @param UserUpdateDTO has usernameNew and passwordNew fields
+     * @param userUpdateDTO has usernameNew and passwordNew fields
      *                      Will invalidate the token if pass empty field; Only pass field to change
      * @param authentication will update that account's username and or password
      * @return If successful, returns the updated User.
