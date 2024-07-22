@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Table from 'react-bootstrap/Table';
-import '../styles/parts.css'
+import '../styles/order.css'
 import '../styles/nav.css'
 
 export default function PartsManager(){

@@ -9,6 +9,7 @@ import UserSettings from './components/user-settings';
 import LoginPage from './components/login-page';
 import RegisterPage from './components/register-page';
 import { AuthProvider } from './components/auth-context';
+import OrderTable from './components/order-manager';
 import { useEffect } from 'react';
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
             <Route path='/settings' element={<UserSettings />} />
             <Route path='/login' element={<LoginPage />} />
             <Route path='/register' element={<RegisterPage />} />
+            <Route path= '/order' element = {<OrderTable />} />
         </Routes>
     </AuthProvider>
   </>);

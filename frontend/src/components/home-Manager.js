@@ -76,9 +76,11 @@ export default function Home(){
                                         <Link to="/orders">
                                             <button>Place Order</button><br />
                                         </Link>
-                                        <Link to="/">
-                                            <button>View Orders</button>
-                                        </Link>
+                                        <div className="ordersHome">
+                                          <Link className="orderHome-content-viewOrder" to="/order">
+                                              <button>View Orders</button>
+                                          </Link>
+                                        </div>
                                     </div>
                                 </div>
                         </div>
@@ -132,6 +134,7 @@ export default function Home(){
                             </div>
 
                         </div>
+
                     )}
         </div>
     </>)
