@@ -125,12 +125,12 @@ INSERT INTO orders (customer_id, status, total, part_id, quantity) VALUES
 ```
 
 ## User Stories
-### Seller
+### SAll Users
 - [x] As a user, I can log into my account.
 - [x] As a user, I can log out of my account.
 - [x] As a user, I can update my account.
 - [x] As a user, I can delete my account.
-- 
+
 ### Customer
 - [x] As a customer, I can register a new account.
 - [x] As a customer, I can search for a specific part by name.
@@ -138,7 +138,7 @@ INSERT INTO orders (customer_id, status, total, part_id, quantity) VALUES
 - [x] As a customer, I can view all my orders.
 - [ ] As a customer, I can register my vehicle.
 - [ ] As a customer, I can return a part.
-- 
+
 ### Admin
 - [x] As an admin, I can log into the Admin page.
 - [x] As an admin, I can view all users.
