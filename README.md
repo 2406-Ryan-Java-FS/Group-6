@@ -9,8 +9,8 @@ The Auto Shop Application is designed to manage and track orders for an auto sho
     - Spring Framework
     - Spring Data JPA for database communication
     - Spring Web (MVC) for RESTful API
-- **Frontend**: React with TypeScript/JavaScript.
-- **Documentation**: Comprehensive READMEs for both UI and API components.
+- **Frontend**: React with JavaScript.
+- **Documentation**: Comprehensive README (this) for both UI and API components.
 
 ## How to Run the Application
 ### Prerequisites
@@ -125,37 +125,45 @@ INSERT INTO orders (customer_id, status, total, part_id, quantity) VALUES
 ```
 
 ## User Stories
-### Admin
-1. As an admin, I can log in to the Admin page.
-2. As an admin, I can view all orders, inventory, and users.
-3. As an admin, I can update or cancel orders. 
-4. As an admin, I can update the inventory (price and quantity). 
-5. As an admin, I can add or delete users. 
-6. As an admin, I can add or delete sellers.
-
+### Seller
+- [x] As a user, I can log into my account.
+- [x] As a user, I can log out of my account.
+- [x] As a user, I can update my account.
+- [x] As a user, I can delete my account.
+- 
 ### Customer
-1. As a customer, I can register my vehicle. 
-2. As a customer, I can search and view if a specific part is available. 
-3. As a customer, I can place an order. 
-4. As a customer, I can return a part. 
-5. As a customer, I can update or delete my account.
+- [x] As a customer, I can register a new account.
+- [x] As a customer, I can search for a specific part by name.
+- [x] As a customer, I can place an order.
+- [x] As a customer, I can view all my orders.
+- [ ] As a customer, I can register my vehicle.
+- [ ] As a customer, I can return a part.
+- 
+### Admin
+- [x] As an admin, I can log into the Admin page.
+- [x] As an admin, I can view all users.
+- [x] As an admin, I can lookup and cancel an order by order id.
+- [x] As an admin, I can lookup and delete a user by user id.
+- [ ] As an admin, I can view all orders.
+- [ ] As an admin, I can update orders.
+- [ ] As an admin, I can update part price and inventory.
+- [ ] As an admin, I can promote a customer account to seller.
+- [ ] As an admin, I can promote a customer account to admin.
 
 ### Seller
-1. As a seller, I can sell a part (update inventory). 
-2. As a seller, I can place an order for a customer. 
-3. As a seller, I can update my account. 
-4. As a seller, I can check inventory. 
-5. As a seller, I can update a customer's vehicle info.
+- [ ] As a seller, I can place an order for a customer.
+- [ ] As an admin, I can update part price.
+- [ ] As an admin, I can update part inventory.
 
 ## Stretch Goals
-- Implement unit and integration testing using Spring Test/JUnit and Postman collections.
-- Secure API endpoints using JWTs (JSON Web Tokens).
-- Implement password reset functionality.
-- Add notification features.
-- Integrate with a third-party API.
+- [ ] Implement unit and integration testing using Spring Test/JUnit and Postman collections.
+- [x] Secure API endpoints using JWTs (JSON Web Tokens).
+- [ ] Implement password reset functionality.
+- [ ] Add notification features.
+- [ ] Integrate with a third-party API.
 
 ## Presentation
-The project presentation is scheduled for the morning of July 19th, 2024. Each team member will present a section of the application, accompanied by a PowerPoint slideshow.
+The project presentation is scheduled for the morning of July 21st, 2024. Each team member will present a section of the application, accompanied by a PowerPoint slideshow.
 
 ## Relevant Information for New Team Members
 - Repository Structure: The project repository is divided into backend and frontend directories.
