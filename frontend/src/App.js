@@ -11,6 +11,7 @@ import RegisterPage from './components/register-page';
 import { AuthProvider } from './components/auth-context';
 import OrderTable from './components/order-manager';
 import { useEffect } from 'react';
+import UpdatesManager from './components/updates-manager';
 
 function App() {
 
@@ -31,6 +32,7 @@ function App() {
             <Route path='/login' element={<LoginPage />} />
             <Route path='/register' element={<RegisterPage />} />
             <Route path= '/order' element = {<OrderTable />} />
+            <Route path= '/updates' element = {<UpdatesManager/>} />
         </Routes>
     </AuthProvider>
   </>);
