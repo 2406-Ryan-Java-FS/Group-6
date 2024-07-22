@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Form from 'react-bootstrap/Form';
 import '../styles/plcOrder.css'
 import '../styles/nav.css'
@@ -7,6 +7,8 @@ import '../styles/nav.css'
 export default function PlaceOrder(){
     // too do, find the customer token and us it to add the orders
     const customerID = 1;
+    const [authUser, setAuthUser] = useState(0)
+
     const [partID, setPartID] = useState('');
     const [quantity, setQuantitiy] = useState(1);
     const [order, setOrder] = useState([]);
@@ -30,7 +32,8 @@ export default function PlaceOrder(){
             const response = await fetch('http://localhost:8080/orders', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
                 },
                 body: JSON.stringify(orderData)
             });
